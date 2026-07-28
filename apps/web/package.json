@@ -1,0 +1,36 @@
+{
+  "name": "@col/web",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "typecheck": "tsc -p tsconfig.json --noEmit"
+  },
+  "dependencies": {
+    "@col/core": "workspace:*",
+    "@col/db": "workspace:*",
+    "@col/schemas": "workspace:*",
+    "@col/storage": "workspace:*",
+    "@col/tradition-packs": "workspace:*",
+    "@col/video": "workspace:*",
+    "@remotion/player": "^4.0.500",
+    "@uppy/core": "^5.2.0",
+    "@uppy/dashboard": "^5.1.1",
+    "@uppy/react": "^5.2.0",
+    "@uppy/xhr-upload": "^5.2.0",
+    "next": "^15.5.22",
+    "qrcode": "^1.5.4",
+    "react": "^19.2.0",
+    "react-dom": "^19.2.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.19.2",
+    "@types/qrcode": "^1.5.6",
+    "@types/react": "^19.2.17",
+    "@types/react-dom": "^19.2.3",
+    "typescript": "^5.9.3"
+  }
+}

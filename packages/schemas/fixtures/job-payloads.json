@@ -1,0 +1,40 @@
+[
+  { "type": "noop", "sleepMs": 100, "note": "scaffold smoke test" },
+  {
+    "type": "ingest-asset",
+    "memorialId": "0192f3a0-0000-7000-8000-000000000001",
+    "assetId": "0192f3a0-3333-7000-8000-00000000000a",
+    "blobKey": "memorial/0192f3a0-0000-7000-8000-000000000001/original/0192f3a0-3333-7000-8000-00000000000a.jpg"
+  },
+  {
+    "type": "analyze-photo-batch",
+    "memorialId": "0192f3a0-0000-7000-8000-000000000001",
+    "assetIds": ["0192f3a0-3333-7000-8000-00000000000a", "0192f3a0-3333-7000-8000-00000000000b"]
+  },
+  {
+    "type": "generate-edl",
+    "memorialId": "0192f3a0-0000-7000-8000-000000000001",
+    "projectId": "0192f3a0-1111-7000-8000-000000000001",
+    "regenerate": false
+  },
+  {
+    "type": "render",
+    "memorialId": "0192f3a0-0000-7000-8000-000000000001",
+    "projectId": "0192f3a0-1111-7000-8000-000000000001",
+    "renderJobId": "0192f3a0-4444-7000-8000-000000000001",
+    "cut": "service",
+    "preset": "final1080"
+  },
+  {
+    "type": "purge-blobs",
+    "memorialId": "0192f3a0-0000-7000-8000-000000000001",
+    "prefix": "memorial/0192f3a0-0000-7000-8000-000000000001/"
+  },
+  {
+    "type": "send-email",
+    "to": "organizer@example.com",
+    "subject": "Your link to Margaret's memorial page",
+    "template": "organizer-magic-link",
+    "data": { "memorialName": "Margaret Ellen Doyle" }
+  }
+]

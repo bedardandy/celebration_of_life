@@ -1,0 +1,59 @@
+{
+  "subject": {
+    "fullName": "Margaret Ellen Doyle",
+    "knownAs": "Peggy",
+    "birthYear": 1938,
+    "deathYear": 2025
+  },
+  "structure": "chrono",
+  "chapters": [
+    {
+      "id": "ch-early",
+      "title": "Growing up on Ravine Street",
+      "era": { "from": 1938, "to": 1956 },
+      "summary": "The third of six children, raised above her father's shoe repair shop. Walked to St. Brigid's every morning, often late.",
+      "anecdotes": [
+        {
+          "id": "an-1",
+          "text": "She once traded a week of dish duty for her brother's roller skates, then wore them until the wheels gave out.",
+          "source": "interview",
+          "approved": true
+        },
+        {
+          "id": "an-2",
+          "text": "A draft note about the shoe shop that the family has not reviewed yet.",
+          "source": "ai-draft",
+          "approved": false
+        }
+      ],
+      "people": ["Frank Doyle", "Eileen Doyle", "Tom Doyle"],
+      "openQuestions": [
+        "What was the name of the shoe shop?",
+        "Did she finish high school in 1956?"
+      ]
+    },
+    {
+      "id": "ch-family",
+      "title": "The house on Linden",
+      "era": { "from": 1961, "to": 1994 },
+      "summary": "Married Bill in 1961. Four children. The kitchen table was the centre of everything, including other people's problems.",
+      "anecdotes": [
+        {
+          "id": "an-3",
+          "text": "Every Sunday she cooked for ten whether or not ten people were coming. Somebody always came.",
+          "source": "memory-note",
+          "approved": true
+        }
+      ],
+      "people": ["Bill Doyle", "Tom Doyle", "Anne Marie", "Kathleen", "Michael"],
+      "openQuestions": ["Which year did they move to Linden Avenue?"]
+    }
+  ],
+  "themes": ["hospitality", "stubborn kindness", "faith", "the kitchen table"],
+  "toneNotes": "Warm and plain-spoken, with dry humour. She would have hated anything flowery. Short sentences suit her.",
+  "coveragePhotoGaps": [
+    "No photos from the 1940s childhood years",
+    "Nothing from the wedding in 1961",
+    "Very few photos of Peggy with her grandchildren"
+  ]
+}

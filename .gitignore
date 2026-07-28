@@ -1,0 +1,26 @@
+node_modules/
+.pnpm-store/
+dist/
+build/
+out/
+.next/
+.turbo/
+coverage/
+*.tsbuildinfo
+
+# Runtime data: sqlite db, blob storage, renders (repo root only — package
+# `data/` directories, e.g. tradition packs, are source and must be committed)
+/data/
+
+# Local env
+.env
+.env.local
+.env.*.local
+
+# Next.js
+next-env.d.ts
+
+# OS / editor
+.DS_Store
+Thumbs.db
+*.log

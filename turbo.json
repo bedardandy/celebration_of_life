@@ -1,0 +1,40 @@
+{
+  "$schema": "https://turbo.build/schema.json",
+  "globalEnv": [
+    "NODE_ENV",
+    "DATABASE_URL",
+    "STORAGE_DIR",
+    "AI_PROVIDER",
+    "AI_FIXTURES_DIR",
+    "FFMPEG_PATH",
+    "FFPROBE_PATH",
+    "PORT",
+    "APP_BASE_URL",
+    "LOG_LEVEL",
+    "WORKER_ID",
+    "WORKER_JOB_TYPES",
+    "WORKER_POLL_INTERVAL_MS",
+    "WORKER_LEASE_MS",
+    "WORKER_MAX_ATTEMPTS"
+  ],
+  "tasks": {
+    "build": {
+      "dependsOn": ["^build"],
+      "outputs": [".next/**", "!.next/cache/**", "dist/**", "build/**"]
+    },
+    "typecheck": {
+      "dependsOn": ["^typecheck"],
+      "outputs": []
+    },
+    "lint": {
+      "outputs": []
+    },
+    "test": {
+      "outputs": []
+    },
+    "dev": {
+      "cache": false,
+      "persistent": true
+    }
+  }
+}

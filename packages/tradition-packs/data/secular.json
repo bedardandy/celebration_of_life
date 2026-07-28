@@ -1,0 +1,44 @@
+{
+  "slug": "secular",
+  "label": "Non-religious celebration of life",
+  "pacingPreset": "flexible",
+  "serviceTimelineNote": "There is no fixed timetable. Many families hold the celebration two to six weeks after the death, once travel is arranged and there has been a little time to breathe. That extra time is not a delay — it usually makes for a warmer, more personal gathering, and it gives everyone a chance to send photos.",
+  "mediaPlacement": [
+    {
+      "context": "During the celebration",
+      "guidance": "A photo tribute is very much at home here. Most families play it after the first few spoken tributes, when everyone has settled, or right at the end as a gentle close. Five minutes is a comfortable length."
+    },
+    {
+      "context": "As people arrive",
+      "guidance": "A looping slideshow while guests come in and find seats gives people something kind to look at, and it takes the pressure off the silence. The same photos can play again later without anyone minding."
+    },
+    {
+      "context": "At the reception or gathering afterwards",
+      "guidance": "This is where the longer family cut belongs — the one with the extra photos, the in-jokes and the blurry-but-beloved shots. People drift over, point, and start telling stories to each other."
+    }
+  ],
+  "musicGuidance": [
+    "Anything that sounds like them is right. Favourite songs, the record that was always on, the piece they walked down the aisle to.",
+    "If you want a song we cannot include in the video file itself, we can build the video silent and timed to that song, and the venue plays it live. Nothing is lost.",
+    "Two or three pieces across the celebration is plenty. Silence between them is not an awkward gap; it is room to feel something."
+  ],
+  "interviewAdjustments": [
+    {
+      "promptSlug": "faith-and-belief",
+      "note": "Ask about what they believed in or lived by rather than about religion — kindness, fairness, the outdoors, hard work, a good argument."
+    },
+    {
+      "promptSlug": "closing-blessing",
+      "note": "Offer a favourite saying, a toast, or a line from a song instead of a prayer."
+    }
+  ],
+  "checklistExtras": [
+    "Decide who will speak, and roughly in what order.",
+    "Check the venue can play a video and has speakers — ask what connection they need.",
+    "Choose whether the tribute video plays during the celebration, as people arrive, or both."
+  ],
+  "deliveryNotes": [
+    "Bring the video on a USB stick formatted FAT32 or exFAT, and email a copy to whoever is running the sound desk.",
+    "Take the printed card for the venue so the person pressing play knows the order and the length."
+  ]
+}

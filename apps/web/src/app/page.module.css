@@ -1,0 +1,62 @@
+.page {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 48px 24px 72px;
+}
+
+.card {
+  width: 100%;
+  max-width: 40rem;
+  text-align: center;
+}
+
+.title {
+  font-size: clamp(2.4rem, 6vw, 3.6rem);
+  margin: 0 0 20px;
+}
+
+.promise {
+  font-size: clamp(1.1rem, 2.4vw, 1.35rem);
+  color: var(--ink-soft);
+  margin: 0 auto 40px;
+  max-width: 32rem;
+}
+
+.cta {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 56px;
+  padding: 0 32px;
+  border-radius: 8px;
+  background: var(--accent);
+  color: var(--paper-raised);
+  font-family: var(--sans);
+  font-size: 1.15rem;
+  text-decoration: none;
+}
+
+.cta:hover {
+  background: var(--accent-hover);
+}
+
+.reassurance {
+  margin: 40px auto 0;
+  max-width: 30rem;
+  color: var(--ink-soft);
+  font-size: 1rem;
+}
+
+.stepBack {
+  display: inline-block;
+  margin-top: 32px;
+  min-height: 48px;
+  line-height: 48px;
+}
+
+.note {
+  color: var(--ink-soft);
+}

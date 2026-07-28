@@ -1,0 +1,49 @@
+{
+  "slug": "catholic",
+  "label": "Catholic funeral",
+  "pacingPreset": "days3to7",
+  "serviceTimelineNote": "A Catholic funeral usually unfolds over three parts across three to seven days: the vigil (often called the wake or rosary) the evening before, the Funeral Mass, and the burial or committal at the graveside. Knowing which of the three you are planning media for makes almost every other decision easier.",
+  "mediaPlacement": [
+    {
+      "context": "The vigil or wake",
+      "guidance": "This is the natural home for a photo tribute. The vigil is meant for remembering out loud — stories, laughter, tears — and a slideshow fits that evening beautifully. If you make only one video, make it for here."
+    },
+    {
+      "context": "The Funeral Mass",
+      "guidance": "Slideshows and recorded eulogies are generally not part of the Mass itself, and many parishes ask that they be kept for the vigil or the reception. This is not a judgement on your family; the Mass has its own shape. Please ring the parish office and ask what they allow — practice varies from parish to parish, and they are used to the question."
+    },
+    {
+      "context": "The reception afterwards",
+      "guidance": "A longer family cut plays well here, looping quietly while people eat and talk. Nobody has to watch it from the beginning, which is exactly right for a room full of people catching up."
+    },
+    {
+      "context": "Words of remembrance",
+      "guidance": "Many parishes allow one brief personal remembrance — often a few minutes, by one family member — after Communion. The full eulogy, with all its stories, usually belongs at the vigil or the reception."
+    }
+  ],
+  "musicGuidance": [
+    "Music at the Mass is sacred music, chosen with the parish music director: hymns, psalms, and settings of the liturgy. Ask them early; they will have a list and they are glad to help.",
+    "Their favourite songs — the ones from the kitchen radio and the car — belong at the vigil, the reception, or the graveside gathering, where there are no restrictions.",
+    "If a particular hymn mattered to them, say so when you meet the parish. It is often possible, and it means a great deal."
+  ],
+  "interviewAdjustments": [
+    {
+      "promptSlug": "faith-and-belief",
+      "note": "Ask about their parish life gently and concretely: the church they went to, who they sat with, whether they sang, what they did quietly for other people."
+    },
+    {
+      "promptSlug": "closing-blessing",
+      "note": "A favourite prayer, saint, or scripture passage often makes the right closing line. Ask whether one was theirs."
+    }
+  ],
+  "checklistExtras": [
+    "Ring the parish office and ask what is allowed during the Mass, and what belongs at the vigil.",
+    "Ask the funeral home what equipment the vigil venue has — screen, projector, speakers, cables.",
+    "Agree with the parish music director on the music for the Mass."
+  ],
+  "deliveryNotes": [
+    "Bring the video to the vigil venue on a USB stick formatted FAT32 or exFAT, and email a copy to the funeral director as a backup.",
+    "Give the funeral director the printed card: it lists the length, the sound requirements, and when the video should play.",
+    "If the parish said no video during the Mass, note that plainly on the card so nobody has to make that decision on the day."
+  ]
+}

@@ -1,0 +1,80 @@
+{
+  "version": 1,
+  "projectId": "0192f3a0-1111-7000-8000-000000000001",
+  "fps": 30,
+  "resolution": { "w": 1920, "h": 1080 },
+  "audio": {
+    "mode": "cleared",
+    "trackId": "0192f3a0-2222-7000-8000-000000000009",
+    "startOffsetSec": 0,
+    "beatGrid": {
+      "bpm": 72,
+      "beats": [0, 0.833, 1.667, 2.5, 3.333, 4.167, 5, 5.833],
+      "phrases": [0, 6.667, 13.333]
+    }
+  },
+  "theme": {
+    "id": "quiet-linen",
+    "palette": ["#f7f4ef", "#2f2a26", "#8c7b6b"],
+    "fontPair": ["Source Serif 4", "Inter"]
+  },
+  "chapters": [
+    {
+      "id": "ch-open",
+      "title": "Opening",
+      "slideIds": ["s-title"]
+    },
+    {
+      "id": "ch-early",
+      "title": "Early years",
+      "slideIds": ["s-photo-1", "s-quote-1"]
+    },
+    {
+      "id": "ch-close",
+      "title": "Closing",
+      "slideIds": ["s-closing"]
+    }
+  ],
+  "slides": {
+    "s-title": {
+      "kind": "title",
+      "text": "Margaret Ellen Doyle",
+      "subtext": "1938 – 2025",
+      "durationSec": 5,
+      "transitionOut": { "kind": "crossfade", "durationSec": 1 }
+    },
+    "s-photo-1": {
+      "kind": "photo",
+      "assetId": "0192f3a0-3333-7000-8000-00000000000a",
+      "variant": "render2400",
+      "durationSec": 4.5,
+      "kenBurns": {
+        "from": { "x": 0.05, "y": 0.05, "w": 0.9, "h": 0.9 },
+        "to": { "x": 0.15, "y": 0.12, "w": 0.7, "h": 0.7 },
+        "easing": "easeInOut"
+      },
+      "caption": { "text": "On the back step, summer 1952", "position": "lower-third" },
+      "transitionOut": { "kind": "crossfade", "durationSec": 0.8 }
+    },
+    "s-quote-1": {
+      "kind": "quote",
+      "text": "She never once asked whether there was enough. She just set another place.",
+      "attribution": "Her son, Tom",
+      "durationSec": 6,
+      "transitionOut": { "kind": "fadeThroughBlack", "durationSec": 1.2 }
+    },
+    "s-closing": {
+      "kind": "closing",
+      "line1": "With love from all of us",
+      "line2": "1938 – 2025",
+      "durationSec": 7
+    }
+  },
+  "cuts": {
+    "service": {
+      "targetSec": 300,
+      "includeSlideIds": ["s-title", "s-photo-1", "s-closing"]
+    },
+    "family": { "targetSec": 720 }
+  }
+}

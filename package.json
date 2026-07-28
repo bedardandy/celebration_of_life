@@ -1,0 +1,47 @@
+{
+  "name": "celebration-of-life",
+  "version": "0.0.0",
+  "private": true,
+  "description": "Grief-sensitive toolkit for creating celebration-of-life media: life story, photo collection, tribute video.",
+  "license": "Apache-2.0",
+  "type": "module",
+  "packageManager": "pnpm@10.33.0",
+  "engines": {
+    "node": ">=22 <23"
+  },
+  "scripts": {
+    "dev": "turbo run dev",
+    "build": "turbo run build",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
+    "typecheck": "turbo run typecheck",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "db:migrate": "pnpm --filter @col/db run migrate",
+    "db:generate": "pnpm --filter @col/db run generate",
+    "dev:web": "pnpm --filter @col/web run dev",
+    "dev:worker": "pnpm --filter @col/worker run dev",
+    "build:web": "pnpm --filter @col/web run build",
+    "worker": "pnpm --filter @col/worker run start",
+    "enqueue-test": "pnpm --filter @col/worker run enqueue-test",
+    "fixtures": "tsx scripts/make-fixtures.ts"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.39.5",
+    "@types/node": "^22.19.2",
+    "@vitest/coverage-v8": "^3.2.7",
+    "concurrently": "^10.0.4",
+    "eslint": "^9.39.5",
+    "eslint-config-prettier": "^10.1.8",
+    "globals": "^16.5.0",
+    "prettier": "^3.9.6",
+    "sharp": "^0.35.3",
+    "tsx": "^4.23.1",
+    "turbo": "^2.10.7",
+    "typescript": "^5.9.3",
+    "typescript-eslint": "^8.65.0",
+    "vitest": "^3.2.7"
+  }
+}

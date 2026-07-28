@@ -1,0 +1,44 @@
+{
+  "slug": "jewish",
+  "label": "Jewish funeral and shiva",
+  "pacingPreset": "urgent24h",
+  "serviceTimelineNote": "Jewish tradition asks for burial quickly — usually within 24 to 48 hours, sometimes the same day. The funeral itself is short and plain by design. Shiva, the seven days of mourning at home that follow, is where remembering happens slowly, with visitors, food, and stories. There is far more time than the first day makes it feel like.",
+  "mediaPlacement": [
+    {
+      "context": "The funeral service",
+      "guidance": "The service is deliberately simple: psalms, a eulogy (hesped), and the burial. Photo slideshows are not usually part of it, and there is rarely time to make one before the funeral anyway. Please do not spend the first day trying."
+    },
+    {
+      "context": "Shiva, at the house",
+      "guidance": "This is where photographs belong. Many families put out framed pictures and photo albums, or run a quiet loop on a laptop or television in the corner of the room. Visitors come to talk about the person who died — the photos give them somewhere to start."
+    },
+    {
+      "context": "The shloshim or first-year memorial",
+      "guidance": "Thirty days after the burial (shloshim), and again at the unveiling of the headstone near the first anniversary, families often gather again. A finished tribute video is very welcome at those gatherings, and you will have had time to make it properly."
+    }
+  ],
+  "musicGuidance": [
+    "Music is traditionally minimal or absent at the funeral itself, and during shiva many families keep the house quiet. Take your lead from the rabbi or the funeral home.",
+    "For a video shown at shloshim or a later memorial, gentle instrumental music is the safest and usually the loveliest choice.",
+    "If you would like their favourite songs, save them for a family gathering rather than the funeral or the shiva house."
+  ],
+  "interviewAdjustments": [
+    {
+      "promptSlug": "early-years",
+      "note": "Family history often carries migration, name changes, and relatives lost. Ask openly, follow where the person leads, and let them stop."
+    },
+    {
+      "promptSlug": "faith-and-belief",
+      "note": "Ask about practice and belonging — the shul, the holidays they hosted, the recipes, the community work — rather than about belief in the abstract."
+    }
+  ],
+  "checklistExtras": [
+    "Do nothing about video in the first day or two. Gathering photos can wait until after the burial.",
+    "Ask family to send photos to the shared link during shiva — visitors often have pictures nobody else has.",
+    "Ask the rabbi or funeral home what they suggest for the service; they will answer plainly and quickly."
+  ],
+  "deliveryNotes": [
+    "For shiva, a laptop or a television with a USB port in the corner of the room is usually all you need.",
+    "For a shloshim or first-anniversary gathering, bring the video on a USB stick formatted FAT32 or exFAT, and send a copy to the venue ahead of time."
+  ]
+}
