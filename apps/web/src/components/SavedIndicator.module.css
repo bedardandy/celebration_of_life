@@ -1,0 +1,27 @@
+.indicator {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 28px;
+  font-size: 0.95rem;
+  color: var(--ink-faint);
+}
+
+.saving {
+  color: var(--ink-faint);
+}
+
+.saved {
+  color: var(--sage);
+}
+
+.mark {
+  font-size: 1rem;
+  line-height: 1;
+}
+
+/* Reserves the line's height so nothing on the page jumps when it appears. */
+.placeholder {
+  display: inline-block;
+  min-height: 28px;
+}

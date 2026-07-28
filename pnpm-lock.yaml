@@ -167,12 +167,18 @@ importers:
 
   packages/core:
     dependencies:
+      '@col/db':
+        specifier: workspace:*
+        version: link:../db
       '@col/media':
         specifier: workspace:*
         version: link:../media
       '@col/schemas':
         specifier: workspace:*
         version: link:../schemas
+      '@col/tradition-packs':
+        specifier: workspace:*
+        version: link:../tradition-packs
       zod:
         specifier: ^4.4.3
         version: 4.4.3

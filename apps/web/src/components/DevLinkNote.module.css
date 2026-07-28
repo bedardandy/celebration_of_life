@@ -1,0 +1,24 @@
+.note {
+  margin: 0 0 32px;
+  padding: 16px 20px;
+  border: 1px dashed var(--line);
+  border-radius: var(--radius);
+  background: var(--paper-raised);
+}
+
+.label {
+  margin: 0 0 8px;
+  font-size: 0.85rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+}
+
+.link {
+  display: inline-block;
+  min-height: var(--tap);
+  line-height: 1.5;
+  word-break: break-all;
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 0.95rem;
+}

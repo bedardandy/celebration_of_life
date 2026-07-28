@@ -1,21 +1,29 @@
 import Link from 'next/link';
 import { PRODUCT_NAME, PRODUCT_TAGLINE } from '@col/core';
-import styles from './page.module.css';
+import { StepScreen, step } from '@/components/StepScreen';
 
 export default function LandingPage() {
   return (
-    <main className={styles.page}>
-      <div className={styles.card}>
-        <h1 className={styles.title}>{PRODUCT_NAME}</h1>
-        <p className={styles.promise}>{PRODUCT_TAGLINE}</p>
-        <Link className={styles.cta} href="/new">
+    <StepScreen
+      eyebrow={PRODUCT_NAME}
+      title="A gentle way to gather photos, memories, and music"
+      helper={PRODUCT_TAGLINE}
+      primary={
+        <Link className={step.primary} href="/new">
           Create a memorial
         </Link>
-        <p className={styles.reassurance}>
-          You can stop at any point and come back. Nothing is lost, and nothing is shared until you
-          say so.
-        </p>
-      </div>
-    </main>
+      }
+      secondary={
+        <Link className={step.quiet} href="/resume">
+          I already have one
+        </Link>
+      }
+      footer={
+        <>
+          You can stop at any point and come back. Everything saves as you go, and nothing is shared
+          until you say so.
+        </>
+      }
+    />
   );
 }

@@ -51,6 +51,16 @@ export const memorials = sqliteTable('memorials', {
   serviceDate: integer('service_date'),
   timezone: text('timezone').notNull().default('UTC'),
   organizerRelationship: text('organizer_relationship'),
+  /** What the family is holding: funeral, celebration of life, memorial, undecided. */
+  gatheringKind: text('gathering_kind'),
+  /**
+   * Furthest intake question reached. Every intake answer is optional, so
+   * "answered" cannot be inferred from the columns being null — a skip and a
+   * never-seen question look identical. This is what lets a half-finished
+   * wizard resume exactly where the tab was closed.
+   */
+  intakeStep: text('intake_step'),
+  intakeCompletedAt: integer('intake_completed_at'),
   /** Consent, per memorial, in plain language. Off until explicitly granted. */
   aiConsentExternal: integer('ai_consent_external', { mode: 'boolean' }).notNull().default(false),
   aiConsentPhotoAnalysis: integer('ai_consent_photo_analysis', { mode: 'boolean' })
