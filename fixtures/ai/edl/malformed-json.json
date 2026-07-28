@@ -1,0 +1,7 @@
+{
+  "id": "malformed-json",
+  "task": "edl",
+  "match": "malformed",
+  "note": "Salvage case: valid JSON wrapped in commentary and a code fence. Exercises strip-fences → first-brace-to-last-brace → parse. Load-bearing for the Phase 3 acceptance criteria — please do not delete.",
+  "response": "Sure — here's the ordering I'd suggest.\n\n```json\n{\n  \"title\": \"A life in three parts\",\n  \"slideCount\": 42,\n  \"beatSnapped\": true\n}\n```\n\nLet me know if you'd like it tightened for the service cut."
+}

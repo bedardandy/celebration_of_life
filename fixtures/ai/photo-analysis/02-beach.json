@@ -1,0 +1,26 @@
+{
+  "id": "02-beach",
+  "task": "photo-analysis",
+  "match": "02-beach.jpg",
+  "note": "Canned analysis for fixtures/photos/02-beach.jpg.",
+  "images": {
+    "02-beach.jpg": {
+      "description": "Four people at the edge of the water on an overcast day, trousers rolled, one shielding their eyes. Wide shot, horizon high in the frame.",
+      "eraGuess": "late 1980s",
+      "settingTags": ["beach", "outdoors", "group", "holiday"],
+      "peopleCountGuess": 4,
+      "emotionalTone": "easy",
+      "slideSuitability": 0.71,
+      "suggestedCaption": "At the coast"
+    }
+  },
+  "response": {
+    "description": "Four people at the edge of the water on an overcast day, trousers rolled, one shielding their eyes. Wide shot, horizon high in the frame.",
+    "eraGuess": "late 1980s",
+    "settingTags": ["beach", "outdoors", "group", "holiday"],
+    "peopleCountGuess": 4,
+    "emotionalTone": "easy",
+    "slideSuitability": 0.71,
+    "suggestedCaption": "At the coast"
+  }
+}

@@ -10,8 +10,10 @@
     "typecheck": "tsc -p tsconfig.json --noEmit"
   },
   "dependencies": {
+    "@col/ai": "workspace:*",
     "@col/core": "workspace:*",
     "@col/db": "workspace:*",
+    "@col/media": "workspace:*",
     "@col/schemas": "workspace:*",
     "@col/storage": "workspace:*",
     "@col/tradition-packs": "workspace:*",

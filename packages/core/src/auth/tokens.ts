@@ -11,13 +11,21 @@
  * are the opposite — they are meant to keep working, because "this link keeps
  * working" is the promise we make to a cousin with photos on an old phone.
  */
-import { createHash, randomBytes, timingSafeEqual } from 'node:crypto';
-import { eq, getById, magicTokens, updateById, type Db, type MagicToken } from '@col/db';
-import { absoluteUrl } from '../env';
+import { createHash, createHmac, randomBytes, timingSafeEqual } from 'node:crypto';
+import {
+  eq,
+  getById,
+  insertOne,
+  magicTokens,
+  updateById,
+  type Db,
+  type MagicToken,
+} from '@col/db';
+import { absoluteUrl, sessionSecret } from '../env';
 
 export const TOKEN_BYTES = 32;
 
-export type TokenKind = 'organizer-login' | 'contributor' | 'watch';
+export type TokenKind = 'organizer-login' | 'collection-link' | 'contributor' | 'watch';
 
 /** Fourteen days. Long enough to survive a hard week; short enough to expire. */
 export const ORGANIZER_LOGIN_TTL_MS = 14 * 24 * 60 * 60 * 1000;
@@ -56,9 +64,9 @@ export type IssuedToken = {
 };
 
 export function tokenUrl(kind: TokenKind, token: string): string {
-  return kind === 'contributor' || kind === 'watch'
-    ? absoluteUrl(`/${kind === 'watch' ? 'w' : 'c'}/${token}`)
-    : absoluteUrl(`/auth/${token}`);
+  if (kind === 'watch') return absoluteUrl(`/w/${token}`);
+  if (kind === 'contributor' || kind === 'collection-link') return absoluteUrl(`/c/${token}`);
+  return absoluteUrl(`/auth/${token}`);
 }
 
 export function issueToken(db: Db, input: IssueTokenInput): IssuedToken {
@@ -84,13 +92,95 @@ export function issueToken(db: Db, input: IssueTokenInput): IssuedToken {
 
 function defaultScopes(kind: TokenKind): string[] {
   if (kind === 'organizer-login') return ['organizer'];
-  if (kind === 'contributor') return ['upload', 'memory-note'];
+  if (kind === 'contributor' || kind === 'collection-link') return ['upload', 'memory-note'];
   return ['watch'];
 }
 
 function defaultMaxUses(kind: TokenKind): number | null {
   // Single-use for login; contributor and watch links are meant to be reused.
   return kind === 'organizer-login' ? 1 : null;
+}
+
+/* -------------------------------------------------------------------------- */
+/* shareable links                                                            */
+/* -------------------------------------------------------------------------- */
+
+/**
+ * A collection link has to be *shown again*.
+ *
+ * An organiser prints the QR code for the back of the order of service, loses
+ * the text message, and comes back on Thursday wanting the same link — and the
+ * link is on a printed card by then, so rotating it is not an option. Storing
+ * only a hash, as we do for login links, makes that impossible.
+ *
+ * So shareable links are derived rather than random: the token is an HMAC of
+ * the row id under a server-side secret. The database still holds only the
+ * hash, and a stolen copy of the database still does not contain anybody's
+ * link — the secret lives in the environment, not in the file. Rotating the
+ * secret invalidates every shared link at once, which `recoverShareableToken`
+ * reports rather than papering over.
+ */
+export function linkSecret(): string {
+  return process.env['LINK_SECRET']?.trim() || sessionSecret();
+}
+
+export function derivedTokenValue(tokenId: string, secret: string = linkSecret()): string {
+  return createHmac('sha256', `${secret}:collection-link`).update(tokenId).digest('base64url');
+}
+
+export type ShareableTokenKind = Exclude<TokenKind, 'organizer-login'>;
+
+export type IssueShareableInput = {
+  memorialId: string;
+  kind: ShareableTokenKind;
+  participantId?: string | null;
+  scopes?: string[];
+  /** Who the link is for, in the organiser's words. */
+  label?: string | null;
+  askTemplate?: string | null;
+  askNote?: string | null;
+  /** A gentle nudge date. Never an expiry: the link keeps working. */
+  deadlineAt?: number | null;
+  now?: number;
+};
+
+/** Issue a link the organiser can be shown again, today and next Thursday. */
+export function issueShareableToken(db: Db, input: IssueShareableInput): IssuedToken {
+  const created = insertOne(db, magicTokens, {
+    memorialId: input.memorialId,
+    participantId: input.participantId ?? null,
+    // Replaced immediately below; the column is NOT NULL and unique, and the
+    // token cannot be derived until the row has an id.
+    tokenHash: hashToken(generateTokenValue()),
+    kind: input.kind,
+    scopes: input.scopes ?? defaultScopes(input.kind),
+    expiresAt: null,
+    maxUses: null,
+    label: input.label ?? null,
+    askTemplate: input.askTemplate ?? null,
+    askNote: input.askNote ?? null,
+    deadlineAt: input.deadlineAt ?? null,
+  });
+
+  const token = derivedTokenValue(created.id);
+  const row = updateById(db, magicTokens, created.id, { tokenHash: hashToken(token) }) ?? created;
+  return { token, row, url: tokenUrl(input.kind, token) };
+}
+
+/**
+ * The plaintext for a link we issued, recomputed. Undefined when the secret has
+ * changed since — the honest answer, so the screen can offer a fresh link
+ * instead of showing one that will not open.
+ */
+export function recoverShareableToken(row: MagicToken): string | undefined {
+  if (row.kind === 'organizer-login') return undefined;
+  const token = derivedTokenValue(row.id);
+  return hashesMatch(hashToken(token), row.tokenHash) ? token : undefined;
+}
+
+export function shareableTokenUrl(row: MagicToken): string | undefined {
+  const token = recoverShareableToken(row);
+  return token === undefined ? undefined : tokenUrl(row.kind, token);
 }
 
 export type TokenRejection = 'not-found' | 'expired' | 'revoked' | 'already-used' | 'wrong-kind';

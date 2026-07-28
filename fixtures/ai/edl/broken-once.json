@@ -1,0 +1,14 @@
+{
+  "id": "broken-once",
+  "task": "edl",
+  "match": "broken once",
+  "note": "The repair loop, isolated: the first response is truncated mid-object, the second is correct. Any call that resolves to this case walks the list, so one generateObject with repairs enabled sees both.",
+  "responses": [
+    "{\n  \"title\": \"A life in three parts\",\n  \"slideCount\":",
+    {
+      "title": "A life in three parts",
+      "slideCount": 42,
+      "beatSnapped": true
+    }
+  ]
+}

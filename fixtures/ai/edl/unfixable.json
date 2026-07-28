@@ -1,0 +1,7 @@
+{
+  "id": "unfixable",
+  "task": "edl",
+  "match": "unfixable",
+  "note": "Never becomes JSON, however many times we ask. Exercises the typed AiSchemaError and the plain-language message a family would actually see — never a stack trace. Load-bearing for the Phase 3 acceptance criteria — please do not delete.",
+  "response": "I'd rather not guess at an order without seeing the photographs. Could you tell me a little more about how the service is arranged?"
+}

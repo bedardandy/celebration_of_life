@@ -55,8 +55,18 @@ export type AiCompleteRequest = {
   messages: AiMessage[];
   /** Resume a provider-side conversation, when the provider has them. */
   sessionId?: string;
-  /** JSON Schema (usually `z.toJSONSchema(someZodSchema)`) for structured output. */
+  /**
+   * JSON Schema (usually `z.toJSONSchema(someZodSchema)`) for structured output.
+   * Always set by `generateObject`; adapters that do not declare
+   * `nativeJsonSchema` must ignore it (the schema is in the prompt instead).
+   * The mock reads it to synthesise a stand-in when no fixture matches.
+   */
   jsonSchema?: Record<string, unknown>;
+  /**
+   * Names the job being done — 'interview', 'photo-analysis', … It selects the
+   * mock's fixture folder and labels errors and logs. Never sent to a model.
+   */
+  taskTag?: string;
   maxTokens?: number;
   temperature?: number;
 };
@@ -110,10 +120,72 @@ export class AiCapabilityError extends AiError {
   constructor(
     readonly providerId: string,
     readonly missing: readonly string[],
+    /** Appended when we know which env var the person should change. */
+    hint?: string,
   ) {
-    super(`AI provider "${providerId}" cannot do: ${missing.join(', ')}.`);
+    super(`AI provider "${providerId}" cannot do: ${missing.join(', ')}.${hint ? ` ${hint}` : ''}`);
     this.name = 'AiCapabilityError';
   }
+}
+
+/**
+ * The provider is configured but cannot run: a CLI that is not installed, an
+ * API key that is not set. Thrown at resolve time so it surfaces at boot rather
+ * than mid-interview.
+ */
+export class AiProviderUnavailableError extends AiError {
+  constructor(
+    readonly providerId: string,
+    readonly reason: string,
+    /** What to do about it, in one sentence. */
+    readonly remedy?: string,
+  ) {
+    super(`AI provider "${providerId}" is not usable: ${reason}.${remedy ? ` ${remedy}` : ''}`);
+    this.name = 'AiProviderUnavailableError';
+  }
+}
+
+/** A provider call that ran out of time. Retryable; not a schema problem. */
+export class AiTimeoutError extends AiError {
+  constructor(
+    readonly providerId: string,
+    readonly timeoutMs: number,
+  ) {
+    super(`AI provider "${providerId}" did not answer within ${timeoutMs}ms.`);
+    this.name = 'AiTimeoutError';
+  }
+}
+
+/** Anything the provider itself reported: non-zero exit, HTTP error, bad body. */
+export class AiCallError extends AiError {
+  constructor(
+    readonly providerId: string,
+    message: string,
+    readonly detail?: string,
+  ) {
+    super(`AI provider "${providerId}": ${message}`);
+    this.name = 'AiCallError';
+  }
+}
+
+/**
+ * Whether an adapter can run right now, and if not, what to tell the person.
+ * Every adapter implements this so `resolveProvider` and `pnpm ai:doctor` can
+ * report the same thing.
+ */
+export type AiAvailability = {
+  ok: boolean;
+  reason?: string;
+  remedy?: string;
+};
+
+/** Adapters that can be missing (CLI binaries, API keys) implement this. */
+export type CheckableProvider = AiProvider & {
+  checkAvailability(env?: Record<string, string | undefined>): AiAvailability;
+};
+
+export function isCheckable(provider: AiProvider): provider is CheckableProvider {
+  return typeof (provider as Partial<CheckableProvider>).checkAvailability === 'function';
 }
 
 /* -------------------------------------------------------------------------- */

@@ -1,0 +1,22 @@
+{
+  "id": "06-blurry",
+  "task": "photo-analysis",
+  "match": "06-blurry.jpg",
+  "note": "Canned analysis for fixtures/photos/06-blurry.jpg.",
+  "images": {
+    "06-blurry.jpg": {
+      "description": "Heavily motion-blurred indoor shot. Two figures are discernible near a window; no faces can be read.",
+      "settingTags": ["indoors", "candid"],
+      "peopleCountGuess": 2,
+      "emotionalTone": "indistinct",
+      "slideSuitability": 0.12
+    }
+  },
+  "response": {
+    "description": "Heavily motion-blurred indoor shot. Two figures are discernible near a window; no faces can be read.",
+    "settingTags": ["indoors", "candid"],
+    "peopleCountGuess": 2,
+    "emotionalTone": "indistinct",
+    "slideSuitability": 0.12
+  }
+}

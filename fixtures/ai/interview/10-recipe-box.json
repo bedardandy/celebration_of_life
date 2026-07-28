@@ -1,0 +1,53 @@
+{
+  "id": "10-recipe-box",
+  "task": "interview",
+  "match": "the recipe box",
+  "note": "Turn 10, and the repair-loop case. The first response is what a model actually does on a bad day: a sentence of preamble, a truncated object, and a trailing apology. The second is the real answer. Load-bearing for the Phase 3 acceptance criteria — please do not delete.",
+  "responses": [
+    "Of course — here is the updated story document.\n\n```json\n{\n  \"nextQuestion\": {\"text\": \"Would you like to stop there for tonight?\",\n  \"docPatch\": {\"chapterUpserts\": [\n```\n\nSorry, that got cut off.",
+    {
+      "nextQuestion": {
+        "text": "Would you like to stop there for tonight? Everything is saved.",
+        "promptSlug": "closing-blessing"
+      },
+      "extractedFacts": [
+        {
+          "kind": "event",
+          "text": "A recipe box with notes written in the margins"
+        },
+        {
+          "kind": "trait",
+          "text": "Wrote to whoever would cook it next"
+        }
+      ],
+      "docPatch": {
+        "chapterUpserts": [
+          {
+            "id": "later-years",
+            "title": "The recipe box",
+            "era": {
+              "from": 2011,
+              "to": 2026
+            },
+            "summary": "In the last years she filled a wooden recipe box with cards, and wrote notes in the margins to whoever would be cooking it next.",
+            "people": [],
+            "openQuestions": ["Could a photograph of one of the cards be scanned?"]
+          }
+        ],
+        "themeAdds": ["Showing up"],
+        "openQuestionAdds": [],
+        "anecdoteAdds": [
+          {
+            "chapterId": "later-years",
+            "text": "The wooden recipe box on the shelf has notes in the margins of nearly every card — \"needs longer than it says\", \"Susan does not like the nutmeg\" — written to whoever would be cooking it next.",
+            "source": "interview"
+          }
+        ]
+      },
+      "coverage": {
+        "sufficientForDraft": true,
+        "note": "Plenty here for a first draft of the story."
+      }
+    }
+  ]
+}

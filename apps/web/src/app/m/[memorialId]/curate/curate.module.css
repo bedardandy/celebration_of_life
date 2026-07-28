@@ -1,0 +1,229 @@
+.summary {
+  margin: 0 0 24px;
+  font-size: 1.05rem;
+  color: var(--ink-soft);
+}
+
+.nudge {
+  margin: 0 0 32px;
+  padding: 18px 22px;
+  border-left: 4px solid var(--sage);
+  border-radius: 0 var(--radius) var(--radius) 0;
+  background: var(--sage-soft);
+}
+
+.nudgeText {
+  margin: 0 0 8px;
+  font-family: var(--serif);
+  font-size: 1.15rem;
+  line-height: 1.35;
+}
+
+.nudgeLink {
+  font-size: 0.98rem;
+}
+
+.problemNote {
+  margin: 0 0 24px;
+  color: var(--ink-soft);
+  font-size: 0.98rem;
+}
+
+.era {
+  margin: 0 0 44px;
+}
+
+.eraTitle {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 16px;
+  margin: 0 0 16px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid var(--line);
+  font-size: 1.35rem;
+}
+
+.eraCount {
+  font-family: var(--sans);
+  font-size: 0.9rem;
+  color: var(--ink-faint);
+}
+
+.grid {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 20px;
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 10px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--paper-raised);
+}
+
+.cardApproved {
+  border-color: var(--sage);
+  box-shadow: inset 0 0 0 2px var(--sage);
+}
+
+.cardHidden {
+  opacity: 0.55;
+}
+
+.tapForm {
+  margin: 0;
+}
+
+/* The whole photo is the target: 48px is the floor, this is the ceiling. */
+.tapButton {
+  position: relative;
+  display: block;
+  width: 100%;
+  padding: 0;
+  border: 0;
+  border-radius: var(--radius);
+  background: none;
+  cursor: pointer;
+}
+
+.thumb {
+  display: block;
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
+  border-radius: var(--radius);
+  background: var(--paper);
+}
+
+.problem,
+.video {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  padding: 12px;
+  border-radius: var(--radius);
+  background: var(--paper);
+  color: var(--ink-soft);
+  font-size: 0.85rem;
+  line-height: 1.4;
+  text-align: center;
+}
+
+.check {
+  position: absolute;
+  right: 8px;
+  bottom: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border: 2px solid var(--sage);
+  border-radius: 50%;
+  background: var(--paper-raised);
+  color: var(--sage);
+  font-size: 1.4rem;
+  line-height: 1;
+}
+
+.meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 10px;
+  align-items: center;
+  min-height: 20px;
+}
+
+.kept {
+  font-size: 0.85rem;
+  color: var(--sage);
+}
+
+.hiddenTag,
+.from {
+  font-size: 0.8rem;
+  color: var(--ink-faint);
+}
+
+.badge {
+  font-size: 0.78rem;
+  line-height: 1.35;
+  color: var(--ink-soft);
+}
+
+.dupes,
+.menu {
+  border-top: 1px solid var(--line);
+  padding-top: 6px;
+}
+
+.dupesSummary,
+.menuSummary {
+  min-height: 40px;
+  display: flex;
+  align-items: center;
+  font-size: 0.85rem;
+  color: var(--ink-soft);
+  cursor: pointer;
+}
+
+.dupeList {
+  list-style: none;
+  margin: 8px 0 0;
+  padding: 0;
+  display: grid;
+  gap: 12px;
+}
+
+.dupeItem {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.dupeThumb {
+  width: 72px;
+  height: 72px;
+  object-fit: cover;
+  border-radius: var(--radius);
+  border: 1px solid var(--line);
+}
+
+.menuBody {
+  display: grid;
+  gap: 8px;
+  padding: 4px 0 8px;
+}
+
+.noteForm {
+  display: grid;
+  gap: 6px;
+}
+
+.noteField {
+  width: 100%;
+  padding: 8px 10px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--paper);
+  font-size: 0.9rem;
+  resize: vertical;
+}
+
+.footerRow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  justify-content: space-between;
+  align-items: center;
+}

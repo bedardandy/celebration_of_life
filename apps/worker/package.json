@@ -12,6 +12,7 @@
     "test": "vitest run --project worker"
   },
   "dependencies": {
+    "@col/ai": "workspace:*",
     "@col/core": "workspace:*",
     "@col/db": "workspace:*",
     "@col/media": "workspace:*",

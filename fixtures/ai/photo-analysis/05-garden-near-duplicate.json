@@ -1,0 +1,24 @@
+{
+  "id": "05-garden-near-duplicate",
+  "task": "photo-analysis",
+  "match": "05-garden-near-duplicate.jpg",
+  "note": "Canned analysis for fixtures/photos/05-garden-near-duplicate.jpg.",
+  "images": {
+    "05-garden-near-duplicate.jpg": {
+      "description": "Nearly the same frame as the other garden photograph — same pose, same flower bed, very slightly brighter exposure.",
+      "eraGuess": "1990s",
+      "settingTags": ["garden", "outdoors", "candid", "flowers"],
+      "peopleCountGuess": 1,
+      "emotionalTone": "absorbed",
+      "slideSuitability": 0.83
+    }
+  },
+  "response": {
+    "description": "Nearly the same frame as the other garden photograph — same pose, same flower bed, very slightly brighter exposure.",
+    "eraGuess": "1990s",
+    "settingTags": ["garden", "outdoors", "candid", "flowers"],
+    "peopleCountGuess": 1,
+    "emotionalTone": "absorbed",
+    "slideSuitability": 0.83
+  }
+}

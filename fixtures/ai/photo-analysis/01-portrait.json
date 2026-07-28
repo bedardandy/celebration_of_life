@@ -1,0 +1,26 @@
+{
+  "id": "01-portrait",
+  "task": "photo-analysis",
+  "match": "01-portrait.jpg",
+  "note": "Canned analysis for fixtures/photos/01-portrait.jpg.",
+  "images": {
+    "01-portrait.jpg": {
+      "description": "A studio portrait of a woman in her late thirties, seated, three-quarter turn to camera, hands folded. Plain backdrop, soft side light.",
+      "eraGuess": "1970s",
+      "settingTags": ["studio", "portrait", "formal"],
+      "peopleCountGuess": 1,
+      "emotionalTone": "composed",
+      "slideSuitability": 0.92,
+      "suggestedCaption": "Studio portrait, mid 1970s"
+    }
+  },
+  "response": {
+    "description": "A studio portrait of a woman in her late thirties, seated, three-quarter turn to camera, hands folded. Plain backdrop, soft side light.",
+    "eraGuess": "1970s",
+    "settingTags": ["studio", "portrait", "formal"],
+    "peopleCountGuess": 1,
+    "emotionalTone": "composed",
+    "slideSuitability": 0.92,
+    "suggestedCaption": "Studio portrait, mid 1970s"
+  }
+}

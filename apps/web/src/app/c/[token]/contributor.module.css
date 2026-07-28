@@ -1,0 +1,163 @@
+/*
+ * The contributor side, on a phone, on a train.
+ *
+ * Bigger than the organiser screens and lighter: one column, huge targets, no
+ * decoration that costs a request. Nothing here depends on JavaScript loading.
+ */
+
+.ask {
+  margin: 0 0 28px;
+  padding: 20px 22px;
+  border-left: 4px solid var(--sage);
+  border-radius: 0 var(--radius) var(--radius) 0;
+  background: var(--paper-raised);
+}
+
+.askHeading {
+  margin: 0 0 8px;
+  font-family: var(--serif);
+  font-size: 1.3rem;
+  line-height: 1.3;
+}
+
+.askBody {
+  margin: 0;
+  color: var(--ink-soft);
+}
+
+.askMeta {
+  margin: 12px 0 0;
+  font-size: 0.95rem;
+  color: var(--ink-faint);
+}
+
+.bigButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  min-height: 96px;
+  padding: 20px 24px;
+  border: 2px dashed var(--accent);
+  border-radius: var(--radius);
+  background: var(--paper-raised);
+  color: var(--accent);
+  font-size: 1.3rem;
+  text-align: center;
+  cursor: pointer;
+}
+
+.bigButton:hover {
+  background: #fff;
+}
+
+.fileInput {
+  display: block;
+  width: 100%;
+  min-height: 64px;
+  padding: 16px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--paper-raised);
+  font-size: 1.05rem;
+}
+
+.fileRow {
+  margin: 0 0 20px;
+}
+
+.progressList {
+  list-style: none;
+  margin: 24px 0 0;
+  padding: 0;
+  display: grid;
+  gap: 10px;
+}
+
+.progressItem {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 12px 16px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--paper-raised);
+  font-size: 0.98rem;
+}
+
+.progressName {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.progressState {
+  color: var(--ink-soft);
+  white-space: nowrap;
+}
+
+.progressDone {
+  color: var(--sage);
+}
+
+.progressFailed {
+  color: var(--accent);
+}
+
+.noteList {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 24px;
+}
+
+.noteItem {
+  display: grid;
+  grid-template-columns: 96px 1fr;
+  gap: 16px;
+  align-items: start;
+}
+
+.noteThumb {
+  width: 96px;
+  height: 96px;
+  border-radius: var(--radius);
+  border: 1px solid var(--line);
+  background: var(--paper-raised);
+  object-fit: cover;
+}
+
+.noteField {
+  width: 100%;
+  min-height: 96px;
+  padding: 12px 14px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--paper-raised);
+  resize: vertical;
+}
+
+.memoryField {
+  width: 100%;
+  min-height: 180px;
+  padding: 14px 16px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--paper-raised);
+  resize: vertical;
+}
+
+.notice {
+  margin: 0 0 24px;
+  padding: 12px 16px;
+  border-left: 3px solid var(--sage);
+  background: var(--sage-soft);
+  font-size: 1rem;
+}
+
+.stack {
+  display: grid;
+  gap: 16px;
+}

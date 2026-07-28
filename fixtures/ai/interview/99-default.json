@@ -1,0 +1,22 @@
+{
+  "id": "default",
+  "task": "interview",
+  "note": "Served when nothing else matches, so a new call site is testable before it has a fixture.",
+  "response": {
+    "nextQuestion": {
+      "text": "What else comes to mind when you think of her?",
+      "promptSlug": "closing-blessing"
+    },
+    "extractedFacts": [],
+    "docPatch": {
+      "chapterUpserts": [],
+      "themeAdds": [],
+      "openQuestionAdds": [],
+      "anecdoteAdds": []
+    },
+    "coverage": {
+      "sufficientForDraft": false,
+      "note": "Fallback fixture — nothing recorded."
+    }
+  }
+}

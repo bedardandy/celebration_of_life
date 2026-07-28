@@ -1,0 +1,43 @@
+{
+  "id": "08-joy",
+  "task": "interview",
+  "match": "kneeling in the dirt",
+  "note": "Turn 8 — the image the slideshow should end on.",
+  "response": {
+    "nextQuestion": {
+      "text": "Was there a faith, or something she lived by?",
+      "promptSlug": "faith-and-belief"
+    },
+    "extractedFacts": [
+      {
+        "kind": "trait",
+        "text": "Happiest in the garden in August, radio on"
+      },
+      {
+        "kind": "era",
+        "text": "August afternoons"
+      }
+    ],
+    "docPatch": {
+      "chapterUpserts": [
+        {
+          "id": "the-garden",
+          "summary": "The whole back garden went to dahlias. She won the county show three years running and then stopped entering, on the grounds that it had stopped being fun. The family picture her kneeling in the dirt on an August afternoon with the kitchen radio going through the open window.",
+          "openQuestions": []
+        }
+      ],
+      "themeAdds": [],
+      "openQuestionAdds": [],
+      "anecdoteAdds": [
+        {
+          "chapterId": "the-garden",
+          "text": "Kneeling in the dirt on an August afternoon, kitchen radio going through the open window, not talking to anybody. That is where everyone pictures her.",
+          "source": "interview"
+        }
+      ]
+    },
+    "coverage": {
+      "sufficientForDraft": true
+    }
+  }
+}

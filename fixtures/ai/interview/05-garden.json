@@ -1,0 +1,49 @@
+{
+  "id": "05-garden",
+  "task": "interview",
+  "match": "the dahlias",
+  "note": "Turn 5 — the visual, photographable life. Opens the garden chapter.",
+  "response": {
+    "nextQuestion": {
+      "text": "Was there something she always said?",
+      "promptSlug": "characteristic-saying"
+    },
+    "extractedFacts": [
+      {
+        "kind": "passion",
+        "text": "Dahlias — the whole back garden"
+      },
+      {
+        "kind": "event",
+        "text": "Won the county show three years running"
+      }
+    ],
+    "docPatch": {
+      "chapterUpserts": [
+        {
+          "id": "the-garden",
+          "title": "The dahlias",
+          "era": {
+            "from": 1962
+          },
+          "summary": "The whole back garden went to dahlias. She won the county show three years running and then stopped entering, on the grounds that it had stopped being fun.",
+          "people": [],
+          "openQuestions": ["Which variety was her favourite?"]
+        }
+      ],
+      "themeAdds": ["Growing things", "Quiet stubbornness"],
+      "openQuestionAdds": ["Are there photographs of the garden in high summer?"],
+      "anecdoteAdds": [
+        {
+          "chapterId": "the-garden",
+          "text": "She won the county show with her dahlias three years running, then stopped entering. She said it had stopped being fun, and that was the end of the discussion.",
+          "source": "interview"
+        }
+      ]
+    },
+    "coverage": {
+      "sufficientForDraft": false,
+      "note": "Three chapters; her own voice still missing."
+    }
+  }
+}

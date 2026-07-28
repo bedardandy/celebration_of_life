@@ -1,0 +1,54 @@
+{
+  "id": "01-beginnings",
+  "task": "interview",
+  "match": "farmhouse outside Bellwood",
+  "note": "Turn 1 — place and era. Opens the first chapter.",
+  "response": {
+    "nextQuestion": {
+      "text": "What was she like as a girl, out there on the farm?",
+      "promptSlug": "growing-up"
+    },
+    "extractedFacts": [
+      {
+        "kind": "place",
+        "text": "A farmhouse outside Bellwood, Ohio"
+      },
+      {
+        "kind": "era",
+        "text": "Born 1936"
+      },
+      {
+        "kind": "person",
+        "text": "Her mother, who kept bees"
+      }
+    ],
+    "docPatch": {
+      "chapterUpserts": [
+        {
+          "id": "early-years",
+          "title": "A farmhouse outside Bellwood",
+          "era": {
+            "from": 1936,
+            "to": 1954
+          },
+          "summary": "Ruth was born in 1936 in a farmhouse outside Bellwood, Ohio. Her mother kept bees at the end of the vegetable garden.",
+          "people": ["Her mother"],
+          "openQuestions": ["What did the farm grow?"]
+        }
+      ],
+      "themeAdds": ["Growing things"],
+      "openQuestionAdds": [],
+      "anecdoteAdds": [
+        {
+          "chapterId": "early-years",
+          "text": "Her mother kept bees at the end of the vegetable garden, and Ruth was the only one in the house who was never once stung.",
+          "source": "interview"
+        }
+      ]
+    },
+    "coverage": {
+      "sufficientForDraft": false,
+      "note": "One chapter open; nothing after 1954 yet."
+    }
+  }
+}

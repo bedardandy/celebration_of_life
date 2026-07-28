@@ -1,0 +1,43 @@
+{
+  "id": "02-growing-up",
+  "task": "interview",
+  "match": "one-room school",
+  "note": "Turn 2 — character as a girl, and the decision that shaped everything after.",
+  "response": {
+    "nextQuestion": {
+      "text": "Did she get to be a teacher in the end?",
+      "promptSlug": "work-and-days"
+    },
+    "extractedFacts": [
+      {
+        "kind": "trait",
+        "text": "Decided at nine that she would teach"
+      },
+      {
+        "kind": "place",
+        "text": "A one-room school two miles from the farm"
+      }
+    ],
+    "docPatch": {
+      "chapterUpserts": [
+        {
+          "id": "early-years",
+          "summary": "Ruth was born in 1936 in a farmhouse outside Bellwood, Ohio, where her mother kept bees. She walked two miles each way to a one-room school, and decided at nine years old that she would be a teacher.",
+          "openQuestions": ["Who was the teacher she wanted to be like?"]
+        }
+      ],
+      "themeAdds": ["Teaching"],
+      "openQuestionAdds": [],
+      "anecdoteAdds": [
+        {
+          "chapterId": "early-years",
+          "text": "She walked two miles each way to a one-room school, and told her mother at nine years old that she was going to be a teacher. Nobody in the family recalls her ever considering anything else.",
+          "source": "interview"
+        }
+      ]
+    },
+    "coverage": {
+      "sufficientForDraft": false
+    }
+  }
+}

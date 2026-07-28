@@ -1,0 +1,7 @@
+{
+  "id": "90-unfixable",
+  "task": "interview",
+  "match": "I truly cannot say",
+  "note": "The response that never becomes valid JSON, however many times we ask. Exercises the typed AiSchemaError and the plain-language error a family would actually see. Please do not delete.",
+  "response": "I'm sorry, I don't feel comfortable summarising someone's life from so little. Perhaps you could tell me more about her first?"
+}

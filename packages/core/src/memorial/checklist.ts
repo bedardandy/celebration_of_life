@@ -16,10 +16,18 @@ export const MIN_MEMORIES_FOR_SLIDESHOW = 1;
 /** A comfortable target — 60–80 photos at 3–7 seconds fills five minutes. */
 export const COMFORTABLE_PHOTO_COUNT = 40;
 export const COMFORTABLE_MEMORY_COUNT = 5;
+/** Enough chapters that the story has an arc rather than a highlight. */
+export const COMFORTABLE_CHAPTER_COUNT = 3;
 
 export type ChecklistCounts = {
   photos: number;
   memories: number;
+  /**
+   * Chapters in the current LifeStoryDocument. Optional because the interview
+   * is a later phase than this file, and a memorial that has never been
+   * interviewed has no document to count — which is not the same as zero.
+   */
+  storyChapters?: number;
 };
 
 export type CardId = 'photos' | 'story' | 'slideshow';
@@ -83,13 +91,30 @@ function storyCard(memorialId: string, counts: ChecklistCounts): ChecklistCard {
     help: 'A few questions at a time. Skip anything. Come back whenever you like.',
     href: `/m/${memorialId}/story`,
   };
-  if (counts.memories === 0) {
+  const chapters = counts.storyChapters ?? 0;
+
+  if (counts.memories === 0 && chapters === 0) {
     return {
       ...base,
       state: 'not-started',
       statusLine: 'Not started. The first question takes about a minute to answer.',
     };
   }
+
+  // Once the interview has produced chapters, that is the better measure of
+  // progress: it is the thing the family can actually read back.
+  if (chapters > 0) {
+    const shape = `Their story is taking shape — ${chapters} ${chapters === 1 ? 'chapter' : 'chapters'} so far.`;
+    return {
+      ...base,
+      state: chapters >= COMFORTABLE_CHAPTER_COUNT ? 'ready' : 'in-progress',
+      statusLine:
+        counts.memories > 0
+          ? `${shape} ${counts.memories} ${counts.memories === 1 ? 'memory' : 'memories'} from others.`
+          : shape,
+    };
+  }
+
   if (counts.memories < COMFORTABLE_MEMORY_COUNT) {
     return {
       ...base,
@@ -149,6 +174,7 @@ export function computeChecklist(
       intakeComplete: memorial.intakeCompletedAt != null,
       hasPhotos: counts.photos > 0,
       hasMemories: counts.memories > 0,
+      hasStory: (counts.storyChapters ?? 0) > 0,
       enoughPhotos: counts.photos >= MIN_PHOTOS_FOR_SLIDESHOW,
       readyToBuild,
     },

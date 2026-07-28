@@ -94,6 +94,7 @@ describe('computeChecklist', () => {
       intakeComplete: true,
       hasPhotos: true,
       hasMemories: true,
+      hasStory: false,
       enoughPhotos: true,
       readyToBuild: true,
     });
@@ -103,5 +104,42 @@ describe('computeChecklist', () => {
   it('points every card at a route under the memorial', () => {
     const { cards } = computeChecklist(memorial, { photos: 0, memories: 0 });
     for (const c of cards) expect(c.href.startsWith('/m/m-1/')).toBe(true);
+  });
+});
+
+describe('the story card once the interview has run', () => {
+  const memorial = { id: 'm-1', intakeCompletedAt: null };
+  const storyCard = (counts: { photos: number; memories: number; storyChapters?: number }) =>
+    computeChecklist(memorial, counts).cards.find((card) => card.id === 'story');
+
+  it('counts chapters once there are any, in the family’s own words', () => {
+    expect(storyCard({ photos: 0, memories: 0, storyChapters: 3 })?.statusLine).toBe(
+      'Their story is taking shape — 3 chapters so far.',
+    );
+    expect(storyCard({ photos: 0, memories: 0, storyChapters: 1 })?.statusLine).toContain(
+      '1 chapter so far',
+    );
+  });
+
+  it('mentions what other people sent in alongside the chapters', () => {
+    expect(storyCard({ photos: 0, memories: 2, storyChapters: 2 })?.statusLine).toContain(
+      '2 memories from others',
+    );
+  });
+
+  it('reads as ready once the story has an arc', () => {
+    expect(storyCard({ photos: 0, memories: 0, storyChapters: 1 })?.state).toBe('in-progress');
+    expect(storyCard({ photos: 0, memories: 0, storyChapters: 4 })?.state).toBe('ready');
+  });
+
+  it('still reads as not started when nothing at all has happened', () => {
+    expect(storyCard({ photos: 0, memories: 0, storyChapters: 0 })?.state).toBe('not-started');
+    expect(storyCard({ photos: 0, memories: 0 })?.state).toBe('not-started');
+  });
+
+  it('flags a story that exists', () => {
+    expect(
+      computeChecklist(memorial, { photos: 0, memories: 0, storyChapters: 2 }).flags['hasStory'],
+    ).toBe(true);
   });
 });

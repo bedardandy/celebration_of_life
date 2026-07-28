@@ -1,0 +1,11 @@
+{
+  "id": "default",
+  "task": "photo-analysis",
+  "note": "Served for any photograph without its own fixture.",
+  "response": {
+    "description": "A photograph from the family collection. No canned analysis for this file.",
+    "settingTags": ["unsorted"],
+    "emotionalTone": "neutral",
+    "slideSuitability": 0.5
+  }
+}

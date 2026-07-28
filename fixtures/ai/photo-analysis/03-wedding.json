@@ -1,0 +1,26 @@
+{
+  "id": "03-wedding",
+  "task": "photo-analysis",
+  "match": "03-wedding.jpg",
+  "note": "Canned analysis for fixtures/photos/03-wedding.jpg.",
+  "images": {
+    "03-wedding.jpg": {
+      "description": "A wedding party on stone steps outside a church. Bride and groom centre, six others arranged either side. Bright midday light, strong shadows.",
+      "eraGuess": "1950s",
+      "settingTags": ["wedding", "church", "group", "formal"],
+      "peopleCountGuess": 8,
+      "emotionalTone": "celebratory",
+      "slideSuitability": 0.88,
+      "suggestedCaption": "The wedding, on the church steps"
+    }
+  },
+  "response": {
+    "description": "A wedding party on stone steps outside a church. Bride and groom centre, six others arranged either side. Bright midday light, strong shadows.",
+    "eraGuess": "1950s",
+    "settingTags": ["wedding", "church", "group", "formal"],
+    "peopleCountGuess": 8,
+    "emotionalTone": "celebratory",
+    "slideSuitability": 0.88,
+    "suggestedCaption": "The wedding, on the church steps"
+  }
+}

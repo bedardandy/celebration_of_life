@@ -21,7 +21,17 @@ describe('provider registry', () => {
 
   it('names the available providers when one is missing', () => {
     expect(() => getProvider('gpt-9000')).toThrow(AiProviderNotFoundError);
-    expect(() => getProvider('gpt-9000')).toThrow(/Available: mock/);
+    expect(() => getProvider('gpt-9000')).toThrow(/Available: .*\bmock\b/);
+  });
+
+  it('registers every adapter, so the doctor can name them all', () => {
+    expect(listProviderIds()).toEqual([
+      'anthropic-api',
+      'claude-cli',
+      'codex-cli',
+      'mock',
+      'openai-api',
+    ]);
   });
 });
 

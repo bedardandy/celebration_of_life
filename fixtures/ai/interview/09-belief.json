@@ -1,0 +1,39 @@
+{
+  "id": "09-belief",
+  "task": "interview",
+  "match": "believed in showing up",
+  "note": "Turn 9 — belief, framed the way a secular family would frame it.",
+  "response": {
+    "nextQuestion": {
+      "text": "Is there anything else you would want people to hear about her?",
+      "promptSlug": "closing-blessing"
+    },
+    "extractedFacts": [
+      {
+        "kind": "trait",
+        "text": "Not religious; believed in turning up"
+      }
+    ],
+    "docPatch": {
+      "chapterUpserts": [
+        {
+          "id": "her-voice",
+          "summary": "Her answer to almost everything was \"Well, we’ll see\" — which the family understood to mean anything from yes to absolutely not. She was not religious. What she believed in was showing up: funerals, hospital visits, the first day of school.",
+          "openQuestions": []
+        }
+      ],
+      "themeAdds": ["Showing up"],
+      "openQuestionAdds": [],
+      "anecdoteAdds": [
+        {
+          "chapterId": "her-voice",
+          "text": "She was not a churchgoer. What she believed in was showing up — funerals, hospital visits, the first day of school. She was always the one already there when you arrived.",
+          "source": "interview"
+        }
+      ]
+    },
+    "coverage": {
+      "sufficientForDraft": true
+    }
+  }
+}

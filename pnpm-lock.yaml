@@ -53,12 +53,18 @@ importers:
 
   apps/web:
     dependencies:
+      '@col/ai':
+        specifier: workspace:*
+        version: link:../../packages/ai
       '@col/core':
         specifier: workspace:*
         version: link:../../packages/core
       '@col/db':
         specifier: workspace:*
         version: link:../../packages/db
+      '@col/media':
+        specifier: workspace:*
+        version: link:../../packages/media
       '@col/schemas':
         specifier: workspace:*
         version: link:../../packages/schemas
@@ -117,6 +123,9 @@ importers:
 
   apps/worker:
     dependencies:
+      '@col/ai':
+        specifier: workspace:*
+        version: link:../../packages/ai
       '@col/core':
         specifier: workspace:*
         version: link:../../packages/core
@@ -167,6 +176,9 @@ importers:
 
   packages/core:
     dependencies:
+      '@col/ai':
+        specifier: workspace:*
+        version: link:../ai
       '@col/db':
         specifier: workspace:*
         version: link:../db

@@ -1,0 +1,167 @@
+.layout {
+  display: grid;
+  gap: 40px;
+  grid-template-columns: 1fr;
+}
+
+@media (min-width: 60rem) {
+  .layout {
+    grid-template-columns: minmax(0, 1.6fr) minmax(18rem, 1fr);
+    align-items: start;
+  }
+}
+
+/* --- the answer box ------------------------------------------------------- */
+
+.answer {
+  width: 100%;
+  min-height: 11rem;
+  padding: 16px 18px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--paper-raised);
+  color: var(--ink);
+  font: inherit;
+  font-size: 1.1rem;
+  line-height: 1.6;
+  resize: vertical;
+}
+
+.answer:focus {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+.answerHint {
+  margin: 10px 0 0;
+  color: var(--ink-soft);
+  font-size: 0.95rem;
+}
+
+.savedRow {
+  display: flex;
+  justify-content: flex-end;
+  min-height: 1.6rem;
+  margin-top: 4px;
+}
+
+.thinking {
+  margin: 0;
+  color: var(--ink-soft);
+}
+
+/* --- the story so far ----------------------------------------------------- */
+
+.aside {
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--paper-raised);
+  padding: 4px 20px 16px;
+}
+
+.asideSummary {
+  padding: 16px 0;
+  font-family: var(--serif);
+  font-size: 1.15rem;
+  cursor: pointer;
+}
+
+.asideSummary::marker {
+  color: var(--ink-faint);
+}
+
+.asideEmpty {
+  margin: 0 0 12px;
+  color: var(--ink-soft);
+  font-size: 0.98rem;
+  line-height: 1.55;
+}
+
+.chapter {
+  padding: 14px 0;
+  border-top: 1px solid var(--line);
+}
+
+.chapterTitle {
+  margin: 0 0 4px;
+  font-family: var(--serif);
+  font-size: 1.05rem;
+}
+
+.chapterEra {
+  color: var(--ink-faint);
+  font-size: 0.9rem;
+  font-family: var(--sans, inherit);
+}
+
+.chapterSummary {
+  margin: 0;
+  color: var(--ink-soft);
+  font-size: 0.96rem;
+  line-height: 1.55;
+}
+
+.anecdotes {
+  margin: 12px 0 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  gap: 12px;
+}
+
+.anecdote {
+  padding: 12px 14px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--paper);
+}
+
+.anecdoteApproved {
+  border-color: var(--sage, var(--line));
+}
+
+.anecdoteText {
+  margin: 0;
+  font-size: 0.96rem;
+  line-height: 1.55;
+}
+
+.anecdoteMeta {
+  margin: 8px 0 0;
+  color: var(--ink-faint);
+  font-size: 0.85rem;
+}
+
+.anecdoteControls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+  align-items: center;
+  margin-top: 10px;
+}
+
+.editArea {
+  width: 100%;
+  min-height: 5rem;
+  padding: 10px 12px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--paper-raised);
+  color: var(--ink);
+  font: inherit;
+  font-size: 0.96rem;
+  line-height: 1.55;
+}
+
+.inlineForm {
+  display: inline;
+}
+
+.themes {
+  margin: 16px 0 0;
+  padding-top: 14px;
+  border-top: 1px solid var(--line);
+  color: var(--ink-soft);
+  font-size: 0.92rem;
+  line-height: 1.6;
+}

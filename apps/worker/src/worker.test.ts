@@ -120,8 +120,11 @@ describe('runOnce', () => {
 });
 
 describe('handler registry', () => {
-  it('registers exactly the Phase 0 handler set', () => {
-    expect(handlers.types()).toEqual(['noop']);
+  it('registers a handler for every job type that has one', () => {
+    // Asserted by containment rather than equality: phases land in parallel,
+    // and a new handler arriving is not a regression in this test's subject.
+    expect(handlers.types()).toContain('noop');
+    expect(handlers.types()).toContain('ingest-asset');
   });
 
   it('refuses two handlers for the same type', () => {

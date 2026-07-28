@@ -42,6 +42,9 @@ export default defineConfig({
         resolve: {
           alias: { '@': path.resolve(here, 'apps/web/src') },
         },
+        // The app's tsconfig leaves JSX for Next to transform; tests import
+        // server components directly, so they need it compiled here.
+        esbuild: { jsx: 'automatic' },
         test: {
           name: 'web',
           root: './apps/web',

@@ -1,0 +1,42 @@
+{
+  "id": "06-saying",
+  "task": "interview",
+  "match": "well, we'll see",
+  "note": "Turn 6 — a phrase in her own voice. Usually the best line in a eulogy.",
+  "response": {
+    "nextQuestion": {
+      "text": "Was there a hard stretch she came through? We can set that aside if you would rather.",
+      "promptSlug": "hard-times"
+    },
+    "extractedFacts": [
+      {
+        "kind": "trait",
+        "text": "Said \"Well, we'll see\" about everything"
+      }
+    ],
+    "docPatch": {
+      "chapterUpserts": [
+        {
+          "id": "her-voice",
+          "title": "Well, we’ll see",
+          "summary": "Her answer to almost everything was \"Well, we’ll see\" — which the family understood to mean anything from yes to absolutely not.",
+          "people": [],
+          "openQuestions": []
+        }
+      ],
+      "themeAdds": ["Quiet stubbornness"],
+      "openQuestionAdds": [],
+      "anecdoteAdds": [
+        {
+          "chapterId": "her-voice",
+          "text": "Her answer to almost everything was \"Well, we’ll see.\" Thirty years in, the grandchildren could tell from the length of the pause whether it meant yes.",
+          "source": "interview"
+        }
+      ]
+    },
+    "coverage": {
+      "sufficientForDraft": true,
+      "note": "Enough voice and detail to draft from."
+    }
+  }
+}

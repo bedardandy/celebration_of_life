@@ -1,0 +1,57 @@
+{
+  "id": "04-people",
+  "task": "interview",
+  "match": "married Walter",
+  "note": "Turn 4 — the people. Adds names the photo request will need.",
+  "response": {
+    "nextQuestion": {
+      "text": "What did she do with herself when she was not at school?",
+      "promptSlug": "hands-and-hobbies"
+    },
+    "extractedFacts": [
+      {
+        "kind": "person",
+        "text": "Walter, her husband, married 1958"
+      },
+      {
+        "kind": "person",
+        "text": "Susan, her daughter"
+      },
+      {
+        "kind": "person",
+        "text": "David, her son"
+      }
+    ],
+    "docPatch": {
+      "chapterUpserts": [
+        {
+          "id": "walter-and-the-children",
+          "title": "Walter, Susan and David",
+          "era": {
+            "from": 1958,
+            "to": 2011
+          },
+          "summary": "Ruth married Walter in 1958, the same year she started teaching. They had two children, Susan and David. Walter died in 2011.",
+          "people": ["Walter", "Susan", "David"],
+          "openQuestions": ["Where did she and Walter meet?"]
+        },
+        {
+          "id": "the-classroom",
+          "people": ["Walter"]
+        }
+      ],
+      "themeAdds": ["Family"],
+      "openQuestionAdds": ["Are there photographs of the wedding?"],
+      "anecdoteAdds": [
+        {
+          "chapterId": "walter-and-the-children",
+          "text": "She married Walter in 1958, the same year she walked into her first classroom. She used to say she got the whole of her life in one go that year.",
+          "source": "interview"
+        }
+      ]
+    },
+    "coverage": {
+      "sufficientForDraft": false
+    }
+  }
+}

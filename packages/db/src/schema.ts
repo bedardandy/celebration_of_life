@@ -139,8 +139,23 @@ export const magicTokens = sqliteTable(
     }),
     /** Only ever the hash. The plaintext exists solely inside the emailed link. */
     tokenHash: text('token_hash').notNull(),
-    kind: text('kind', { enum: ['organizer-login', 'contributor', 'watch'] }).notNull(),
+    /**
+     * 'collection-link' is the one link a family shares with everyone;
+     * 'contributor' is a personal ask made of one person. Both land on the same
+     * contributor pages — the difference is what the landing page says.
+     */
+    kind: text('kind', {
+      enum: ['organizer-login', 'collection-link', 'contributor', 'watch'],
+    }).notNull(),
     scopes: text('scopes', { mode: 'json' }).$type<string[]>().notNull().default([]),
+    /** Who this link was made for, in the organiser's words: "Aunt Mary". */
+    label: text('label'),
+    /** Which bounded-ask template produced it, e.g. 'younger-years'. */
+    askTemplate: text('ask_template'),
+    /** The ask itself, as the person receiving the link will read it. */
+    askNote: text('ask_note'),
+    /** A gentle "by Wednesday", not an expiry — the link keeps working after it. */
+    deadlineAt: integer('deadline_at'),
     expiresAt: integer('expires_at'),
     usedCount: integer('used_count').notNull().default(0),
     maxUses: integer('max_uses'),
@@ -175,6 +190,8 @@ export const mediaAssets = sqliteTable(
     height: integer('height'),
     /** EXIF capture time when we can read one; drives era grouping. */
     capturedAt: integer('captured_at'),
+    /** Decade label derived from capturedAt, e.g. '1960s'. Null = "when was this?". */
+    eraGuess: text('era_guess'),
     /** Blob keys are prefixed memorial/{id}/ so hard delete can purge by prefix. */
     blobKey: text('blob_key').notNull(),
     /** Perceptual hash (sharp-phash) for near-duplicate grouping. */
@@ -183,6 +200,14 @@ export const mediaAssets = sqliteTable(
     qualityScore: real('quality_score'),
     blurScore: real('blur_score'),
     dupeGroupId: text('dupe_group_id'),
+    /** The member of its dupe group the grid shows. The family can change it. */
+    dupeRepresentative: integer('dupe_representative', { mode: 'boolean' })
+      .notNull()
+      .default(false),
+    /** "Who is this?" — raised by the organiser, answered by whoever knows. */
+    needsIdentification: integer('needs_identification', { mode: 'boolean' })
+      .notNull()
+      .default(false),
     analysis: text('analysis', { mode: 'json' }).$type<PhotoAnalysis>(),
     /** Blurry photos are flagged, never silently removed — the family decides. */
     curationState: text('curation_state', {

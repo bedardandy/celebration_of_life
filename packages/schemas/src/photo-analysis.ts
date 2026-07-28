@@ -1,4 +1,5 @@
 import { z } from 'zod';
+import { IdSchema } from './common';
 
 /**
  * The structured record produced for each photo. Analysis is done once, stored,
@@ -19,3 +20,26 @@ export const PhotoAnalysisSchema = z
   })
   .strict();
 export type PhotoAnalysis = z.infer<typeof PhotoAnalysisSchema>;
+
+/**
+ * A batch of photographs, analysed in one call.
+ *
+ * Batched because a hundred separate calls is a hundred chances to fail
+ * halfway, and keyed by `assetId` because the answers have to find their way
+ * back to the right rows — the model is shown ids it must echo, not filenames
+ * it might paraphrase.
+ */
+export const PhotoAnalysisEntrySchema = z
+  .object({
+    assetId: IdSchema,
+    analysis: PhotoAnalysisSchema,
+  })
+  .strict();
+export type PhotoAnalysisEntry = z.infer<typeof PhotoAnalysisEntrySchema>;
+
+export const PhotoAnalysisBatchSchema = z
+  .object({
+    analyses: z.array(PhotoAnalysisEntrySchema),
+  })
+  .strict();
+export type PhotoAnalysisBatch = z.infer<typeof PhotoAnalysisBatchSchema>;

@@ -1,0 +1,54 @@
+{
+  "id": "03-work",
+  "task": "interview",
+  "match": "thirty-one years",
+  "note": "Turn 3 — the working life. Opens the second chapter.",
+  "response": {
+    "nextQuestion": {
+      "text": "Who was at home with her through those years?",
+      "promptSlug": "home-and-people"
+    },
+    "extractedFacts": [
+      {
+        "kind": "event",
+        "text": "Taught fourth grade for thirty-one years"
+      },
+      {
+        "kind": "place",
+        "text": "Pinecrest Elementary"
+      },
+      {
+        "kind": "trait",
+        "text": "Kept every class photograph"
+      }
+    ],
+    "docPatch": {
+      "chapterUpserts": [
+        {
+          "id": "the-classroom",
+          "title": "Thirty-one years of fourth grade",
+          "era": {
+            "from": 1958,
+            "to": 1989
+          },
+          "summary": "Ruth taught fourth grade at Pinecrest Elementary for thirty-one years, and kept a photograph of every class in a cupboard by the back door.",
+          "people": [],
+          "openQuestions": ["Are the class photographs still in the house?"]
+        }
+      ],
+      "themeAdds": ["Teaching"],
+      "openQuestionAdds": [],
+      "anecdoteAdds": [
+        {
+          "chapterId": "the-classroom",
+          "text": "Thirty-one years of fourth grade at Pinecrest Elementary, and a photograph of every single class kept in the cupboard by the back door.",
+          "source": "interview"
+        }
+      ]
+    },
+    "coverage": {
+      "sufficientForDraft": false,
+      "note": "Two chapters now; family still missing."
+    }
+  }
+}

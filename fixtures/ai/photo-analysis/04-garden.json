@@ -1,0 +1,26 @@
+{
+  "id": "04-garden",
+  "task": "photo-analysis",
+  "match": "04-garden.jpg",
+  "note": "Canned analysis for fixtures/photos/04-garden.jpg.",
+  "images": {
+    "04-garden.jpg": {
+      "description": "A woman kneeling beside a bed of tall flowers, trowel in hand, looking down at the soil rather than at the camera. Late afternoon light.",
+      "eraGuess": "1990s",
+      "settingTags": ["garden", "outdoors", "candid", "flowers"],
+      "peopleCountGuess": 1,
+      "emotionalTone": "absorbed",
+      "slideSuitability": 0.95,
+      "suggestedCaption": "In the garden"
+    }
+  },
+  "response": {
+    "description": "A woman kneeling beside a bed of tall flowers, trowel in hand, looking down at the soil rather than at the camera. Late afternoon light.",
+    "eraGuess": "1990s",
+    "settingTags": ["garden", "outdoors", "candid", "flowers"],
+    "peopleCountGuess": 1,
+    "emotionalTone": "absorbed",
+    "slideSuitability": 0.95,
+    "suggestedCaption": "In the garden"
+  }
+}

@@ -1,9 +1,11 @@
 import Link from 'next/link';
 import {
   computeChecklist,
+  currentDoc,
   dashboardBanner,
   formatServiceDate,
   resumeIntakeStep,
+  subjectOf,
   type ChecklistCard,
   type DeadlineBanner,
 } from '@col/core';
@@ -51,6 +53,8 @@ export default async function DashboardPage({
       memoryNotes,
       and(eq(memoryNotes.memorialId, memorialId), isNull(memoryNotes.deletedAt)),
     ),
+    // The interview's own measure of progress: chapters a family can read back.
+    storyChapters: currentDoc(db(), memorialId, subjectOf(memorial)).doc.chapters.length,
   };
 
   const checklist = computeChecklist(memorial, counts);

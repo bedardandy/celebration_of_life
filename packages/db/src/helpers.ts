@@ -1,4 +1,4 @@
-import { and, desc, eq, isNull, type SQL } from 'drizzle-orm';
+import { and, desc, eq, inArray, isNull, type SQL } from 'drizzle-orm';
 import type { SQLiteColumn, SQLiteTable } from 'drizzle-orm/sqlite-core';
 import type { Db } from './client';
 
@@ -114,4 +114,4 @@ export function countWhere<T extends SQLiteTable>(db: Db, table: T, where?: SQL)
   return listWhere(db, table, where, Number.MAX_SAFE_INTEGER).length;
 }
 
-export { and, desc, eq, isNull };
+export { and, desc, eq, inArray, isNull };

@@ -1,0 +1,22 @@
+{
+  "id": "07-skipped",
+  "task": "interview",
+  "match": "They skipped this question",
+  "note": "Turn 7 — a skip. Nothing is added, nothing is commented on, we move on.",
+  "response": {
+    "nextQuestion": {
+      "text": "When do you picture her happiest?",
+      "promptSlug": "joy"
+    },
+    "extractedFacts": [],
+    "docPatch": {
+      "chapterUpserts": [],
+      "themeAdds": [],
+      "openQuestionAdds": [],
+      "anecdoteAdds": []
+    },
+    "coverage": {
+      "sufficientForDraft": true
+    }
+  }
+}
