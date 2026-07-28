@@ -1,0 +1,24 @@
+The Long Meadow — licence and provenance
+
+Licence: CC0 1.0 Universal (public domain dedication).
+https://creativecommons.org/publicdomain/zero/1.0/
+
+Provenance
+----------
+This recording was not obtained from anywhere. It was synthesised by
+scripts/make-music.ts in this repository: a small additive synthesiser
+renders the chord progression and melody written in that file, at the
+tempo written in that file, through a reverb written in that file, and
+ffmpeg encodes the result to AAC.
+
+  key       G major
+  tempo     76 BPM
+  length    207.1 seconds
+  seed      5502 (deterministic — re-running reproduces this file)
+
+Because the work is entirely original and machine-generated from that
+source, it carries no third-party rights: no composition licence, no
+master recording licence, no performing rights, no attribution required.
+A family may include it in a video and share that video anywhere.
+
+The CC0 dedication is made by the authors of this repository.

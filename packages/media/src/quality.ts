@@ -90,10 +90,7 @@ export function laplacianVariance(
 }
 
 /** Soft, bounded, monotonic: no cliff edge where one photo is fine and the next is not. */
-export function sharpnessScore(
-  variance: number,
-  halfPoint: number = SHARPNESS_HALF_POINT,
-): number {
+export function sharpnessScore(variance: number, halfPoint: number = SHARPNESS_HALF_POINT): number {
   if (!Number.isFinite(variance) || variance <= 0) return 0;
   return clamp01(variance / (variance + halfPoint));
 }
@@ -138,7 +135,12 @@ export async function measureQuality(input: Buffer): Promise<QualityMeasurement>
   const { data, info } = await sharp(input, { failOn: 'none' })
     .rotate()
     .greyscale()
-    .resize({ width: ANALYSIS_EDGE, height: ANALYSIS_EDGE, fit: 'inside', withoutEnlargement: true })
+    .resize({
+      width: ANALYSIS_EDGE,
+      height: ANALYSIS_EDGE,
+      fit: 'inside',
+      withoutEnlargement: true,
+    })
     .raw()
     .toBuffer({ resolveWithObject: true });
   return measureQualityFromGray(data, info.width, info.height);

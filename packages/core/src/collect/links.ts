@@ -217,8 +217,7 @@ export type ContributorContext = {
 };
 
 export type ContributorResolution =
-  | { ok: true; context: ContributorContext }
-  | { ok: false; reason: TokenRejection | 'gone' };
+  { ok: true; context: ContributorContext } | { ok: false; reason: TokenRejection | 'gone' };
 
 /**
  * Turn a link into a page. Never consumes a use: a contributor link is meant to

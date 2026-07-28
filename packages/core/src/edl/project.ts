@@ -8,13 +8,7 @@
  * what the preview screen keys its player on: a new version means new pixels,
  * without a page reload and without a cache to get wrong.
  */
-import {
-  EdlSchema,
-  type CutName,
-  type Edl,
-  type ResolvedTimeline,
-  type Slide,
-} from '@col/schemas';
+import { EdlSchema, type CutName, type Edl, type ResolvedTimeline, type Slide } from '@col/schemas';
 import {
   and,
   desc,

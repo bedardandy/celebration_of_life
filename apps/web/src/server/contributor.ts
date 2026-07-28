@@ -106,10 +106,7 @@ export function contributorFromCookieHeader(
   return contributorForMemorial(db(), context.memorial.id, value);
 }
 
-export function readCookieHeader(
-  cookieHeader: string | null,
-  name: string,
-): string | undefined {
+export function readCookieHeader(cookieHeader: string | null, name: string): string | undefined {
   if (!cookieHeader) return undefined;
   const match = cookieHeader
     .split(';')

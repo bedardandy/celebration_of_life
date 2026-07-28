@@ -6,9 +6,22 @@
  * There is no Save button to miss and no confirmation dialog to read: an
  * approve is a tap, a hide is a tap, and both can be tapped again.
  */
-import { and, eq, getById, insertOne, isNull, listWhere, mediaAssets, memoryNotes, updateById, type Db, type MediaAsset } from '@col/db';
+import {
+  and,
+  eq,
+  getById,
+  insertOne,
+  isNull,
+  listWhere,
+  mediaAssets,
+  memoryNotes,
+  updateById,
+  type Db,
+  type MediaAsset,
+} from '@col/db';
 
-export type CurationAction = 'approve' | 'unapprove' | 'hide' | 'unhide' | 'flag-who' | 'unflag-who';
+export type CurationAction =
+  'approve' | 'unapprove' | 'hide' | 'unhide' | 'flag-who' | 'unflag-who';
 
 export const CURATION_ACTION_MESSAGE: Record<CurationAction, string> = {
   approve: 'Kept.',
@@ -66,7 +79,11 @@ export function applyCurationAction(
 }
 
 /** Tap to approve, tap again to undo. One control, no modes. */
-export function toggleApproval(db: Db, memorialId: string, assetId: string): CurationOutcome | undefined {
+export function toggleApproval(
+  db: Db,
+  memorialId: string,
+  assetId: string,
+): CurationOutcome | undefined {
   const asset = ownedAsset(db, memorialId, assetId);
   if (!asset) return undefined;
   return applyCurationAction(
@@ -77,7 +94,11 @@ export function toggleApproval(db: Db, memorialId: string, assetId: string): Cur
   );
 }
 
-export function toggleHidden(db: Db, memorialId: string, assetId: string): CurationOutcome | undefined {
+export function toggleHidden(
+  db: Db,
+  memorialId: string,
+  assetId: string,
+): CurationOutcome | undefined {
   const asset = ownedAsset(db, memorialId, assetId);
   if (!asset) return undefined;
   const hidden = asset.curationState === 'hidden' || asset.curationState === 'rejected';

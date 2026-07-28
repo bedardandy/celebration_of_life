@@ -15,12 +15,7 @@
  *     the answer. A family three days from a funeral cannot be told to try
  *     again later.
  */
-import {
-  AiSchemaError,
-  friendlyAiMessage,
-  resolveProvider,
-  type AiProvider,
-} from '@col/ai';
+import { AiSchemaError, friendlyAiMessage, resolveProvider, type AiProvider } from '@col/ai';
 import { getById, memorials, slideshowProjects, type Db } from '@col/db';
 import {
   assembleEdl,

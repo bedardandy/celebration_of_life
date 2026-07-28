@@ -1,0 +1,317 @@
+.current {
+  margin: 0 0 24px;
+  padding: 12px 16px;
+  border-left: 3px solid var(--accent);
+  background: var(--paper-raised);
+  color: var(--ink);
+}
+
+/* --- the two modes --------------------------------------------------------- */
+
+.modes {
+  display: grid;
+  gap: 16px;
+  grid-template-columns: repeat(auto-fit, minmax(19rem, 1fr));
+}
+
+.modeForm {
+  display: flex;
+}
+
+.mode {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: 100%;
+  min-height: 60px;
+  padding: 22px 24px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--paper-raised);
+  text-align: left;
+  cursor: pointer;
+  font: inherit;
+  color: inherit;
+}
+
+.mode:hover {
+  border-color: var(--accent);
+}
+
+.modeTitle {
+  font-size: 1.3rem;
+}
+
+.modeLead {
+  color: var(--ink);
+  font-size: 1.02rem;
+  line-height: 1.5;
+}
+
+.modeBody,
+.modeAlso {
+  color: var(--ink-soft);
+  font-size: 0.95rem;
+  line-height: 1.55;
+}
+
+.modeAlso {
+  padding-top: 8px;
+  border-top: 1px solid var(--line);
+}
+
+/* --- tradition guidance ---------------------------------------------------- */
+
+.guidance {
+  margin-top: 32px;
+  padding: 18px 22px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--paper-raised);
+}
+
+.guidanceTitle {
+  margin: 0 0 10px;
+  font-size: 1.05rem;
+}
+
+.guidanceList {
+  margin: 0;
+  padding-left: 20px;
+  color: var(--ink-soft);
+  font-size: 0.97rem;
+  line-height: 1.6;
+}
+
+.guidanceList li + li {
+  margin-top: 8px;
+}
+
+.footnote {
+  margin: 28px 0 0;
+  color: var(--ink-soft);
+  font-size: 0.95rem;
+  line-height: 1.6;
+}
+
+/* --- the track list -------------------------------------------------------- */
+
+.moods {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 24px;
+}
+
+.mood {
+  display: inline-flex;
+  align-items: center;
+  min-height: var(--tap);
+  padding: 0 16px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: var(--paper-raised);
+  color: var(--ink-soft);
+  text-decoration: none;
+  font-size: 0.97rem;
+}
+
+.moodActive {
+  border-color: var(--accent);
+  color: var(--ink);
+}
+
+.tracks {
+  display: grid;
+  gap: 12px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.track {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px 20px;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 20px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--paper-raised);
+}
+
+.trackChosen {
+  border-color: var(--accent);
+  box-shadow: inset 0 0 0 1px var(--accent);
+}
+
+.trackBody {
+  flex: 1 1 16rem;
+}
+
+.trackTitle {
+  margin: 0;
+  font-size: 1.15rem;
+}
+
+.trackMeta {
+  margin: 4px 0 0;
+  color: var(--ink-soft);
+  font-size: 0.92rem;
+}
+
+.trackWhy {
+  margin: 6px 0 0;
+  color: var(--accent);
+  font-size: 0.92rem;
+}
+
+.trackActions {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+
+.chosenBadge {
+  color: var(--accent);
+  font-size: 0.95rem;
+}
+
+.preview {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: var(--tap);
+  padding: 0 18px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: transparent;
+  color: var(--ink);
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+.preview:hover {
+  border-color: var(--accent);
+}
+
+.previewNote {
+  margin: 0 0 20px;
+  color: var(--ink-soft);
+  font-size: 0.95rem;
+}
+
+.choose {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: var(--tap);
+  padding: 0 20px;
+  border: 1px solid var(--accent);
+  border-radius: var(--radius);
+  background: var(--accent);
+  color: var(--paper-raised);
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+.afterChoice {
+  margin: 24px 0 0;
+  color: var(--ink-soft);
+  font-size: 0.95rem;
+}
+
+.licence {
+  margin: 24px 0 0;
+  color: var(--ink-faint);
+  font-size: 0.88rem;
+  line-height: 1.6;
+}
+
+/* --- forms ----------------------------------------------------------------- */
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.label {
+  display: block;
+  margin-bottom: 6px;
+  font-size: 1rem;
+}
+
+.input {
+  width: 100%;
+  min-height: var(--tap);
+  padding: 10px 14px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--paper-raised);
+  color: var(--ink);
+  font-size: 1.05rem;
+}
+
+.hint {
+  margin: 6px 0 0;
+  color: var(--ink-soft);
+  font-size: 0.92rem;
+}
+
+.checkbox {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+  padding: 16px 18px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--paper-raised);
+  font-size: 1rem;
+  line-height: 1.5;
+  cursor: pointer;
+}
+
+.checkbox input {
+  width: 22px;
+  height: 22px;
+  margin-top: 2px;
+}
+
+.problem {
+  margin: 0 0 24px;
+  padding: 14px 18px;
+  border-left: 3px solid var(--accent);
+  background: var(--paper-raised);
+}
+
+/* --- tap tempo ------------------------------------------------------------- */
+
+.tapRow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  align-items: center;
+}
+
+.tapButton {
+  min-width: 12rem;
+  min-height: 64px;
+  padding: 0 24px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--paper-raised);
+  color: var(--ink);
+  font-size: 1.1rem;
+  cursor: pointer;
+}
+
+.tapButton:hover {
+  border-color: var(--accent);
+}
+
+.tapReading {
+  color: var(--ink-soft);
+  font-size: 1rem;
+}

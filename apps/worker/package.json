@@ -17,7 +17,8 @@
     "@col/db": "workspace:*",
     "@col/media": "workspace:*",
     "@col/schemas": "workspace:*",
-    "@col/storage": "workspace:*"
+    "@col/storage": "workspace:*",
+    "@col/video": "workspace:*"
   },
   "devDependencies": {
     "@types/node": "^22.19.2",

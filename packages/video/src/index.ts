@@ -30,7 +30,10 @@ export {
 } from './slides/PhotoSlide';
 export { CARD_FADE_SEC, ClosingCard, QuoteCard, TitleCard, cardEntrance } from './slides/Cards';
 export { TRIBUTE_THEME, type TributeTheme } from './theme';
+export { RENDER_PRESETS, renderPreset, type RenderPresetSpec } from './presets';
 
-// Deliberately NOT re-exported here: `./browser` reads the filesystem, and this
-// entry point is imported by the browser preview. Node-side callers (the render
-// worker, the micro-render test) import '@col/video/browser' directly.
+// Deliberately NOT re-exported here: `./browser` reads the filesystem and
+// `./render` pulls in a bundler and a browser driver, while this entry point is
+// imported by the browser preview. Node-side callers (the render worker, the
+// micro-render test) import '@col/video/browser' and '@col/video/render'
+// directly.

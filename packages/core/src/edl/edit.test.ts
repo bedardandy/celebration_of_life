@@ -205,7 +205,9 @@ describe('removing, and putting back', () => {
 describe('applying an edit', () => {
   it('routes every button on the preview screen', () => {
     const base = edl();
-    expect(applyEdit(base, { op: 'longer', slideId: 'c1-s1' }).slides['c1-s1']?.durationSec).toBe(5);
+    expect(applyEdit(base, { op: 'longer', slideId: 'c1-s1' }).slides['c1-s1']?.durationSec).toBe(
+      5,
+    );
     expect(applyEdit(base, { op: 'shorter', slideId: 'c1-s1' }).slides['c1-s1']?.durationSec).toBe(
       4,
     );

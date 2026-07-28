@@ -48,10 +48,15 @@ export function stageOpacity(
     const half = transitionOut.frames / 2;
     opacity = Math.min(
       opacity,
-      interpolate(frame, [durationInFrames - transitionOut.frames, durationInFrames - half], [1, 0], {
-        extrapolateLeft: 'clamp',
-        extrapolateRight: 'clamp',
-      }),
+      interpolate(
+        frame,
+        [durationInFrames - transitionOut.frames, durationInFrames - half],
+        [1, 0],
+        {
+          extrapolateLeft: 'clamp',
+          extrapolateRight: 'clamp',
+        },
+      ),
     );
   }
 

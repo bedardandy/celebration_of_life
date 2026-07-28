@@ -196,9 +196,7 @@ describe('the contributor page', () => {
   it('shows a gentle page, not an error, once the link is turned off', async () => {
     const { memorialId, token, tokenRow, session } = await createMemorial();
     signIn(session);
-    await captureRedirect(() =>
-      revokeLinkAction(form({ memorialId, tokenId: tokenRow.id })),
-    );
+    await captureRedirect(() => revokeLinkAction(form({ memorialId, tokenId: tokenRow.id })));
     cookieJar.clear();
 
     const screen = await ContributorLanding({ params: Promise.resolve({ token }) });
@@ -331,9 +329,7 @@ describe('upload → ingest → curate', () => {
 
     // And a re-ingest does not undo the family's choice.
     await ingestAsset(db(), getBlobStore(), { assetId: other.id });
-    expect(
-      assetsOf(memorialId).find((a) => a.dupeRepresentative)?.id,
-    ).toBe(other.id);
+    expect(assetsOf(memorialId).find((a) => a.dupeRepresentative)?.id).toBe(other.id);
   });
 
   it('takes notes about the batch that just arrived, and one memory at the end', async () => {
@@ -415,11 +411,14 @@ describe('the delegation composer', () => {
       ),
     );
 
-    const links = listCollectionLinks(db(), (await import('@col/db')).getById(
+    const links = listCollectionLinks(
       db(),
-      (await import('@col/db')).memorials,
-      memorialId,
-    ) as never);
+      (await import('@col/db')).getById(
+        db(),
+        (await import('@col/db')).memorials,
+        memorialId,
+      ) as never,
+    );
     const ask = links.find((l) => l.row.kind === 'contributor');
     expect(ask?.label).toBe('Aunt Mary');
     expect(ask?.ask.deadlineLine).toContain('Wednesday');

@@ -12,15 +12,7 @@
  * working" is the promise we make to a cousin with photos on an old phone.
  */
 import { createHash, createHmac, randomBytes, timingSafeEqual } from 'node:crypto';
-import {
-  eq,
-  getById,
-  insertOne,
-  magicTokens,
-  updateById,
-  type Db,
-  type MagicToken,
-} from '@col/db';
+import { eq, getById, insertOne, magicTokens, updateById, type Db, type MagicToken } from '@col/db';
 import { absoluteUrl, sessionSecret } from '../env';
 
 export const TOKEN_BYTES = 32;

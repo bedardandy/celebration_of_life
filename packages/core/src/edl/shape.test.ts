@@ -51,7 +51,9 @@ describe('recommending a shape', () => {
   });
 
   it('always offers three options, recommendation first, each one only once', () => {
-    const result = recommendStructure({ eras: eras({ '1950s': 4, '1970s': 4, '1990s': 4, '2010s': 4 }) });
+    const result = recommendStructure({
+      eras: eras({ '1950s': 4, '1970s': 4, '1990s': 4, '2010s': 4 }),
+    });
     expect(result.options[0]?.id).toBe(result.recommended);
     expect(new Set(result.options.map((o) => o.id)).size).toBe(3);
   });

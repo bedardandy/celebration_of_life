@@ -12,7 +12,11 @@
       {
         "title": "Where she began",
         "photos": [
-          { "assetId": "{{asset:0}}", "kenBurns": "center", "caption": "At home, before any of us" },
+          {
+            "assetId": "{{asset:0}}",
+            "kenBurns": "center",
+            "caption": "At home, before any of us"
+          },
           { "assetId": "{{asset:1}}", "kenBurns": "wide" }
         ],
         "quotes": [

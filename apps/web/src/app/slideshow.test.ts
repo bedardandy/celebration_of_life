@@ -198,7 +198,10 @@ function textOf(node: Node): string {
   const props = node.props as Record<string, unknown>;
   const type = node.type as unknown;
   if (typeof type === 'function') {
-    const name = (type as { displayName?: string; name?: string }).displayName ?? (type as { name?: string }).name ?? '';
+    const name =
+      (type as { displayName?: string; name?: string }).displayName ??
+      (type as { name?: string }).name ??
+      '';
     if (!CLIENT_COMPONENTS.has(name)) {
       try {
         const rendered = (type as (p: unknown) => unknown)(props);
@@ -510,13 +513,17 @@ describe('adjusting slides', () => {
 describe('the dashboard card', () => {
   it('unlocks and points at the preview once a slideshow exists', async () => {
     const { memorialId } = await memorialWithPhotos();
-    const locked = textOf((await DashboardPage({ params: Promise.resolve({ memorialId }) })) as Node);
+    const locked = textOf(
+      (await DashboardPage({ params: Promise.resolve({ memorialId }) })) as Node,
+    );
     expect(locked).toContain('Build the slideshow');
 
     await captureRedirect(() => chooseShapeAction(form({ memorialId, structure: 'chrono' })));
     await buildSlideshow(memorialId);
 
-    const ready = textOf((await DashboardPage({ params: Promise.resolve({ memorialId }) })) as Node);
+    const ready = textOf(
+      (await DashboardPage({ params: Promise.resolve({ memorialId }) })) as Node,
+    );
     expect(ready).toContain('Watch the slideshow');
     expect(ready).toContain('A first version is ready');
   });

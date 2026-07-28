@@ -242,9 +242,7 @@ describe('the mock and EDL proposals', () => {
             { assetId: '{{asset:0}}', kenBurns: 'center' },
             { assetId: '{{asset:1}}', kenBurns: 'wide' },
           ],
-          quotes: [
-            { text: '{{memory:0}}', attribution: '{{memoryFrom:0}}', placement: 'before' },
-          ],
+          quotes: [{ text: '{{memory:0}}', attribution: '{{memoryFrom:0}}', placement: 'before' }],
         },
         {
           title: 'Later on',
@@ -257,7 +255,10 @@ describe('the mock and EDL proposals', () => {
   };
 
   function request(dir: string, prompt: string) {
-    return resolveMockResponse({ messages: [{ role: 'user', content: prompt }], taskTag: 'edl' }, dir);
+    return resolveMockResponse(
+      { messages: [{ role: 'user', content: prompt }], taskTag: 'edl' },
+      dir,
+    );
   }
 
   const prompt = [
@@ -277,7 +278,10 @@ describe('the mock and EDL proposals', () => {
     expect(resolution.source).toBe('edl-proposal');
 
     const proposal = JSON.parse(resolution.text) as {
-      chapters: { photos: { assetId: string }[]; quotes: { text: string; attribution: string }[] }[];
+      chapters: {
+        photos: { assetId: string }[];
+        quotes: { text: string; attribution: string }[];
+      }[];
     };
     expect(proposal.chapters[0]?.photos.map((p) => p.assetId)).toEqual(['asset-aaa', 'asset-bbb']);
     expect(proposal.chapters[0]?.quotes[0]?.text).toBe(

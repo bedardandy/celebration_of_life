@@ -13,11 +13,7 @@
  */
 
 export type AskTemplateSlug =
-  | 'recent-photos'
-  | 'younger-years'
-  | 'era-or-theme'
-  | 'one-story'
-  | 'anything';
+  'recent-photos' | 'younger-years' | 'era-or-theme' | 'one-story' | 'anything';
 
 export type AskTemplate = {
   slug: AskTemplateSlug;

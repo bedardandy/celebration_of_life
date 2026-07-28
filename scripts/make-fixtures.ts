@@ -69,7 +69,13 @@ export const FIXTURE_SPECS: Spec[] = [
     brightness: 1.03,
     nudgePx: 10,
   },
-  { file: '06-blurry.jpg', bg: { r: 122, g: 78, b: 168 }, label: 'BLURRY 1999', scene: 79, blur: 9 },
+  {
+    file: '06-blurry.jpg',
+    bg: { r: 122, g: 78, b: 168 },
+    label: 'BLURRY 1999',
+    scene: 79,
+    blur: 9,
+  },
   {
     file: '07-sideways.jpg',
     bg: { r: 96, g: 104, b: 132 },
@@ -90,7 +96,10 @@ export const FIXTURE_SPECS: Spec[] = [
  * A file that claims to be a photo and is not. Ingest must park it politely
  * instead of taking the worker down, so the unhappy path gets a fixture too.
  */
-export const POISON_FIXTURE = { file: '09-not-a-photo.jpg', bytes: 'this is not an image at all\n' };
+export const POISON_FIXTURE = {
+  file: '09-not-a-photo.jpg',
+  bytes: 'this is not an image at all\n',
+};
 
 /** Tiny deterministic PRNG (mulberry32). Same seed, same picture, every run. */
 function rng(seed: number): () => number {
@@ -196,9 +205,7 @@ export async function makeFixtures(outDir: string = FIXTURE_PHOTO_DIR): Promise<
 export async function fixturesArePresent(outDir: string = FIXTURE_PHOTO_DIR): Promise<boolean> {
   try {
     const entries = new Set(await readdir(outDir));
-    return (
-      FIXTURE_SPECS.every((s) => entries.has(s.file)) && entries.has(POISON_FIXTURE.file)
-    );
+    return FIXTURE_SPECS.every((s) => entries.has(s.file)) && entries.has(POISON_FIXTURE.file);
   } catch {
     return false;
   }

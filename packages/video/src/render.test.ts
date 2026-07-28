@@ -78,7 +78,12 @@ export const FIXTURE_EDL: Edl = EdlSchema.parse({
       durationSec: 2,
       transitionOut: crossfade,
     },
-    closing: { kind: 'closing', line1: 'Margaret Anne Doyle', line2: '1938 — 2024', durationSec: 2 },
+    closing: {
+      kind: 'closing',
+      line1: 'Margaret Anne Doyle',
+      line2: '1938 — 2024',
+      durationSec: 2,
+    },
   },
   cuts: { service: { targetSec: 300 } },
 });
@@ -171,85 +176,83 @@ afterAll(() => {
 });
 
 describe.skipIf(!ready)('micro render', () => {
-  it(
-    'renders three slides to an MP4 a funeral laptop can play',
-    async (ctx) => {
-      const { bundle } = await import('@remotion/bundler');
-      const { renderMedia, selectComposition } = await import('@remotion/renderer');
+  it('renders three slides to an MP4 a funeral laptop can play', async (ctx) => {
+    const { bundle } = await import('@remotion/bundler');
+    const { renderMedia, selectComposition } = await import('@remotion/renderer');
 
-      const serveUrl = await bundle({ entryPoint: ENTRY, onProgress: () => {} });
+    const serveUrl = await bundle({ entryPoint: ENTRY, onProgress: () => {} });
 
-      const inputProps = {
-        edl: FIXTURE_EDL,
-        resolvedTimeline: FIXTURE_TIMELINE,
-        // A real photograph, so the Ken Burns path and the blurred backing for
-        // a portrait picture are actually exercised. Inlined rather than served
-        // from disk because the render browser refuses file:// URLs, exactly as
-        // a browser should — in the product these are authorised HTTP URLs.
-        assetUrlMap: fixturePhotoDataUrl(),
-      };
-      const browserOptions = {
-        browserExecutable: browser?.executable ?? null,
-        chromiumOptions: { gl: 'swangle' as const },
-      };
+    const inputProps = {
+      edl: FIXTURE_EDL,
+      resolvedTimeline: FIXTURE_TIMELINE,
+      // A real photograph, so the Ken Burns path and the blurred backing for
+      // a portrait picture are actually exercised. Inlined rather than served
+      // from disk because the render browser refuses file:// URLs, exactly as
+      // a browser should — in the product these are authorised HTTP URLs.
+      assetUrlMap: fixturePhotoDataUrl(),
+    };
+    const browserOptions = {
+      browserExecutable: browser?.executable ?? null,
+      chromiumOptions: { gl: 'swangle' as const },
+    };
 
-      try {
-        const composition = await selectComposition({
-          serveUrl,
-          id: TRIBUTE_COMPOSITION_ID,
-          inputProps,
-          ...browserOptions,
-        });
+    try {
+      const composition = await selectComposition({
+        serveUrl,
+        id: TRIBUTE_COMPOSITION_ID,
+        inputProps,
+        ...browserOptions,
+      });
 
-        expect(composition.durationInFrames).toBe(timelineDurationInFrames(FIXTURE_TIMELINE));
-        expect([composition.width, composition.height]).toEqual([WIDTH, HEIGHT]);
+      expect(composition.durationInFrames).toBe(timelineDurationInFrames(FIXTURE_TIMELINE));
+      expect([composition.width, composition.height]).toEqual([WIDTH, HEIGHT]);
 
-        await renderMedia({
-          composition,
-          serveUrl,
-          codec: 'h264',
-          // bt709 rather than the default: a full-range (yuvj420p) file is the
-          // classic "plays here, green on the venue projector" bug.
-          colorSpace: 'bt709',
-          pixelFormat: 'yuv420p',
-          outputLocation: output,
-          inputProps,
-          ...browserOptions,
-          concurrency: 1,
-          onProgress: () => {},
-        });
-      } catch (error) {
-        // No browser at all, and none obtainable: say so at the top of the run
-        // rather than failing a build for a thing the network did.
-        if (!isBrowserProblem(error)) throw error;
-        process.emitWarning(
-          `[micro-render] SKIPPED — ${NO_BROWSER_MESSAGE} (${
-            error instanceof Error ? error.message.split('\n')[0] : String(error)
-          }) The render smoke test did NOT run on this machine.`,
-        );
-        ctx.skip();
-        return;
-      }
+      await renderMedia({
+        composition,
+        serveUrl,
+        codec: 'h264',
+        // bt709 rather than the default: a full-range (yuvj420p) file is the
+        // classic "plays here, green on the venue projector" bug.
+        colorSpace: 'bt709',
+        pixelFormat: 'yuv420p',
+        outputLocation: output,
+        inputProps,
+        ...browserOptions,
+        concurrency: 1,
+        onProgress: () => {},
+      });
+    } catch (error) {
+      // No browser at all, and none obtainable: say so at the top of the run
+      // rather than failing a build for a thing the network did.
+      if (!isBrowserProblem(error)) throw error;
+      process.emitWarning(
+        `[micro-render] SKIPPED — ${NO_BROWSER_MESSAGE} (${
+          error instanceof Error ? error.message.split('\n')[0] : String(error)
+        }) The render smoke test did NOT run on this machine.`,
+      );
+      ctx.skip();
+      return;
+    }
 
-      const probe = ffprobe(output);
-      const video = probe.streams.find((stream) => stream.codec_name === 'h264');
+    const probe = ffprobe(output);
+    const video = probe.streams.find((stream) => stream.codec_name === 'h264');
 
-      expect(video, 'the file must carry an H.264 stream').toBeDefined();
-      expect(video?.pix_fmt).toBe('yuv420p');
-      expect([video?.width, video?.height]).toEqual([WIDTH, HEIGHT]);
-      expect(probe.format.format_name ?? '').toContain('mp4');
+    expect(video, 'the file must carry an H.264 stream').toBeDefined();
+    expect(video?.pix_fmt).toBe('yuv420p');
+    expect([video?.width, video?.height]).toEqual([WIDTH, HEIGHT]);
+    expect(probe.format.format_name ?? '').toContain('mp4');
 
-      const duration = Number.parseFloat(probe.format.duration ?? '0');
-      expect(Math.abs(duration - FIXTURE_TIMELINE.totalSec)).toBeLessThanOrEqual(0.5);
-    },
-    240_000,
-  );
+    const duration = Number.parseFloat(probe.format.duration ?? '0');
+    expect(Math.abs(duration - FIXTURE_TIMELINE.totalSec)).toBeLessThanOrEqual(0.5);
+  }, 240_000);
 });
 
 describe('finding a browser', () => {
   it('prefers an explicitly configured binary', () => {
     expect(findBrowser({ REMOTION_BROWSER_EXECUTABLE: '/bin/sh' })?.source).toBe('env');
-    expect(findBrowser({ REMOTION_BROWSER_EXECUTABLE: '/no/such/browser' })?.source).not.toBe('env');
+    expect(findBrowser({ REMOTION_BROWSER_EXECUTABLE: '/no/such/browser' })?.source).not.toBe(
+      'env',
+    );
   });
 
   it('explains itself when there is nothing to render with', () => {

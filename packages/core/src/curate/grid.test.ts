@@ -168,17 +168,19 @@ describe('the counts line', () => {
   });
 
   it('never scolds an empty grid', () => {
-    expect(summarise({
-      photos: 0,
-      approved: 0,
-      hidden: 0,
-      blurry: 0,
-      duplicatesCollapsed: 0,
-      needsIdentification: 0,
-      contributors: 0,
-      problems: 0,
-      videos: 0,
-    })).toBe('No photos yet. They will appear here as they arrive.');
+    expect(
+      summarise({
+        photos: 0,
+        approved: 0,
+        hidden: 0,
+        blurry: 0,
+        duplicatesCollapsed: 0,
+        needsIdentification: 0,
+        contributors: 0,
+        problems: 0,
+        videos: 0,
+      }),
+    ).toBe('No photos yet. They will appear here as they arrive.');
   });
 
   it('gets the singulars right, because "1 photos" is a papercut', () => {

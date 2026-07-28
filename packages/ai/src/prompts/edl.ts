@@ -96,7 +96,8 @@ export function assetPromptLine(asset: EdlPromptAsset): string {
   if (asset.description) facts.push(asset.description);
   if (asset.settingTags && asset.settingTags.length > 0) facts.push(asset.settingTags.join(', '));
   if (asset.emotionalTone) facts.push(asset.emotionalTone);
-  if (asset.suitability != null) facts.push(`carries a full screen: ${asset.suitability.toFixed(2)}`);
+  if (asset.suitability != null)
+    facts.push(`carries a full screen: ${asset.suitability.toFixed(2)}`);
   if (asset.suggestedCaption) facts.push(`caption idea: ${asset.suggestedCaption}`);
   return `- ${asset.assetId}${ASSET_SEPARATOR}${facts.join(' — ')}`;
 }
@@ -132,7 +133,11 @@ export function parseEdlQuoteLines(text: string): ParsedEdlQuoteLine[] {
     if (!match) continue;
     const [, index, attribution, quoted] = match;
     if (!index || !attribution || !quoted) continue;
-    out.push({ index: Number.parseInt(index, 10), attribution: attribution.trim(), text: quoted.trim() });
+    out.push({
+      index: Number.parseInt(index, 10),
+      attribution: attribution.trim(),
+      text: quoted.trim(),
+    });
   }
   return out;
 }
@@ -152,9 +157,7 @@ export function buildEdlPrompt(input: EdlPromptInput): string {
         : '';
 
   const lines: string[] = [];
-  lines.push(
-    `This slideshow is for ${subject.fullName}${years ? ` (${years})` : ''}.`,
-  );
+  lines.push(`This slideshow is for ${subject.fullName}${years ? ` (${years})` : ''}.`);
   if (subject.knownAs) lines.push(`Most people called them ${subject.knownAs}.`);
   lines.push(
     '',
@@ -191,10 +194,7 @@ export function buildEdlPrompt(input: EdlPromptInput): string {
     lines.push('', 'No memories have been approved yet, so use no quote cards.');
   }
 
-  lines.push(
-    '',
-    'Return the opening title card, the chapters in order, and the closing card.',
-  );
+  lines.push('', 'Return the opening title card, the chapters in order, and the closing card.');
   return lines.join('\n');
 }
 

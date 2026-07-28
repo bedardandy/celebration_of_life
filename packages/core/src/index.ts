@@ -29,6 +29,15 @@ export * from './curate/actions';
 
 export * from './edl';
 
+export * from './music/library';
+export * from './music/seed';
+export * from './music/recommend';
+export * from './music/selection';
+
+export * from './deliver/filenames';
+export * from './deliver/render-jobs';
+export * from './deliver/cards';
+
 // Re-exported so server code has a single import; client code must use
 // '@col/core/ui' directly, which pulls in none of the above.
 export * from './ui';

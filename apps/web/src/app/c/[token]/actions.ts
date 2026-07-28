@@ -8,7 +8,13 @@ import {
   type ContributorContext,
 } from '@col/core';
 import { db } from '@/server/db';
-import { clearBatch, currentContributor, readBatch, rememberContributor, resolveToken } from '@/server/contributor';
+import {
+  clearBatch,
+  currentContributor,
+  readBatch,
+  rememberContributor,
+  resolveToken,
+} from '@/server/contributor';
 
 /**
  * Every action here starts by re-resolving the link. The URL is the credential,

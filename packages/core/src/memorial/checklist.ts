@@ -42,6 +42,14 @@ export type ChecklistCounts = {
     lengthLabel?: string;
     /** A generate-edl job is on the queue right now. */
     building?: boolean;
+    /** The family has chosen how the music works. */
+    musicChosen?: boolean;
+    /** One line about the music, for the card. */
+    musicLine?: string;
+    /** A render is queued or running right now. */
+    rendering?: boolean;
+    /** A verified MP4 is sitting in the blob store, ready to download. */
+    delivered?: boolean;
   };
 };
 
@@ -153,11 +161,49 @@ function slideshowCard(memorialId: string, counts: ChecklistCounts): ChecklistCa
   };
   const slideshow = counts.slideshow;
 
+  // The end of the road first: a family with a finished video should be looking
+  // at how to get it into the room, not at the slideshow editor.
+  if (slideshow?.delivered) {
+    return {
+      ...base,
+      title: 'The video is ready',
+      help: 'Download it, and take the card for the funeral director.',
+      href: `/m/${memorialId}/deliver`,
+      state: 'ready',
+      statusLine: 'Made and checked — it will play. There is guidance for the USB stick too.',
+    };
+  }
+
+  if (slideshow?.rendering) {
+    return {
+      ...base,
+      title: 'Making the video',
+      help: 'About 5–15 minutes. Nothing needs you while it runs.',
+      href: `/m/${memorialId}/deliver`,
+      state: 'in-progress',
+      statusLine: 'The file is being made. You can close this and come back.',
+    };
+  }
+
   // Once something exists, it outranks every threshold: a family watching their
   // own slideshow must never be told the card is locked.
   if (slideshow?.hasEdl) {
     const slides = slideshow.slideCount ?? 0;
     const length = slideshow.lengthLabel ? `, about ${slideshow.lengthLabel}` : '';
+
+    if (slideshow.musicChosen) {
+      return {
+        ...base,
+        title: 'Make the video',
+        help: 'The slideshow and the music are both settled.',
+        href: `/m/${memorialId}/deliver`,
+        state: 'ready',
+        statusLine:
+          slideshow.musicLine ??
+          `Ready to make — ${slides} ${slides === 1 ? 'slide' : 'slides'}${length}.`,
+      };
+    }
+
     return {
       ...base,
       title: 'Watch the slideshow',
@@ -219,9 +265,19 @@ export function computeChecklist(
       enoughPhotos: counts.photos >= MIN_PHOTOS_FOR_SLIDESHOW,
       readyToBuild,
       hasSlideshow: counts.slideshow?.hasEdl === true,
+      ...deliveryFlags(counts),
     },
     nextStep: suggestNextStep(counts, readyToBuild),
     readyToBuild,
+  };
+}
+
+/** Added to `flags` so a later phase can diff progress without recomputing. */
+function deliveryFlags(counts: ChecklistCounts): Record<string, boolean> {
+  return {
+    musicChosen: counts.slideshow?.musicChosen === true,
+    rendering: counts.slideshow?.rendering === true,
+    delivered: counts.slideshow?.delivered === true,
   };
 }
 
@@ -231,6 +287,15 @@ export function computeChecklist(
  * that actually takes weight off the organiser.
  */
 export function suggestNextStep(counts: ChecklistCounts, readyToBuild: boolean): string {
+  if (counts.slideshow?.delivered) {
+    return 'The video is made. What is left is getting it to the venue and testing it there.';
+  }
+  if (counts.slideshow?.rendering) {
+    return 'The video is being made. Nothing needs you right now.';
+  }
+  if (counts.slideshow?.hasEdl && counts.slideshow.musicChosen) {
+    return 'Everything is chosen — the next step is making the video file.';
+  }
   if (counts.slideshow?.hasEdl) {
     return 'The slideshow is ready to watch — see whether it sounds like them.';
   }

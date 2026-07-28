@@ -17,6 +17,8 @@ export type RunResult = {
   code: number;
   stdout: string;
   stderr: string;
+  /** Present only when `binaryStdout` was asked for: raw, undecoded bytes. */
+  stdoutBuffer?: Buffer;
   durationMs: number;
   command: string;
   args: string[];
@@ -30,6 +32,13 @@ export type RunOptions = {
   signal?: AbortSignal;
   /** Called with each stderr chunk — ffmpeg reports progress there. */
   onStderr?: (chunk: string) => void;
+  /**
+   * Keep stdout as bytes rather than decoding it as UTF-8. Needed whenever
+   * ffmpeg is piping raw PCM out: decoding samples as text destroys them.
+   */
+  binaryStdout?: boolean;
+  /** Cap on captured stdout. Raw PCM needs far more room than a JSON probe. */
+  maxStdoutBytes?: number;
 };
 
 export class FfmpegError extends Error {
@@ -86,6 +95,10 @@ function run(command: string, args: string[], options: RunOptions = {}): Promise
 
     let stdout = '';
     let stderr = '';
+    const stdoutChunks: Buffer[] = [];
+    let stdoutBytes = 0;
+    const maxStdoutBytes =
+      options.maxStdoutBytes ?? (options.binaryStdout ? 512_000_000 : MAX_CAPTURE_BYTES);
     let settled = false;
     let timedOut = false;
 
@@ -103,7 +116,14 @@ function run(command: string, args: string[], options: RunOptions = {}): Promise
     };
 
     child.stdout?.on('data', (d: Buffer) => {
-      if (stdout.length < MAX_CAPTURE_BYTES) stdout += d.toString('utf8');
+      if (options.binaryStdout) {
+        if (stdoutBytes + d.byteLength <= maxStdoutBytes) {
+          stdoutChunks.push(d);
+          stdoutBytes += d.byteLength;
+        }
+        return;
+      }
+      if (stdout.length < maxStdoutBytes) stdout += d.toString('utf8');
     });
     child.stderr?.on('data', (d: Buffer) => {
       const chunk = d.toString('utf8');
@@ -127,6 +147,7 @@ function run(command: string, args: string[], options: RunOptions = {}): Promise
         code: code ?? -1,
         stdout,
         stderr,
+        ...(options.binaryStdout ? { stdoutBuffer: Buffer.concat(stdoutChunks) } : {}),
         durationMs: Date.now() - startedAt,
         command,
         args,

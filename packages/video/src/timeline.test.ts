@@ -6,7 +6,12 @@
  * notice in a rendered file.
  */
 import { describe, expect, it } from 'vitest';
-import { EdlSchema, type Edl, type PhotoSlide as PhotoSlideType, type ResolvedTimeline } from '@col/schemas';
+import {
+  EdlSchema,
+  type Edl,
+  type PhotoSlide as PhotoSlideType,
+  type ResolvedTimeline,
+} from '@col/schemas';
 import { framesFor, slidePlacements, timelineDurationInFrames } from './timeline';
 import { stageOpacity } from './slides/Stage';
 import { isPortrait, kenBurnsRect, transformForRect } from './slides/PhotoSlide';
@@ -27,7 +32,12 @@ const edl: Edl = EdlSchema.parse({
   theme: { id: 'quiet-linen' },
   chapters: [{ id: 'c1', title: 'One', slideIds: ['a', 'b', 'c'] }],
   slides: {
-    a: { kind: 'title', text: 'Margaret', durationSec: 4, transitionOut: { kind: 'crossfade', durationSec: 0.8 } },
+    a: {
+      kind: 'title',
+      text: 'Margaret',
+      durationSec: 4,
+      transitionOut: { kind: 'crossfade', durationSec: 0.8 },
+    },
     b: {
       kind: 'photo',
       assetId: 'asset-1',

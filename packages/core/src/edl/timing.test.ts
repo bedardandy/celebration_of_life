@@ -350,7 +350,10 @@ describe('cut projection', () => {
   it('honours an explicit include list when the family has made one', () => {
     const edl = makeEdl(2, 5);
     const chosen = ['opening-title', 'c1-s1', 'c2-s1', 'closing-card'];
-    const timeline = projectCut({ ...edl, cuts: { ...edl.cuts, service: { targetSec: 300, includeSlideIds: chosen } } }, 'service');
+    const timeline = projectCut(
+      { ...edl, cuts: { ...edl.cuts, service: { targetSec: 300, includeSlideIds: chosen } } },
+      'service',
+    );
     expect(timeline.slides.map((slide) => slide.slideId)).toEqual(chosen);
   });
 

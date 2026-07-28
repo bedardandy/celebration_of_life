@@ -48,11 +48,7 @@ export function transformForRect(rect: Rect, width: number, height: number): str
 }
 
 /** Where the move has got to on this frame, 0 at the start and 1 at the end. */
-export function kenBurnsRect(
-  slide: PhotoSlideType,
-  frame: number,
-  durationInFrames: number,
-): Rect {
+export function kenBurnsRect(slide: PhotoSlideType, frame: number, durationInFrames: number): Rect {
   const easing = EASINGS[slide.kenBurns.easing] ?? EASINGS.easeInOut;
   const at = (from: number, to: number) =>
     interpolate(frame, [0, Math.max(1, durationInFrames - 1)], [from, to], {
@@ -121,7 +117,9 @@ export function PhotoSlide({ slide, durationInFrames, src }: PhotoSlideProps) {
         </AbsoluteFill>
       )}
 
-      {slide.caption ? <Caption text={slide.caption.text} position={slide.caption.position} /> : null}
+      {slide.caption ? (
+        <Caption text={slide.caption.text} position={slide.caption.position} />
+      ) : null}
     </AbsoluteFill>
   );
 }

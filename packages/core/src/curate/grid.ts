@@ -148,7 +148,8 @@ export function buildCurationView(input: BuildViewInput): CurationView {
     const blurry = isBlurry(asset.blurScore);
     const problem =
       asset.ingestState === 'failed'
-        ? (asset.ingestError ?? 'We could not open this one. Nothing is lost — try sending it again.')
+        ? (asset.ingestError ??
+          'We could not open this one. Nothing is lost — try sending it again.')
         : undefined;
     const contributor = asset.uploadedByParticipantId
       ? contributorNames.get(asset.uploadedByParticipantId)

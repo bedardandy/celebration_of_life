@@ -6,8 +6,9 @@
  * a person can act on — this process is the one that runs unattended while a
  * family waits for a video.
  */
-import { checkFfmpeg } from '@col/core';
+import { checkFfmpeg, seedMusicLibrary } from '@col/core';
 import { closeDb, ensureDatabase, getDb } from '@col/db';
+import { getBlobStore } from '@col/storage';
 import { loadWorkerConfig } from './config';
 import { createWorker } from './worker';
 import { handlers } from './handlers';
@@ -29,6 +30,27 @@ async function main(): Promise<void> {
   }
 
   const db = getDb();
+
+  // The bundled music library, loaded on every boot. Idempotent by slug, so
+  // this is a no-op once it has run, and a track that has been fixed or added
+  // needs no migration — only a restart.
+  try {
+    const seeded = await seedMusicLibrary(db, getBlobStore());
+    log.info('music library ready', {
+      added: seeded.added.length,
+      updated: seeded.updated.length,
+      unchanged: seeded.unchanged.length,
+    });
+    for (const problem of seeded.problems) {
+      log.warn('music track excluded', { slug: problem.slug, reason: problem.reason });
+    }
+  } catch (error) {
+    // A music problem must never stop photographs being processed.
+    log.error('the music library could not be loaded', {
+      error: error instanceof Error ? error.message : String(error),
+    });
+  }
+
   const worker = createWorker({ db, config });
 
   log.info('handlers registered', { types: handlers.types().join(',') });

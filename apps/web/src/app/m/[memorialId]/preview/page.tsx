@@ -20,6 +20,7 @@ import {
   latestProject,
   previewView,
   projectEdl,
+  summariseMusic,
   type PreviewSlideRow,
 } from '@col/core';
 import type { CutName, Slide } from '@col/schemas';
@@ -79,6 +80,7 @@ export default async function PreviewPage({
   }
 
   const view = previewView(edl, cut);
+  const music = summariseMusic(db(), project);
   const assets = approvedAssets(db(), memorialId);
   const assetUrlMap = Object.fromEntries(
     assets.map((asset) => [asset.id, `/api/assets/${asset.id}?variant=web1600`]),
@@ -89,14 +91,23 @@ export default async function PreviewPage({
       wide
       eyebrow={`Remembering ${memorial.decedentName}`}
       title="Watch it through"
-      helper={`${cut === 'service' ? 'The service cut' : 'The family cut'} — ${describeLength(view.timeline.totalSec)}, ${view.timeline.slides.length} slides.`}
+      helper={`${cut === 'service' ? 'The service cut' : 'The family cut'} — ${describeLength(view.timeline.totalSec)}, ${view.timeline.slides.length} slides.${music.decided ? ` ${music.line}` : ''}`}
       primary={
-        <Link className={step.primary} href={`/m/${memorialId}/music`}>
-          Looks good — choose music next
-        </Link>
+        // Once the music is settled there is exactly one thing left worth
+        // doing, and it is not looking at this screen again.
+        music.decided ? (
+          <Link className={step.primary} href={`/m/${memorialId}/deliver`}>
+            Looks good — make the video
+          </Link>
+        ) : (
+          <Link className={step.primary} href={`/m/${memorialId}/music`}>
+            Looks good — choose music next
+          </Link>
+        )
       }
       secondary={
         <>
+          {music.decided ? <Link href={`/m/${memorialId}/music`}>Change the music</Link> : null}
           <Link href={`/m/${memorialId}/story-shape`}>Try a different shape</Link>
           <Link href={`/m/${memorialId}`}>Back to the dashboard</Link>
         </>

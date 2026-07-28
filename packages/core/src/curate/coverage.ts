@@ -76,7 +76,10 @@ export function findCoverageGaps(input: CoverageInput): CoverageGap[] {
     const era = `${startYear}s`;
     if ((countsByEra.get(era) ?? 0) > 0) continue;
     const ageRange = input.birthYear
-      ? { from: Math.max(0, startYear - input.birthYear), to: Math.max(0, startYear + 9 - input.birthYear) }
+      ? {
+          from: Math.max(0, startYear - input.birthYear),
+          to: Math.max(0, startYear + 9 - input.birthYear),
+        }
       : undefined;
     gaps.push({
       era,

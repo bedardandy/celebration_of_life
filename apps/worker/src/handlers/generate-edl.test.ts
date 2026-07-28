@@ -70,7 +70,9 @@ function addApprovedPhoto(index: number, capturedYear?: number): string {
     ingestState: 'ready',
     width: index % 3 === 0 ? 1200 : 4000,
     height: index % 3 === 0 ? 1600 : 3000,
-    ...(capturedYear ? { capturedAt: Date.UTC(capturedYear, 5, 1), eraGuess: `${capturedYear}s` } : {}),
+    ...(capturedYear
+      ? { capturedAt: Date.UTC(capturedYear, 5, 1), eraGuess: `${capturedYear}s` }
+      : {}),
     analysis: {
       description: `A photograph, number ${index}`,
       settingTags: ['home'],
@@ -198,9 +200,7 @@ describe('generating an EDL from a fixture memorial', () => {
 describe('consent', () => {
   it('lets a subscription or local provider through without asking', () => {
     const local = { id: 'mock', capabilities: { costTier: 'free' } };
-    expect(
-      edlGenerationAllowed(local as never, { aiConsentExternal: false }).allowed,
-    ).toBe(true);
+    expect(edlGenerationAllowed(local as never, { aiConsentExternal: false }).allowed).toBe(true);
   });
 
   it('holds a metered provider until the family has said yes', () => {

@@ -1,0 +1,123 @@
+/**
+ * Printable, first and foremost.
+ *
+ * Black on white, one column, generous type, and everything that is only useful
+ * on a screen removed by the print stylesheet. A funeral director reads this
+ * standing up.
+ */
+
+.sheet {
+  max-width: 42rem;
+  margin: 0 auto;
+  padding: 40px 24px 72px;
+  color: var(--ink);
+}
+
+.title {
+  margin: 0 0 4px;
+  font-size: clamp(1.6rem, 4vw, 2.1rem);
+}
+
+.subtitle {
+  margin: 0 0 28px;
+  color: var(--ink-soft);
+  font-size: 1rem;
+}
+
+.lines {
+  margin: 0 0 28px;
+  padding: 0;
+}
+
+.line {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 16px;
+  padding: 12px 0;
+  border-bottom: 1px solid var(--line);
+}
+
+.label {
+  flex: 0 0 9rem;
+  margin: 0;
+  color: var(--ink-soft);
+  font-size: 0.95rem;
+}
+
+.value {
+  flex: 1 1 16rem;
+  margin: 0;
+  font-size: 1.05rem;
+  line-height: 1.5;
+  word-break: break-word;
+}
+
+.emphasis {
+  margin: 0 0 28px;
+  padding: 14px 18px;
+  border: 2px solid var(--ink);
+  border-radius: var(--radius);
+  font-size: 1.1rem;
+  line-height: 1.5;
+}
+
+.heading {
+  margin: 28px 0 10px;
+  font-size: 1.15rem;
+}
+
+.checklist {
+  margin: 0;
+  padding-left: 22px;
+  line-height: 1.7;
+}
+
+.checklist li + li {
+  margin-top: 8px;
+}
+
+.note {
+  margin: 10px 0 0;
+  color: var(--ink-soft);
+  line-height: 1.6;
+}
+
+.text {
+  margin: 12px 0 0;
+  padding: 16px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--paper-raised);
+  font-size: 0.9rem;
+  line-height: 1.5;
+  white-space: pre-wrap;
+  overflow-x: auto;
+}
+
+.screenOnly {
+  display: block;
+  margin-bottom: 24px;
+}
+
+.printHint {
+  display: block;
+  margin-top: 6px;
+  color: var(--ink-faint);
+  font-size: 0.9rem;
+}
+
+@media print {
+  .screenOnly {
+    display: none;
+  }
+
+  .sheet {
+    max-width: none;
+    padding: 0;
+    color: #000;
+  }
+
+  .emphasis {
+    border-color: #000;
+  }
+}

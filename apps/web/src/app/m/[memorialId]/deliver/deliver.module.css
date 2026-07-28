@@ -1,0 +1,197 @@
+.cuts {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-bottom: 28px;
+}
+
+.cutLink {
+  display: inline-flex;
+  align-items: center;
+  min-height: var(--tap);
+  padding: 0 18px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--paper-raised);
+  color: var(--ink-soft);
+  text-decoration: none;
+  font-size: 1rem;
+}
+
+.cutActive {
+  border-color: var(--accent);
+  color: var(--ink);
+}
+
+.started,
+.empty {
+  margin: 0 0 24px;
+  padding: 14px 18px;
+  border-left: 3px solid var(--accent);
+  background: var(--paper-raised);
+  color: var(--ink);
+  line-height: 1.55;
+}
+
+.empty {
+  border-left-color: var(--line);
+  color: var(--ink-soft);
+}
+
+/* --- one render per row ---------------------------------------------------- */
+
+.renders {
+  display: grid;
+  gap: 14px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.render {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px 24px;
+  align-items: center;
+  justify-content: space-between;
+  padding: 18px 22px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--paper-raised);
+}
+
+.renderHead {
+  flex: 1 1 14rem;
+}
+
+.renderTitle {
+  margin: 0;
+  font-size: 1.15rem;
+}
+
+.renderMeta {
+  margin: 4px 0 0;
+  color: var(--ink-soft);
+  font-size: 0.92rem;
+}
+
+.renderActions {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  align-items: flex-start;
+}
+
+.filename {
+  margin: 0;
+  color: var(--ink-faint);
+  font-size: 0.85rem;
+  word-break: break-all;
+}
+
+.renderProgress {
+  flex: 1 1 18rem;
+}
+
+.bar {
+  height: 10px;
+  border-radius: 999px;
+  background: var(--line);
+  overflow: hidden;
+}
+
+.barFill {
+  display: block;
+  height: 100%;
+  background: var(--accent);
+  transition: width 600ms ease;
+}
+
+.progressLine,
+.problem {
+  margin: 8px 0 0;
+  color: var(--ink-soft);
+  font-size: 0.95rem;
+  line-height: 1.5;
+}
+
+.problem {
+  color: var(--ink);
+}
+
+/* --- the primary action ---------------------------------------------------- */
+
+.primaryForm {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  align-items: flex-start;
+}
+
+.backupToggle {
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+  color: var(--ink-soft);
+  font-size: 0.97rem;
+  line-height: 1.5;
+  cursor: pointer;
+}
+
+.backupToggle input {
+  width: 20px;
+  height: 20px;
+  margin-top: 2px;
+}
+
+/* --- guidance -------------------------------------------------------------- */
+
+.guides {
+  margin-top: 40px;
+  padding-top: 24px;
+  border-top: 1px solid var(--line);
+}
+
+.guidesTitle {
+  margin: 0 0 16px;
+  font-size: 1.2rem;
+}
+
+.accordion {
+  margin-bottom: 10px;
+  padding: 14px 18px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--paper-raised);
+}
+
+.summary {
+  min-height: var(--tap);
+  display: flex;
+  align-items: center;
+  font-size: 1.05rem;
+  cursor: pointer;
+}
+
+.guideBody {
+  margin: 10px 0 0;
+  color: var(--ink-soft);
+  line-height: 1.6;
+}
+
+.guideLink {
+  display: inline-flex;
+  align-items: center;
+  min-height: var(--tap);
+}
+
+.steps {
+  margin: 12px 0 0;
+  padding-left: 22px;
+  color: var(--ink-soft);
+  line-height: 1.65;
+}
+
+.steps li + li {
+  margin-top: 8px;
+}

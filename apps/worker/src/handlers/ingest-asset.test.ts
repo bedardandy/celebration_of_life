@@ -248,10 +248,7 @@ describe('when something is wrong with the file', () => {
 
   it('shrugs at a photo the family removed while it sat in the queue', async () => {
     const assetId = await upload('01-portrait.jpg');
-    db.update(mediaAssets)
-      .set({ deletedAt: Date.now() })
-      .where(eq(mediaAssets.id, assetId))
-      .run();
+    db.update(mediaAssets).set({ deletedAt: Date.now() }).where(eq(mediaAssets.id, assetId)).run();
 
     const result = await runOnce({ db, config, logger: silent });
     expect(result.status).toBe('done');

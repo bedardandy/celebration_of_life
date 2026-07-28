@@ -141,7 +141,11 @@ describe('a personal ask', () => {
   });
 
   it('is listed for the organiser with what has arrived through it', () => {
-    createDelegatedAsk(db, { memorialId: memorial.id, name: 'Aunt Mary', templateSlug: 'anything' });
+    createDelegatedAsk(db, {
+      memorialId: memorial.id,
+      name: 'Aunt Mary',
+      templateSlug: 'anything',
+    });
     ensureCollectionLink(db, memorial.id);
 
     const links = listCollectionLinks(db, memorial);

@@ -8,12 +8,7 @@
  * the other two underneath, quieter, still there for anyone who disagrees.
  */
 import Link from 'next/link';
-import {
-  approvedAssets,
-  latestProject,
-  recommendStructure,
-  type StructureOption,
-} from '@col/core';
+import { approvedAssets, latestProject, recommendStructure, type StructureOption } from '@col/core';
 import { StepScreen, step } from '@/components/StepScreen';
 import { db } from '@/server/db';
 import { requireOrganizer } from '@/server/auth';

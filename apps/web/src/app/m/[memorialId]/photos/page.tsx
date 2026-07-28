@@ -239,7 +239,7 @@ export default async function PhotosPage({
             {recent.map((asset) => (
               <li key={asset.id} className={styles.arrival}>
                 {asset.ingestState === 'ready' && !asset.mime.startsWith('video/') ? (
-                    <img
+                  <img
                     className={styles.arrivalThumb}
                     src={`/api/assets/${asset.id}?variant=thumb320`}
                     alt={asset.originalFilename ?? 'A photo someone added'}

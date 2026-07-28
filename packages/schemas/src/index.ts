@@ -5,3 +5,4 @@ export * from './tradition-pack';
 export * from './photo-analysis';
 export * from './interview';
 export * from './jobs';
+export * from './music';

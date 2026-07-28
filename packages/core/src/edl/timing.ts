@@ -171,7 +171,10 @@ export function scalePhotoDurations(
   const photoIdx = slides.map((s, i) => (s.kind === 'photo' ? i : -1)).filter((i) => i >= 0);
   if (photoIdx.length === 0) return out;
 
-  const fixedSum = slides.reduce((sum, s, i) => (s.kind === 'photo' ? sum : sum + (base[i] ?? 0)), 0);
+  const fixedSum = slides.reduce(
+    (sum, s, i) => (s.kind === 'photo' ? sum : sum + (base[i] ?? 0)),
+    0,
+  );
   let remaining = wantedSum - fixedSum;
   let free = photoIdx;
 
@@ -344,7 +347,11 @@ function quantise0(seconds: number, fps: number): number {
  * held for nine seconds to catch a phrase is a photo the room has finished
  * looking at.
  */
-export function withinBand(kind: SlideKind, seconds: number, tolerance = SNAP_TOLERANCE_SEC): boolean {
+export function withinBand(
+  kind: SlideKind,
+  seconds: number,
+  tolerance = SNAP_TOLERANCE_SEC,
+): boolean {
   if (kind === 'photo') return seconds >= PHOTO_MIN_SEC && seconds <= PHOTO_MAX_SEC;
   const fixed = FIXED_DURATIONS[kind];
   return seconds >= fixed - tolerance && seconds <= fixed + tolerance;
@@ -427,7 +434,9 @@ export function projectCut(
 
   const targetSec =
     options.targetSec ??
-    (cut === 'service' ? (edl.cuts.service.targetSec ?? SERVICE_TARGET_SEC) : edl.cuts.family?.targetSec);
+    (cut === 'service'
+      ? (edl.cuts.service.targetSec ?? SERVICE_TARGET_SEC)
+      : edl.cuts.family?.targetSec);
 
   const timing = assignTimings(kept, {
     fps,

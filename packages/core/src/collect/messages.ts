@@ -79,5 +79,4 @@ export function messageDrafts(input: MessageInput): MessageDraft[] {
 export const COLLECTION_LINK_HELP =
   'Anyone with this link can add photos and memories. They will not need an account.';
 
-export const REVOKE_LINK_HELP =
-  'This stops the link from working; photos already shared stay.';
+export const REVOKE_LINK_HELP = 'This stops the link from working; photos already shared stay.';

@@ -141,6 +141,9 @@ importers:
       '@col/storage':
         specifier: workspace:*
         version: link:../../packages/storage
+      '@col/video':
+        specifier: workspace:*
+        version: link:../../packages/video
     devDependencies:
       '@types/node':
         specifier: ^22.19.2
@@ -319,7 +322,13 @@ importers:
       '@col/schemas':
         specifier: workspace:*
         version: link:../schemas
+      '@remotion/bundler':
+        specifier: ^4.0.500
+        version: 4.0.500(@swc/helpers@0.5.15)(postcss@8.5.24)(react-dom@19.2.8(react@19.2.8))(react@19.2.8)
       '@remotion/player':
+        specifier: ^4.0.500
+        version: 4.0.500(react-dom@19.2.8(react@19.2.8))(react@19.2.8)
+      '@remotion/renderer':
         specifier: ^4.0.500
         version: 4.0.500(react-dom@19.2.8(react@19.2.8))(react@19.2.8)
       react:
@@ -332,15 +341,9 @@ importers:
         specifier: ^4.0.500
         version: 4.0.500(react-dom@19.2.8(react@19.2.8))(react@19.2.8)
     devDependencies:
-      '@remotion/bundler':
-        specifier: ^4.0.500
-        version: 4.0.500(@swc/helpers@0.5.15)(postcss@8.5.24)(react-dom@19.2.8(react@19.2.8))(react@19.2.8)
       '@remotion/cli':
         specifier: ^4.0.500
         version: 4.0.500(@swc/helpers@0.5.15)(postcss@8.5.24)(react-dom@19.2.8(react@19.2.8))(react@19.2.8)(typescript@5.9.3)
-      '@remotion/renderer':
-        specifier: ^4.0.500
-        version: 4.0.500(react-dom@19.2.8(react@19.2.8))(react@19.2.8)
       '@types/node':
         specifier: ^22.19.2
         version: 22.20.1

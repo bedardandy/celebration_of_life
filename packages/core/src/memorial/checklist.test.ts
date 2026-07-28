@@ -122,6 +122,51 @@ describe('computeChecklist', () => {
     expect(nextStep).toContain('being put together');
   });
 
+  it('moves the card on to making the video once the music is settled', () => {
+    const { cards, nextStep } = computeChecklist(memorial, {
+      photos: 40,
+      memories: 4,
+      slideshow: {
+        hasEdl: true,
+        slideCount: 42,
+        lengthLabel: '5 minutes',
+        musicChosen: true,
+        musicLine: 'Evensong is included in the video, so it can be shared anywhere.',
+      },
+    });
+    const slideshow = card(cards, 'slideshow');
+    expect(slideshow.title).toBe('Make the video');
+    expect(slideshow.href).toBe('/m/m-1/deliver');
+    expect(slideshow.statusLine).toContain('Evensong');
+    expect(nextStep).toContain('making the video file');
+  });
+
+  it('says a video is being made, and that nothing needs them meanwhile', () => {
+    const { cards, nextStep } = computeChecklist(memorial, {
+      photos: 40,
+      memories: 4,
+      slideshow: { hasEdl: true, musicChosen: true, rendering: true },
+    });
+    const slideshow = card(cards, 'slideshow');
+    expect(slideshow.state).toBe('in-progress');
+    expect(slideshow.statusLine).toContain('close this');
+    expect(nextStep).toContain('Nothing needs you');
+  });
+
+  it('points a family with a finished video at getting it into the room', () => {
+    const { cards, nextStep, flags } = computeChecklist(memorial, {
+      photos: 40,
+      memories: 4,
+      // A backup copy still rendering must not hide a video that is ready.
+      slideshow: { hasEdl: true, musicChosen: true, rendering: true, delivered: true },
+    });
+    const slideshow = card(cards, 'slideshow');
+    expect(slideshow.title).toBe('The video is ready');
+    expect(slideshow.href).toBe('/m/m-1/deliver');
+    expect(nextStep).toContain('getting it to the venue');
+    expect(flags['delivered']).toBe(true);
+  });
+
   it('reports flags that can be persisted on the memorial row', () => {
     const done = computeChecklist(
       { id: 'm-1', intakeCompletedAt: 123 },
@@ -135,6 +180,11 @@ describe('computeChecklist', () => {
       enoughPhotos: true,
       readyToBuild: true,
       hasSlideshow: false,
+      // Delivery flags: false rather than absent, so a diff over time can tell
+      // "not yet" from "this memorial predates the question".
+      musicChosen: false,
+      rendering: false,
+      delivered: false,
     });
     expect(Object.values(done.flags).every((v) => typeof v === 'boolean')).toBe(true);
   });

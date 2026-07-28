@@ -140,7 +140,10 @@ describe('assembly', () => {
     const loose = proposal();
     const chapter = loose.chapters[0];
     // Same words, different whitespace and curly quotes: still verbatim.
-    if (chapter) chapter.quotes = [{ text: `  ${QUOTE.replace(/'/g, '’')}  `, attribution: 'x', placement: 'before' }];
+    if (chapter)
+      chapter.quotes = [
+        { text: `  ${QUOTE.replace(/'/g, '’')}  `, attribution: 'x', placement: 'before' },
+      ];
     const { edl } = assembleEdl(loose, context());
     const quote = Object.values(edl.slides).find((slide) => slide.kind === 'quote');
     expect(quote?.kind).toBe('quote');

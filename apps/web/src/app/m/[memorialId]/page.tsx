@@ -5,11 +5,14 @@ import {
   dashboardBanner,
   describeLength,
   formatServiceDate,
+  hasDeliverable,
+  isRendering,
   latestProject,
   projectCut,
   projectEdl,
   resumeIntakeStep,
   subjectOf,
+  summariseMusic,
   type ChecklistCard,
   type ChecklistCounts,
   type DeadlineBanner,
@@ -132,10 +135,17 @@ function slideshowProgress(memorialId: string): ChecklistCounts['slideshow'] {
   const edl = projectEdl(project);
   if (!edl) return { hasEdl: false, building: true };
   const family = projectCut(edl, 'family');
+  const music = summariseMusic(db(), project);
   return {
     hasEdl: true,
     slideCount: family.slides.length,
     lengthLabel: describeLength(family.totalSec),
+    musicChosen: music.decided,
+    musicLine: music.line,
+    // A finished file outranks a running render: a family who asked for the
+    // 720p backup as well should still be told the main one is ready.
+    delivered: hasDeliverable(db(), memorialId),
+    rendering: isRendering(db(), memorialId),
   };
 }
 

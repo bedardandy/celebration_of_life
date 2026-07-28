@@ -137,12 +137,7 @@ export const SLIDE_VARIANT = 'render2400' as const;
 
 /** Whitespace and case are noise; every other difference is a rewrite. */
 export function normalizeQuote(text: string): string {
-  return text
-    .replace(/[‘’]/g, "'")
-    .replace(/[“”]/g, '"')
-    .replace(/\s+/g, ' ')
-    .trim()
-    .toLowerCase();
+  return text.replace(/[‘’]/g, "'").replace(/[“”]/g, '"').replace(/\s+/g, ' ').trim().toLowerCase();
 }
 
 /**
@@ -317,7 +312,9 @@ export function promptAssetsFor(assets: readonly EdlAssetInput[]): EdlPromptAsse
     ...(asset.eraGuess ? { eraGuess: asset.eraGuess } : {}),
     ...(asset.description ? { description: asset.description } : {}),
     ...(asset.emotionalTone ? { emotionalTone: asset.emotionalTone } : {}),
-    ...(asset.settingTags && asset.settingTags.length > 0 ? { settingTags: asset.settingTags } : {}),
+    ...(asset.settingTags && asset.settingTags.length > 0
+      ? { settingTags: asset.settingTags }
+      : {}),
     ...(asset.suitability == null ? {} : { suitability: asset.suitability }),
     ...(asset.suggestedCaption ? { suggestedCaption: asset.suggestedCaption } : {}),
   }));
