@@ -27,6 +27,8 @@ export * from './curate/dedupe';
 export * from './curate/ingest';
 export * from './curate/actions';
 
+export * from './edl';
+
 // Re-exported so server code has a single import; client code must use
 // '@col/core/ui' directly, which pulls in none of the above.
 export * from './ui';

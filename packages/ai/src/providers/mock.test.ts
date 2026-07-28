@@ -228,6 +228,78 @@ describe('the mock and photo batches', () => {
   });
 });
 
+describe('the mock and EDL proposals', () => {
+  const template = {
+    id: 'proposal',
+    task: 'edl',
+    match: 'photographs available',
+    response: {
+      openingTitle: { text: 'Margaret Anne Doyle', subtext: '1938 — 2024' },
+      chapters: [
+        {
+          title: 'Where she began',
+          photos: [
+            { assetId: '{{asset:0}}', kenBurns: 'center' },
+            { assetId: '{{asset:1}}', kenBurns: 'wide' },
+          ],
+          quotes: [
+            { text: '{{memory:0}}', attribution: '{{memoryFrom:0}}', placement: 'before' },
+          ],
+        },
+        {
+          title: 'Later on',
+          photos: [{ assetId: '{{asset:9}}', kenBurns: 'center' }],
+          quotes: [],
+        },
+      ],
+      closing: { line1: 'Margaret Anne Doyle', line2: '' },
+    },
+  };
+
+  function request(dir: string, prompt: string) {
+    return resolveMockResponse({ messages: [{ role: 'user', content: prompt }], taskTag: 'edl' }, dir);
+  }
+
+  const prompt = [
+    'Photographs available (use these ids exactly, and no others):',
+    '',
+    '- asset-aaa :: 1950s — a portrait',
+    '- asset-bbb :: 1960s — at the beach',
+    '',
+    'Approved memories:',
+    '',
+    '~ 0 :: Her daughter, Anne :: She always said the garden would outlive her.',
+  ].join('\n');
+
+  it('fills a canned proposal with the ids and memories from the prompt', () => {
+    const dir = fixtureTree({ 'edl/00-proposal.json': template });
+    const resolution = request(dir, prompt);
+    expect(resolution.source).toBe('edl-proposal');
+
+    const proposal = JSON.parse(resolution.text) as {
+      chapters: { photos: { assetId: string }[]; quotes: { text: string; attribution: string }[] }[];
+    };
+    expect(proposal.chapters[0]?.photos.map((p) => p.assetId)).toEqual(['asset-aaa', 'asset-bbb']);
+    expect(proposal.chapters[0]?.quotes[0]?.text).toBe(
+      'She always said the garden would outlive her.',
+    );
+    expect(proposal.chapters[0]?.quotes[0]?.attribution).toBe('Her daughter, Anne');
+  });
+
+  it('prunes what it cannot fill rather than inventing an asset id', () => {
+    const dir = fixtureTree({ 'edl/00-proposal.json': template });
+    const proposal = JSON.parse(request(dir, prompt).text) as { chapters: { title: string }[] };
+    // The second chapter wanted a tenth photograph; there were two.
+    expect(proposal.chapters.map((chapter) => chapter.title)).toEqual(['Where she began']);
+  });
+
+  it('leaves requests without an asset list to the ordinary fixture path', () => {
+    const dir = fixtureTree({ 'edl/00-proposal.json': template });
+    const resolution = request(dir, 'No photographs available here at all.');
+    expect(resolution.source).not.toBe('edl-proposal');
+  });
+});
+
 function schemaFor(): Record<string, unknown> {
   return z.toJSONSchema(PhotoAnalysisBatchSchema) as Record<string, unknown>;
 }

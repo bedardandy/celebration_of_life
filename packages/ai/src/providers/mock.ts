@@ -27,6 +27,7 @@ import {
 import { findFixture, fixtureResponseText, fixturesDir, type FixtureCase } from '../fixtures';
 import { hasRepairTurn, requestMatchText } from '../generate-object';
 import { parseAssetLines } from '../prompts/photo-analysis';
+import { EDL_TASK, parseEdlAssetLines, parseEdlQuoteLines } from '../prompts/edl';
 import { synthesizeFromJsonSchema } from '../schema-walker';
 
 /** Task tag the photo-analysis batch job uses; also its fixture folder. */
@@ -86,7 +87,7 @@ function scriptedResponse(fixture: FixtureCase, cursorKey: string): unknown {
 
 export type MockResolution = {
   text: string;
-  source: 'fixture' | 'photo-batch' | 'schema' | 'echo';
+  source: 'fixture' | 'photo-batch' | 'edl-proposal' | 'schema' | 'echo';
   fixtureId?: string;
 };
 
@@ -100,6 +101,9 @@ export function resolveMockResponse(
 
   const batch = photoBatchResponse(request, matchText, dir);
   if (batch) return batch;
+
+  const proposal = edlProposalResponse(request, matchText, fixture);
+  if (proposal) return proposal;
 
   if (fixture) {
     const value = scriptedResponse(fixture, `${dir}::${task}::${fixture.id}`);
@@ -154,6 +158,82 @@ function photoBatchResponse(
     return { assetId: asset.assetId, analysis };
   });
   return { text: JSON.stringify({ analyses }, null, 2), source: 'photo-batch' };
+}
+
+/**
+ * EDL proposals have the same problem photo analysis does, one level up: a
+ * canned proposal cannot name asset ids or quote a memory that only exists once
+ * a real family has uploaded and approved things. So the fixture is written as
+ * a *template* — `{{asset:0}}`, `{{memory:1}}`, `{{memoryFrom:1}}` — and the
+ * mock fills it in from the very prompt the job just built.
+ *
+ * Placeholders that have nothing to fill them (a fixture that expects six
+ * photographs, a memorial that has four) are pruned rather than left dangling,
+ * so a small fixture memorial still produces a clean proposal.
+ */
+export function edlProposalResponse(
+  request: AiCompleteRequest,
+  matchText: string,
+  fixture: FixtureCase | undefined,
+): MockResolution | undefined {
+  if (request.taskTag !== EDL_TASK) return undefined;
+  const template = plainObject(fixture?.response);
+  if (!template) return undefined;
+  const assets = parseEdlAssetLines(matchText);
+  if (assets.length === 0) return undefined;
+
+  const quotes = parseEdlQuoteLines(matchText);
+  const filled = JSON.stringify(template).replace(
+    /\{\{(asset|memory|memoryFrom):(\d+)\}\}/g,
+    (whole, kind: string, rawIndex: string) => {
+      const index = Number.parseInt(rawIndex, 10);
+      if (kind === 'asset') return assets[index]?.assetId ?? whole;
+      const quote = quotes.find((q) => q.index === index);
+      if (!quote) return whole;
+      return jsonSafe(kind === 'memory' ? quote.text : quote.attribution);
+    },
+  );
+
+  let parsed: unknown;
+  try {
+    parsed = JSON.parse(filled);
+  } catch {
+    return undefined;
+  }
+  return {
+    text: JSON.stringify(pruneUnfilled(parsed as Record<string, unknown>), null, 2),
+    source: 'edl-proposal',
+    ...(fixture?.id ? { fixtureId: fixture.id } : {}),
+  };
+}
+
+/** Escaped for the inside of a JSON string literal, minus the quote marks. */
+function jsonSafe(text: string): string {
+  return JSON.stringify(text).slice(1, -1);
+}
+
+const UNFILLED = /\{\{(asset|memory|memoryFrom):\d+\}\}/;
+
+function pruneUnfilled(proposal: Record<string, unknown>): Record<string, unknown> {
+  const chapters = Array.isArray(proposal['chapters']) ? proposal['chapters'] : [];
+  const kept = chapters
+    .map((raw) => {
+      const chapter = plainObject(raw);
+      if (!chapter) return undefined;
+      const photos = (Array.isArray(chapter['photos']) ? chapter['photos'] : []).filter(
+        (photo) => !UNFILLED.test(String(plainObject(photo)?.['assetId'] ?? '')),
+      );
+      const quotes = (Array.isArray(chapter['quotes']) ? chapter['quotes'] : []).filter((quote) => {
+        const entry = plainObject(quote);
+        return !UNFILLED.test(`${entry?.['text'] ?? ''}${entry?.['attribution'] ?? ''}`);
+      });
+      return { ...chapter, photos, quotes } as Record<string, unknown>;
+    })
+    .filter(
+      (chapter): chapter is Record<string, unknown> =>
+        chapter !== undefined && (chapter['photos'] as unknown[]).length > 0,
+    );
+  return { ...proposal, chapters: kept };
 }
 
 function plainObject(value: unknown): Record<string, unknown> | undefined {

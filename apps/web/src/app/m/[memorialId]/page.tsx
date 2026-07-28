@@ -3,10 +3,15 @@ import {
   computeChecklist,
   currentDoc,
   dashboardBanner,
+  describeLength,
   formatServiceDate,
+  latestProject,
+  projectCut,
+  projectEdl,
   resumeIntakeStep,
   subjectOf,
   type ChecklistCard,
+  type ChecklistCounts,
   type DeadlineBanner,
 } from '@col/core';
 import { getPack } from '@col/tradition-packs';
@@ -55,6 +60,7 @@ export default async function DashboardPage({
     ),
     // The interview's own measure of progress: chapters a family can read back.
     storyChapters: currentDoc(db(), memorialId, subjectOf(memorial)).doc.chapters.length,
+    slideshow: slideshowProgress(memorialId),
   };
 
   const checklist = computeChecklist(memorial, counts);
@@ -113,6 +119,24 @@ export default async function DashboardPage({
       ) : null}
     </StepScreen>
   );
+}
+
+/**
+ * How far the slideshow has got, in the terms the card needs: is there
+ * something to watch, how long is it, and is a job putting one together right
+ * now. Computed rather than stored so it can never be stale.
+ */
+function slideshowProgress(memorialId: string): ChecklistCounts['slideshow'] {
+  const project = latestProject(db(), memorialId);
+  if (!project) return undefined;
+  const edl = projectEdl(project);
+  if (!edl) return { hasEdl: false, building: true };
+  const family = projectCut(edl, 'family');
+  return {
+    hasEdl: true,
+    slideCount: family.slides.length,
+    lengthLabel: describeLength(family.totalSec),
+  };
 }
 
 function Banner({ banner }: { banner: DeadlineBanner }) {

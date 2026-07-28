@@ -1,0 +1,261 @@
+/* --- player --------------------------------------------------------------- */
+
+.chapters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 12px;
+}
+
+.chapterButton {
+  min-height: var(--tap);
+  padding: 0 16px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--paper-raised);
+  color: var(--ink);
+  font-size: 0.95rem;
+  cursor: pointer;
+}
+
+.chapterButton:hover {
+  border-color: var(--accent);
+}
+
+/* --- cuts ----------------------------------------------------------------- */
+
+.cuts {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin: 24px 0 8px;
+}
+
+.cutLink {
+  min-height: var(--tap);
+  display: inline-flex;
+  align-items: center;
+  padding: 0 18px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  color: var(--ink-soft);
+  text-decoration: none;
+  font-size: 0.98rem;
+}
+
+.cutActive {
+  border-color: var(--accent);
+  color: var(--ink);
+  background: var(--paper-raised);
+}
+
+.note {
+  margin: 8px 0 0;
+  color: var(--ink-soft);
+  font-size: 0.95rem;
+}
+
+/* --- slide list ----------------------------------------------------------- */
+
+.list {
+  list-style: none;
+  margin: 28px 0 0;
+  padding: 0;
+  display: grid;
+  gap: 10px;
+}
+
+.row {
+  display: flex;
+  gap: 16px;
+  padding: 16px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--paper-raised);
+}
+
+.row:target {
+  border-color: var(--accent);
+}
+
+.thumb {
+  flex: 0 0 96px;
+  width: 96px;
+  height: 96px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+  background: var(--paper);
+  overflow: hidden;
+}
+
+.thumbImg {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.cardBadge {
+  font-size: 0.85rem;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+}
+
+.body {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+.rowTitle {
+  margin: 0;
+  font-size: 1.02rem;
+}
+
+.chapter {
+  display: block;
+  font-size: 0.82rem;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+}
+
+.timing {
+  margin: 2px 0 10px;
+  color: var(--ink-soft);
+  font-size: 0.9rem;
+}
+
+/* --- caption -------------------------------------------------------------- */
+
+.captionRow {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 12px;
+}
+
+.captionLabel {
+  font-size: 0.9rem;
+  color: var(--ink-soft);
+}
+
+.captionInput {
+  flex: 1 1 18rem;
+  min-height: var(--tap);
+  padding: 0 12px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--sans);
+  font-size: 1rem;
+}
+
+.captionInput:focus {
+  outline: 2px solid var(--focus);
+  outline-offset: 1px;
+}
+
+/* --- buttons -------------------------------------------------------------- */
+
+.buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.rowButton {
+  min-height: var(--tap);
+  padding: 0 14px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--paper);
+  color: var(--ink);
+  font-size: 0.95rem;
+  cursor: pointer;
+}
+
+.rowButton:hover:not(:disabled) {
+  border-color: var(--accent);
+}
+
+.rowButton:disabled {
+  opacity: 0.45;
+  cursor: default;
+}
+
+/* --- swap ----------------------------------------------------------------- */
+
+.swap {
+  margin-top: 12px;
+}
+
+.swapSummary {
+  min-height: var(--tap);
+  display: flex;
+  align-items: center;
+  color: var(--ink-soft);
+  font-size: 0.95rem;
+  cursor: pointer;
+}
+
+.swapGrid {
+  list-style: none;
+  margin: 8px 0 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.swapButton {
+  padding: 2px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--paper);
+  cursor: pointer;
+  line-height: 0;
+}
+
+.swapButton:hover {
+  border-color: var(--accent);
+}
+
+/* --- removed -------------------------------------------------------------- */
+
+.removed {
+  margin-top: 32px;
+  padding-top: 20px;
+  border-top: 1px solid var(--line);
+}
+
+.removedTitle {
+  margin: 0 0 4px;
+  font-size: 1.2rem;
+}
+
+.removedHelp {
+  margin: 0 0 12px;
+  color: var(--ink-soft);
+  font-size: 0.95rem;
+}
+
+.removedList {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 8px;
+}
+
+.removedItem {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  color: var(--ink-soft);
+}

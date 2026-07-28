@@ -1,0 +1,57 @@
+.recommended {
+  padding: 24px;
+  border: 1px solid var(--accent);
+  border-radius: var(--radius);
+  background: var(--paper-raised);
+}
+
+.badge {
+  margin: 0 0 8px;
+  font-size: 0.85rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+.title {
+  margin: 0 0 8px;
+  font-size: 1.5rem;
+}
+
+.blurb {
+  margin: 0 0 14px;
+  color: var(--ink);
+}
+
+.why {
+  margin: 0;
+  padding-top: 14px;
+  border-top: 1px solid var(--line);
+  color: var(--ink-soft);
+  font-size: 0.98rem;
+}
+
+.alternatives {
+  display: grid;
+  gap: 12px;
+  margin-top: 24px;
+}
+
+.alternative {
+  padding: 18px 20px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: transparent;
+}
+
+.altTitle {
+  margin: 0 0 4px;
+  font-size: 1.15rem;
+  color: var(--ink-soft);
+}
+
+.altBlurb {
+  margin: 0 0 8px;
+  color: var(--ink-soft);
+  font-size: 0.98rem;
+}

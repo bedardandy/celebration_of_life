@@ -1,0 +1,48 @@
+{
+  "id": "00-proposal",
+  "task": "edl",
+  "match": "photographs available (use these ids exactly",
+  "note": "The happy path: a whole slideshow proposed in one call. Written as a template because a canned response cannot know the asset ids or the memories of a family that has not uploaded anything yet — the mock provider fills {{asset:N}} from the prompt's own photo list and {{memory:N}} / {{memoryFrom:N}} from its approved-memories list, and prunes anything it cannot fill. Keep the quote text as a placeholder: a literal string here would be a quote card nobody wrote, which is the exact failure the verbatim check exists to catch.",
+  "response": {
+    "openingTitle": {
+      "text": "Margaret Anne Doyle",
+      "subtext": "1938 — 2024"
+    },
+    "chapters": [
+      {
+        "title": "Where she began",
+        "photos": [
+          { "assetId": "{{asset:0}}", "kenBurns": "center", "caption": "At home, before any of us" },
+          { "assetId": "{{asset:1}}", "kenBurns": "wide" }
+        ],
+        "quotes": [
+          { "text": "{{memory:0}}", "attribution": "{{memoryFrom:0}}", "placement": "before" }
+        ]
+      },
+      {
+        "title": "The years with everyone in them",
+        "photos": [
+          { "assetId": "{{asset:2}}", "kenBurns": "face-left", "caption": "The wedding" },
+          { "assetId": "{{asset:3}}", "kenBurns": "center" },
+          { "assetId": "{{asset:4}}", "kenBurns": "wide", "caption": "The garden she kept" }
+        ],
+        "quotes": [
+          { "text": "{{memory:1}}", "attribution": "{{memoryFrom:1}}", "placement": "after" }
+        ]
+      },
+      {
+        "title": "Later on",
+        "photos": [
+          { "assetId": "{{asset:5}}", "kenBurns": "face-right" },
+          { "assetId": "{{asset:6}}", "kenBurns": "center" },
+          { "assetId": "{{asset:7}}", "kenBurns": "wide" }
+        ],
+        "quotes": []
+      }
+    ],
+    "closing": {
+      "line1": "Margaret Anne Doyle",
+      "line2": "Thank you for being here."
+    }
+  }
+}

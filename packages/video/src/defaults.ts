@@ -1,4 +1,4 @@
-import { EDL_VERSION, type Edl, type TitleSlide } from '@col/schemas';
+import { EDL_VERSION, type Edl, type ResolvedTimeline, type TitleSlide } from '@col/schemas';
 
 /** Delivery of record: 1080p30. The Player preview uses the same numbers. */
 export const TRIBUTE_WIDTH = 1920;
@@ -35,6 +35,31 @@ export const DEFAULT_EDL: Edl = {
     },
   },
   cuts: { service: { targetSec: 300 } },
+  omittedSlideIds: [],
+};
+
+/**
+ * The resolved timeline that goes with {@link DEFAULT_EDL}.
+ *
+ * Written out rather than computed, because `@col/video` deliberately does not
+ * depend on `@col/core`: the composition is handed a timeline, it never works
+ * one out. This exists so Remotion Studio and `remotion compositions` have
+ * something to open before a real slideshow has been generated.
+ */
+export const DEFAULT_TIMELINE: ResolvedTimeline = {
+  cut: 'family',
+  fps: TRIBUTE_FPS,
+  totalSec: DEFAULT_DURATION_IN_FRAMES / TRIBUTE_FPS,
+  slides: [
+    {
+      slideId: 'slide-title',
+      startSec: 0,
+      durationSec: DEFAULT_DURATION_IN_FRAMES / TRIBUTE_FPS,
+      chapterId: 'chapter-open',
+    },
+  ],
+  chapters: [{ id: 'chapter-open', title: 'Opening', startSec: 0, slideCount: 1 }],
+  droppedSlideIds: [],
 };
 
 /**

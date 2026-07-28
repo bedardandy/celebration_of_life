@@ -2,6 +2,7 @@ import { z } from 'zod';
 import {
   AssetVariantKindSchema,
   AudioModeSchema,
+  CutNameSchema,
   EasingSchema,
   IdSchema,
   RectSchema,
@@ -86,6 +87,18 @@ export const PhotoSlideSchema = z
     kenBurns: KenBurnsSchema,
     caption: CaptionSchema.optional(),
     transitionOut: TransitionSchema,
+    /**
+     * 0..1, copied from the photo's analysis at assembly time. Carried on the
+     * slide so the service cut can be projected from the EDL alone — a cut that
+     * needed a database round-trip could not be recomputed in the browser.
+     */
+    suitability: z.number().min(0).max(1).optional(),
+    /**
+     * Source width ÷ height. Lets the composition decide, deterministically and
+     * without measuring pixels, whether a photo needs the blurred backing that
+     * stops a portrait picture from sitting in two black bars.
+     */
+    sourceAspect: z.number().gt(0).max(100).optional(),
   })
   .strict();
 
@@ -171,6 +184,15 @@ export const EdlSchema = z
     /** Keyed by slide id. Chapters reference these ids in order. */
     slides: z.record(IdSchema, SlideSchema),
     cuts: EdlCutsSchema,
+    /**
+     * Slides the family took out on the preview screen.
+     *
+     * They stay in `slides` and in their chapter, at their original position,
+     * and are simply skipped when a cut is resolved. That is what makes "put it
+     * back" exact rather than approximate — nothing about where the slide
+     * belonged has been thrown away.
+     */
+    omittedSlideIds: z.array(IdSchema).default([]),
   })
   .strict()
   .superRefine((edl, ctx) => {
@@ -194,5 +216,131 @@ export const EdlSchema = z
         });
       }
     }
+    for (const [si, slideId] of edl.omittedSlideIds.entries()) {
+      if (!(slideId in edl.slides)) {
+        ctx.addIssue({
+          code: 'custom',
+          path: ['omittedSlideIds', si],
+          message: `omitted slide id "${slideId}" is not a slide`,
+        });
+      }
+    }
   });
 export type Edl = z.infer<typeof EdlSchema>;
+
+/* -------------------------------------------------------------------------- */
+/* resolved timeline                                                           */
+/* -------------------------------------------------------------------------- */
+
+/**
+ * What the timing engine produces and what actually gets played.
+ *
+ * The EDL says what the slideshow *is*; a resolved timeline says where every
+ * slide lands on the clock for one particular cut. The browser preview and the
+ * renderer are handed the same resolved timeline, which is the only reason the
+ * two can be frame-identical.
+ */
+export const ResolvedSlideSchema = z
+  .object({
+    slideId: IdSchema,
+    startSec: z.number().min(0),
+    durationSec: z.number().gt(0),
+    /** Chapter this slide belongs to, so the preview can offer jump links. */
+    chapterId: IdSchema.optional(),
+  })
+  .strict();
+export type ResolvedSlide = z.infer<typeof ResolvedSlideSchema>;
+
+export const ResolvedChapterSchema = z
+  .object({
+    id: IdSchema,
+    title: z.string().min(1).max(120),
+    startSec: z.number().min(0),
+    slideCount: z.number().int().min(0),
+  })
+  .strict();
+export type ResolvedChapter = z.infer<typeof ResolvedChapterSchema>;
+
+export const ResolvedTimelineSchema = z
+  .object({
+    cut: CutNameSchema,
+    fps: z.number().int().min(1).max(120),
+    /** Wall-clock length including transition overlap. */
+    totalSec: z.number().min(0),
+    slides: z.array(ResolvedSlideSchema),
+    chapters: z.array(ResolvedChapterSchema),
+    /** Slides this cut left out, for the "shorter for the service" note. */
+    droppedSlideIds: z.array(IdSchema),
+  })
+  .strict();
+export type ResolvedTimeline = z.infer<typeof ResolvedTimelineSchema>;
+
+/* -------------------------------------------------------------------------- */
+/* EDL proposal (what the model is allowed to decide)                          */
+/* -------------------------------------------------------------------------- */
+
+/**
+ * Where the eye should be. The model names a focal region in words; the code
+ * turns each word into concrete from/to rectangles, so the arithmetic of a Ken
+ * Burns move is never something a language model got to invent.
+ */
+export const KenBurnsHintSchema = z.enum(['face-left', 'face-right', 'center', 'wide']);
+export type KenBurnsHint = z.infer<typeof KenBurnsHintSchema>;
+
+export const EdlProposalPhotoSchema = z
+  .object({
+    assetId: IdSchema,
+    kenBurns: KenBurnsHintSchema,
+    /** Short factual line. Optional, and the family can always edit it. */
+    caption: z.string().max(300).optional(),
+  })
+  .strict();
+export type EdlProposalPhoto = z.infer<typeof EdlProposalPhotoSchema>;
+
+/**
+ * A memory on screen in the family's own words.
+ *
+ * `text` must be a verbatim copy of an approved anecdote or memory note —
+ * assembly checks it against the list it supplied and drops anything the model
+ * rewrote. A memorial is not the place to discover that an AI improved a
+ * sentence someone's daughter wrote.
+ */
+export const EdlProposalQuoteSchema = z
+  .object({
+    text: z.string().min(1).max(600),
+    attribution: z.string().min(1).max(120),
+    /** Where in the chapter it lands: before the photos, or after them. */
+    placement: z.enum(['before', 'after']).default('before'),
+  })
+  .strict();
+export type EdlProposalQuote = z.infer<typeof EdlProposalQuoteSchema>;
+
+export const EdlProposalChapterSchema = z
+  .object({
+    title: z.string().min(1).max(120),
+    photos: z.array(EdlProposalPhotoSchema).max(400),
+    quotes: z.array(EdlProposalQuoteSchema).max(4).default([]),
+  })
+  .strict();
+export type EdlProposalChapter = z.infer<typeof EdlProposalChapterSchema>;
+
+export const EdlProposalSchema = z
+  .object({
+    /** The opening card: usually the name, and the years underneath. */
+    openingTitle: z
+      .object({
+        text: z.string().min(1).max(200),
+        subtext: z.string().max(200).optional(),
+      })
+      .strict(),
+    chapters: z.array(EdlProposalChapterSchema).min(1).max(12),
+    closing: z
+      .object({
+        line1: z.string().min(1).max(200),
+        /** One quiet line. Years, or "Thank you for being here." */
+        line2: z.string().max(200).default(''),
+      })
+      .strict(),
+  })
+  .strict();
+export type EdlProposal = z.infer<typeof EdlProposalSchema>;

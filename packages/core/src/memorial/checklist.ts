@@ -28,6 +28,21 @@ export type ChecklistCounts = {
    * interviewed has no document to count — which is not the same as zero.
    */
   storyChapters?: number;
+  /**
+   * How far the slideshow itself has got. Optional for the same reason
+   * `storyChapters` is: a memorial that has never opened the slideshow has no
+   * project, which is not the same as a project with nothing in it.
+   */
+  slideshow?: {
+    /** A generated EDL exists — there is something to watch. */
+    hasEdl: boolean;
+    /** Slides in the family cut. */
+    slideCount?: number;
+    /** "about 5 minutes", already phrased for a person. */
+    lengthLabel?: string;
+    /** A generate-edl job is on the queue right now. */
+    building?: boolean;
+  };
 };
 
 export type CardId = 'photos' | 'story' | 'slideshow';
@@ -136,6 +151,32 @@ function slideshowCard(memorialId: string, counts: ChecklistCounts): ChecklistCa
     help: 'Photos and music, timed for the service.',
     href: `/m/${memorialId}/slideshow`,
   };
+  const slideshow = counts.slideshow;
+
+  // Once something exists, it outranks every threshold: a family watching their
+  // own slideshow must never be told the card is locked.
+  if (slideshow?.hasEdl) {
+    const slides = slideshow.slideCount ?? 0;
+    const length = slideshow.lengthLabel ? `, about ${slideshow.lengthLabel}` : '';
+    return {
+      ...base,
+      title: 'Watch the slideshow',
+      help: 'Play it through and change anything that is not right.',
+      href: `/m/${memorialId}/preview`,
+      state: 'ready',
+      statusLine: `A first version is ready — ${slides} ${slides === 1 ? 'slide' : 'slides'}${length}.`,
+    };
+  }
+
+  if (slideshow?.building) {
+    return {
+      ...base,
+      href: `/m/${memorialId}/preview`,
+      state: 'in-progress',
+      statusLine: 'Putting it together now — a minute or two.',
+    };
+  }
+
   const enoughPhotos = counts.photos >= MIN_PHOTOS_FOR_SLIDESHOW;
   const enoughMemories = counts.memories >= MIN_MEMORIES_FOR_SLIDESHOW;
   if (!enoughPhotos || !enoughMemories) {
@@ -177,6 +218,7 @@ export function computeChecklist(
       hasStory: (counts.storyChapters ?? 0) > 0,
       enoughPhotos: counts.photos >= MIN_PHOTOS_FOR_SLIDESHOW,
       readyToBuild,
+      hasSlideshow: counts.slideshow?.hasEdl === true,
     },
     nextStep: suggestNextStep(counts, readyToBuild),
     readyToBuild,
@@ -189,6 +231,12 @@ export function computeChecklist(
  * that actually takes weight off the organiser.
  */
 export function suggestNextStep(counts: ChecklistCounts, readyToBuild: boolean): string {
+  if (counts.slideshow?.hasEdl) {
+    return 'The slideshow is ready to watch — see whether it sounds like them.';
+  }
+  if (counts.slideshow?.building) {
+    return 'The slideshow is being put together. Nothing else needs you right now.';
+  }
   if (counts.photos < MIN_PHOTOS_FOR_SLIDESHOW) {
     return 'The most helpful next step is gathering a few photos.';
   }

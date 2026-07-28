@@ -85,6 +85,43 @@ describe('computeChecklist', () => {
     );
   });
 
+  it('turns the slideshow card into a way back into the slideshow once one exists', () => {
+    const { cards, nextStep } = computeChecklist(memorial, {
+      photos: 30,
+      memories: 4,
+      slideshow: { hasEdl: true, slideCount: 42, lengthLabel: '5 minutes' },
+    });
+    const slideshow = card(cards, 'slideshow');
+    expect(slideshow.state).toBe('ready');
+    expect(slideshow.href).toBe('/m/m-1/preview');
+    expect(slideshow.statusLine).toContain('42 slides');
+    expect(slideshow.statusLine).toContain('5 minutes');
+    expect(nextStep).toContain('ready to watch');
+  });
+
+  it('unlocks the card even when the thresholds were never met, if a slideshow exists', () => {
+    // Someone who uploaded eight photographs and built anyway must not be told
+    // the card is locked while their own slideshow is sitting there.
+    const { cards } = computeChecklist(memorial, {
+      photos: 8,
+      memories: 0,
+      slideshow: { hasEdl: true, slideCount: 9 },
+    });
+    expect(card(cards, 'slideshow').state).toBe('ready');
+  });
+
+  it('says so plainly while one is being put together', () => {
+    const { cards, nextStep } = computeChecklist(memorial, {
+      photos: 30,
+      memories: 4,
+      slideshow: { hasEdl: false, building: true },
+    });
+    const slideshow = card(cards, 'slideshow');
+    expect(slideshow.state).toBe('in-progress');
+    expect(slideshow.statusLine).toContain('Putting it together');
+    expect(nextStep).toContain('being put together');
+  });
+
   it('reports flags that can be persisted on the memorial row', () => {
     const done = computeChecklist(
       { id: 'm-1', intakeCompletedAt: 123 },
@@ -97,6 +134,7 @@ describe('computeChecklist', () => {
       hasStory: false,
       enoughPhotos: true,
       readyToBuild: true,
+      hasSlideshow: false,
     });
     expect(Object.values(done.flags).every((v) => typeof v === 'boolean')).toBe(true);
   });

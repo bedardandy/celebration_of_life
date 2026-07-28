@@ -1,10 +1,16 @@
-import Link from 'next/link';
-import { StepScreen, step } from '@/components/StepScreen';
+/**
+ * The slideshow card's destination, which is really a signpost.
+ *
+ * Where a family lands depends on where they are: a slideshow that already
+ * exists means the preview, and one that does not means the single decision
+ * that produces it. Nobody should have to work out which screen they want.
+ */
+import { redirect } from 'next/navigation';
+import { latestProject, projectEdl } from '@col/core';
+import { db } from '@/server/db';
 import { requireOrganizer } from '@/server/auth';
 
 export const dynamic = 'force-dynamic';
-
-export const metadata = { title: 'Build the slideshow' };
 
 export default async function SlideshowPage({
   params,
@@ -12,19 +18,12 @@ export default async function SlideshowPage({
   params: Promise<{ memorialId: string }>;
 }) {
   const { memorialId } = await params;
-  const { memorial } = await requireOrganizer(memorialId);
+  await requireOrganizer(memorialId);
 
-  return (
-    <StepScreen
-      eyebrow={`Remembering ${memorial.decedentName}`}
-      title="Coming together"
-      helper="This is where the photos and the music become a video. It opens once you have a few photos and memories."
-      primary={
-        <Link className={step.primary} href={`/m/${memorialId}`}>
-          Back to the dashboard
-        </Link>
-      }
-      footer="Nothing you do elsewhere is affected by this page not being ready yet."
-    />
-  );
+  const project = latestProject(db(), memorialId);
+  if (projectEdl(project)) redirect(`/m/${memorialId}/preview`);
+  // A project with a job already queued still goes to the preview, which is
+  // where the waiting is explained.
+  if (project) redirect(`/m/${memorialId}/preview?waiting=1`);
+  redirect(`/m/${memorialId}/story-shape`);
 }
