@@ -13,8 +13,18 @@ import {
 } from './index';
 
 describe('tradition packs in this repo', () => {
-  it('ships the three Phase 0 packs', () => {
-    expect([...TRADITION_SLUGS]).toEqual(['catholic', 'jewish', 'secular']);
+  it('ships a pack for each tradition we have written for', () => {
+    expect([...TRADITION_SLUGS]).toEqual([
+      'buddhist',
+      'catholic',
+      'hindu',
+      'homegoing',
+      'jewish',
+      'muslim',
+      'orthodox-christian',
+      'protestant',
+      'secular',
+    ]);
   });
 
   it('every pack parses against TraditionPackSchema', () => {
@@ -26,6 +36,15 @@ describe('tradition packs in this repo', () => {
       expect(pack.musicGuidance.length).toBeGreaterThan(0);
       expect(pack.serviceTimelineNote.trim()).not.toBe('');
     }
+  });
+
+  it('carries the pacing preset the new packs imply', () => {
+    expect(getPack('muslim').pacingPreset).toBe('urgent24h');
+    expect(getPack('hindu').pacingPreset).toBe('memorial-cycle');
+    expect(getPack('buddhist').pacingPreset).toBe('memorial-cycle');
+    expect(getPack('orthodox-christian').pacingPreset).toBe('days3to7');
+    expect(getPack('protestant').pacingPreset).toBe('days3to7');
+    expect(getPack('homegoing').pacingPreset).toBe('flexible');
   });
 
   it('carries the pacing preset each tradition implies', () => {
@@ -43,6 +62,68 @@ describe('tradition packs in this repo', () => {
     expect(jewish.mediaPlacement.map((p) => p.context).join(' ')).toMatch(/shiva/i);
   });
 
+  it('is honest that norms vary, wherever a family might otherwise be misled', () => {
+    expect(getPack('muslim').serviceTimelineNote).toMatch(/varies|vary/i);
+    expect(getPack('hindu').serviceTimelineNote).toMatch(/differ|vary|varies/i);
+    expect(getPack('buddhist').serviceTimelineNote).toMatch(/varies|vary/i);
+    expect(
+      getPack('protestant')
+        .mediaPlacement.map((p) => p.guidance)
+        .join(' '),
+    ).toMatch(/varies from congregation/i);
+  });
+
+  it('says plainly where media does not belong', () => {
+    const janazah = getPack('muslim').mediaPlacement.find((p) => /janazah/i.test(p.context));
+    expect(janazah?.guidance).toMatch(/no music|no slideshow|no screen/i);
+
+    const orthodox = getPack('orthodox-christian');
+    expect(orthodox.musicGuidance.join(' ')).toMatch(/a cappella|voices alone/i);
+  });
+
+  it('treats the homegoing program as the keepsake it is', () => {
+    const program = getPack('homegoing').mediaPlacement.find((p) => /program/i.test(p.context));
+    expect(program?.guidance).toMatch(/keepsake/i);
+  });
+
+  /* -- the printed program ------------------------------------------------- */
+
+  it('gives every pack an order of service and readings', () => {
+    for (const pack of listPacks()) {
+      expect(pack.orderOfService.length, `${pack.slug} orderOfService`).toBeGreaterThan(0);
+      expect(pack.readings.length, `${pack.slug} readings`).toBeGreaterThan(0);
+      for (const item of pack.orderOfService) expect(item.item.trim()).not.toBe('');
+      for (const reading of pack.readings) {
+        expect(reading.title.trim()).not.toBe('');
+        expect(reading.source.trim()).not.toBe('');
+      }
+    }
+  });
+
+  /**
+   * Reproducing a text still in copyright inside a funeral program is a real
+   * legal problem for a family that has enough on. Anything we print carries a
+   * provenance line saying why we may; anything we may not is named only.
+   */
+  it('only reproduces readings whose provenance is stated', () => {
+    const provenance = /public domain|traditional|plain english rendering|transliteration/i;
+    for (const pack of listPacks()) {
+      for (const reading of pack.readings) {
+        if (reading.text === undefined) continue;
+        expect(reading.source, `${pack.slug}: ${reading.title}`).toMatch(provenance);
+      }
+    }
+  });
+
+  it('still accepts a pack that has neither, so an older pack keeps working', () => {
+    const bare = { ...getPack('secular') } as Record<string, unknown>;
+    delete bare['orderOfService'];
+    delete bare['readings'];
+    const parsed = parsePack('secular.json', JSON.stringify(bare));
+    expect(parsed.orderOfService).toEqual([]);
+    expect(parsed.readings).toEqual([]);
+  });
+
   it('defaults to the least presumptuous pack', () => {
     expect(DEFAULT_TRADITION_SLUG).toBe('secular');
     expect(getDefaultPack().slug).toBe('secular');
@@ -53,7 +134,7 @@ describe('lookup errors', () => {
   it('names the packs that do exist when a slug is unknown', () => {
     expect(hasPack('klingon')).toBe(false);
     expect(() => getPack('klingon')).toThrow(UnknownTraditionError);
-    expect(() => getPack('klingon')).toThrow(/Available: catholic, jewish, secular/);
+    expect(() => getPack('klingon')).toThrow(/Available: buddhist, catholic, hindu/);
   });
 });
 

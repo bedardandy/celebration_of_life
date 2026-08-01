@@ -8,7 +8,7 @@
  */
 import { checkFfmpeg, seedMusicLibrary } from '@col/core';
 import { closeDb, ensureDatabase, getDb } from '@col/db';
-import { getBlobStore } from '@col/storage';
+import { getBlobStore, initBlobStore } from '@col/storage';
 import { loadWorkerConfig } from './config';
 import { createWorker } from './worker';
 import { handlers } from './handlers';
@@ -28,6 +28,11 @@ async function main(): Promise<void> {
     // do not, so say so once, clearly, at boot rather than mid-render.
     log.error(`ffmpeg is not available — video rendering will fail.\n${ffmpeg.message}`);
   }
+
+  // Where blobs live, decided once. Every `getBlobStore()` after this — in a
+  // handler, mid-render — is synchronous and gets whatever was chosen here.
+  const store = await initBlobStore();
+  log.info('blob storage ready', { driver: store.id });
 
   const db = getDb();
 

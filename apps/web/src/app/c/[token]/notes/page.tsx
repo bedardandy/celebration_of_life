@@ -74,14 +74,22 @@ export default async function NotesPage({
           <ul className={styles.noteList}>
             {assets.map((asset) => (
               <li key={asset.id} className={styles.noteItem}>
-                <img
-                  className={styles.noteThumb}
-                  src={`/api/assets/${asset.id}?variant=thumb320&token=${encodeURIComponent(token)}`}
-                  alt={asset.originalFilename ?? 'A photo you just added'}
-                  width={96}
-                  height={96}
-                  loading="lazy"
-                />
+                {/* A photo is only shown once its small copy exists. Straight
+                    after an upload it usually does not yet, and a broken image
+                    icon is the last thing somebody should see having just sent
+                    their photographs. */}
+                {asset.ingestState === 'ready' ? (
+                  <img
+                    className={styles.noteThumb}
+                    src={`/api/assets/${asset.id}?variant=thumb320&token=${encodeURIComponent(token)}`}
+                    alt={asset.originalFilename ?? 'A photo you just added'}
+                    width={96}
+                    height={96}
+                    loading="lazy"
+                  />
+                ) : (
+                  <span className={styles.notePending} aria-hidden="true" />
+                )}
                 <div>
                   <label htmlFor={`note-${asset.id}`}>
                     Where or when was this? Anything you remember?

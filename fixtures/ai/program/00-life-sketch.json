@@ -1,0 +1,13 @@
+{
+  "id": "00-life-sketch",
+  "task": "program",
+  "match": "the life sketch is for",
+  "note": "The paragraph that gets printed, folded, handed out and kept in a drawer for thirty years. Around 200 words, plain past tense, no euphemism for dying, and nothing in it that the family did not write down first.",
+  "response": {
+    "paragraphs": [
+      "Ruth was born in 1936 and grew up in a house where the back door was never locked and the kettle was never quite off. She left school at fifteen, worked in the same town for most of her life, and never much saw the point in living anywhere else.",
+      "She married, raised her family, and kept a garden that other people came to look at and she insisted was nothing special. She taught, in one way or another, all her life: fractions to nine-year-olds, then bread to her grandchildren, then patience to anybody who would sit still long enough. She was practical, funny in a dry way that took some people a year to notice, and impossible to thank.",
+      "She died at home, with her family around her. She leaves children, grandchildren, and a long list of people who were fed at her table and never forgot it."
+    ]
+  }
+}

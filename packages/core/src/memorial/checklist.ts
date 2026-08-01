@@ -51,9 +51,27 @@ export type ChecklistCounts = {
     /** A verified MP4 is sitting in the blob store, ready to download. */
     delivered?: boolean;
   };
+  /**
+   * The words half of the day: the speeches people will give, and the printed
+   * program. Optional for the same reason `slideshow` is — a family who has
+   * never opened those screens has nothing to count, which is not the same as
+   * having counted nothing.
+   */
+  speeches?: {
+    /** Speeches started, whether or not anything is written in them yet. */
+    started: number;
+    /** Speeches that have words in them. */
+    drafted: number;
+  };
+  program?: {
+    /** The program screens have been opened and something was saved. */
+    started: boolean;
+    /** Enough of it exists to hand to a printer. */
+    ready: boolean;
+  };
 };
 
-export type CardId = 'photos' | 'story' | 'slideshow';
+export type CardId = 'photos' | 'story' | 'slideshow' | 'speeches';
 
 export type CardState = 'not-started' | 'in-progress' | 'ready' | 'locked';
 
@@ -241,6 +259,53 @@ function slideshowCard(memorialId: string, counts: ChecklistCounts): ChecklistCa
 }
 
 /**
+ * The words half of the day.
+ *
+ * Never locked. A eulogy can be written on the first evening with nothing else
+ * in place — often it is the thing an organiser most wants to get on with, and
+ * telling them to gather ten photographs first would be absurd.
+ */
+function speechesCard(memorialId: string, counts: ChecklistCounts): ChecklistCard {
+  const base = {
+    id: 'speeches' as const,
+    title: 'Speeches & program',
+    help: 'What people will say, and the program to hand out.',
+    href: `/m/${memorialId}/speeches`,
+  };
+  const speeches = counts.speeches;
+  const program = counts.program;
+  const drafted = speeches?.drafted ?? 0;
+  const started = speeches?.started ?? 0;
+
+  if (drafted === 0 && !program?.started) {
+    return {
+      ...base,
+      state: started > 0 ? 'in-progress' : 'not-started',
+      statusLine:
+        started > 0
+          ? 'A speech is set up and waiting for its first draft.'
+          : 'Not started. We can draft a eulogy from the memories you have already kept.',
+    };
+  }
+
+  const speechLine =
+    drafted === 0
+      ? 'No speech written yet.'
+      : `${drafted} ${drafted === 1 ? 'speech' : 'speeches'} written.`;
+  const programLine = program?.ready
+    ? 'The program is ready to print.'
+    : program?.started
+      ? 'The program is part-way there.'
+      : 'The program has not been started.';
+
+  return {
+    ...base,
+    state: drafted > 0 && program?.ready ? 'ready' : 'in-progress',
+    statusLine: `${speechLine} ${programLine}`,
+  };
+}
+
+/**
  * `memorial` is taken for its intake answers — later phases read the tradition
  * and the service date from it — and `counts` for everything that is gathered.
  */
@@ -251,7 +316,8 @@ export function computeChecklist(
   const photos = photosCard(memorial.id, counts);
   const story = storyCard(memorial.id, counts);
   const slideshow = slideshowCard(memorial.id, counts);
-  const cards = [photos, story, slideshow];
+  const speeches = speechesCard(memorial.id, counts);
+  const cards = [photos, story, slideshow, speeches];
 
   const readyToBuild = slideshow.state !== 'locked';
 
@@ -265,6 +331,8 @@ export function computeChecklist(
       enoughPhotos: counts.photos >= MIN_PHOTOS_FOR_SLIDESHOW,
       readyToBuild,
       hasSlideshow: counts.slideshow?.hasEdl === true,
+      hasSpeech: (counts.speeches?.drafted ?? 0) > 0,
+      programReady: counts.program?.ready === true,
       ...deliveryFlags(counts),
     },
     nextStep: suggestNextStep(counts, readyToBuild),

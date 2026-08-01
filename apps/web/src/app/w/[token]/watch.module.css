@@ -1,0 +1,54 @@
+.frame {
+  margin: 0 0 24px;
+  background: #000;
+  border-radius: var(--radius);
+  overflow: hidden;
+  /* A steady box before the file loads, so the page does not jump. */
+  aspect-ratio: 16 / 9;
+}
+
+.video {
+  display: block;
+  width: 100%;
+  height: 100%;
+  background: #000;
+}
+
+.service {
+  margin: 0 0 20px;
+  padding: 14px 18px;
+  border-left: 3px solid var(--line);
+  background: var(--paper-raised);
+  color: var(--ink-soft);
+  font-size: 1rem;
+}
+
+.note {
+  margin: 0 0 8px;
+  color: var(--ink-soft);
+  font-size: 0.98rem;
+  line-height: 1.55;
+}
+
+.download {
+  display: inline-flex;
+  align-items: center;
+  min-height: var(--tap);
+  color: var(--ink-soft);
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+
+.download:hover {
+  color: var(--ink);
+}
+
+.waiting {
+  margin: 0;
+  padding: 28px 24px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--paper-raised);
+  color: var(--ink-soft);
+  line-height: 1.6;
+}

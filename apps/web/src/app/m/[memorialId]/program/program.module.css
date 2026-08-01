@@ -1,0 +1,315 @@
+/*
+ * The printed program's builder screens.
+ *
+ * Everything is a list with buttons: no dragging, no inline rich text, nothing
+ * that needs a steady hand on a phone at a kitchen table.
+ */
+
+.steps {
+  display: grid;
+  gap: 12px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.stepRow {
+  display: grid;
+  gap: 4px;
+  grid-template-columns: 1fr auto;
+  padding: 18px 22px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--paper-raised);
+  color: inherit;
+  text-decoration: none;
+}
+
+.stepRow:hover {
+  border-color: var(--accent);
+}
+
+.stepTitle {
+  font-family: var(--serif);
+  font-size: 1.2rem;
+}
+
+.stepHelp {
+  grid-column: 1;
+  color: var(--ink-soft);
+  font-size: 0.95rem;
+}
+
+.stepState {
+  grid-row: 1 / span 2;
+  grid-column: 2;
+  align-self: center;
+  color: var(--ink-faint);
+  font-size: 0.9rem;
+}
+
+.sectionTitle {
+  margin: 32px 0 12px;
+  font-size: 1.2rem;
+}
+
+.hint {
+  margin: 12px 0 20px;
+  color: var(--ink-soft);
+  font-size: 0.98rem;
+  line-height: 1.6;
+}
+
+.field {
+  display: block;
+  margin-bottom: 20px;
+}
+
+.label {
+  display: block;
+  margin-bottom: 6px;
+  color: var(--ink-soft);
+  font-size: 0.98rem;
+}
+
+.input {
+  width: 100%;
+  min-height: var(--tap);
+  padding: 10px 14px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--paper-raised);
+}
+
+.textarea {
+  width: 100%;
+  padding: 12px 14px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--paper-raised);
+  font-family: inherit;
+  font-size: 1rem;
+  line-height: 1.6;
+  resize: vertical;
+}
+
+/* --- cover ---------------------------------------------------------------- */
+
+.covers {
+  display: grid;
+  gap: 12px;
+  grid-template-columns: repeat(auto-fill, minmax(8rem, 1fr));
+  margin: 0 0 20px;
+  padding: 0;
+  list-style: none;
+}
+
+.cover {
+  display: block;
+  width: 100%;
+  padding: 4px;
+  border: 2px solid transparent;
+  border-radius: var(--radius);
+  background: none;
+  cursor: pointer;
+}
+
+.cover:hover {
+  border-color: var(--line);
+}
+
+.coverOn {
+  border-color: var(--accent);
+}
+
+.coverImage {
+  display: block;
+  width: 100%;
+  aspect-ratio: 3 / 4;
+  object-fit: cover;
+  border-radius: 6px;
+}
+
+/* --- order of service ----------------------------------------------------- */
+
+.order {
+  margin: 0 0 28px;
+  padding: 0;
+  list-style: none;
+  counter-reset: order;
+}
+
+.orderRow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 16px;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 0;
+  border-bottom: 1px solid var(--line);
+}
+
+.orderItem {
+  flex: 1 1 14rem;
+  font-family: var(--serif);
+  font-size: 1.15rem;
+}
+
+.orderNote {
+  display: block;
+  color: var(--ink-soft);
+  font-family: var(--sans);
+  font-size: 0.92rem;
+}
+
+.orderButtons {
+  display: flex;
+  gap: 8px;
+}
+
+.smallButton {
+  min-height: 40px;
+  padding: 4px 12px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--paper-raised);
+  font-size: 0.92rem;
+  cursor: pointer;
+}
+
+.smallButton:hover {
+  border-color: var(--accent);
+}
+
+.rename {
+  flex: 1 1 100%;
+}
+
+.renameSummary {
+  min-height: 40px;
+  padding: 8px 0;
+  color: var(--ink-soft);
+  font-size: 0.92rem;
+  cursor: pointer;
+}
+
+.renameForm {
+  display: grid;
+  gap: 10px;
+  padding: 4px 0 12px;
+}
+
+.addRow {
+  padding-top: 8px;
+}
+
+.inlineForm {
+  display: inline;
+}
+
+/* --- life sketch ---------------------------------------------------------- */
+
+.sketch {
+  width: 100%;
+  min-height: 18rem;
+  padding: 20px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--paper-raised);
+  font-family: var(--serif);
+  font-size: 1.1rem;
+  line-height: 1.75;
+  resize: vertical;
+}
+
+.savedRow {
+  display: flex;
+  justify-content: flex-end;
+  min-height: 28px;
+  margin-top: 8px;
+}
+
+.tool {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  align-items: flex-start;
+  width: 100%;
+  max-width: 24rem;
+  min-height: var(--tap);
+  padding: 12px 16px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--paper-raised);
+  text-align: left;
+  font-size: 1.05rem;
+  cursor: pointer;
+}
+
+.tool:hover {
+  border-color: var(--accent);
+}
+
+.tool:disabled {
+  opacity: 0.6;
+  cursor: default;
+}
+
+.toolNote {
+  color: var(--ink-soft);
+  font-size: 0.9rem;
+  line-height: 1.4;
+}
+
+/* --- readings ------------------------------------------------------------- */
+
+.readings {
+  display: grid;
+  gap: 12px;
+  margin: 0 0 8px;
+  padding: 0;
+  list-style: none;
+}
+
+.reading {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  align-items: flex-start;
+  width: 100%;
+  padding: 16px 20px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--paper-raised);
+  text-align: left;
+  cursor: pointer;
+}
+
+.reading:hover {
+  border-color: var(--accent);
+}
+
+.readingOn {
+  border-color: var(--accent);
+  box-shadow: inset 0 0 0 1px var(--accent);
+}
+
+.readingTitle {
+  font-family: var(--serif);
+  font-size: 1.15rem;
+}
+
+.readingText {
+  color: var(--ink-soft);
+  font-size: 0.98rem;
+  line-height: 1.5;
+}
+
+.readingSource {
+  color: var(--ink-faint);
+  font-size: 0.88rem;
+}
+
+.ownReading {
+  margin-top: 8px;
+}

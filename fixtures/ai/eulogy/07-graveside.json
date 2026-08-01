@@ -1,0 +1,16 @@
+{
+  "id": "07-graveside",
+  "task": "eulogy",
+  "match": "for the graveside",
+  "note": "Ninety seconds, standing outside, often in weather. One story, the relationship, the closing line — and the same verbatim rule, because a graveside is not a place where a tidied-up quotation is any more acceptable.",
+  "response": {
+    "openingLine": "We won't keep you standing long. She wouldn't have.",
+    "body": [
+      "The first thing I was ever told about Ruth was this: \"{{memory:0}}\" That was {{memoryFrom:0}}, and it was true for the whole time I knew her.",
+      "[pause]",
+      "It was small things, done quietly, for years. That is what she leaves, and it is a great deal."
+    ],
+    "closingLine": "Thank you for coming out here for her.",
+    "usedMemoryIds": ["{{memoryId:0}}"]
+  }
+}

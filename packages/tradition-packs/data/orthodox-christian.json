@@ -1,0 +1,85 @@
+{
+  "slug": "orthodox-christian",
+  "label": "Orthodox Christian funeral",
+  "pacingPreset": "days3to7",
+  "serviceTimelineNote": "An Orthodox funeral usually falls three to seven days after the death. There is often a Trisagion service at the funeral home the evening before, then the funeral service itself in the church, the burial, and the makaria — the memorial meal — afterwards. Remembrance continues on the third, ninth and fortieth days, and again at six months and a year, with a memorial service (mnemosyno or panikhida) and kollyva, the boiled wheat. Practice differs between Greek, Slavic, Antiochian, Romanian and other parishes; the priest is the one to ask.",
+  "mediaPlacement": [
+    {
+      "context": "The funeral service in church",
+      "guidance": "The service is chanted from beginning to end and has a fixed shape that has not changed in a very long time. Slideshows, screens and recorded music are not part of it, and most parishes will ask that nothing be added. This is not about your family; it is how the service is."
+    },
+    {
+      "context": "The Trisagion the evening before",
+      "guidance": "Short and prayerful. Photographs are usually displayed in the room rather than shown on a screen — framed pictures on a table near the casket are the tradition, and they are quietly perfect."
+    },
+    {
+      "context": "The makaria, the meal afterwards",
+      "guidance": "This is where a photo tribute belongs. The meal is where people speak, remember and laugh a little, and a video playing quietly at one end of the room fits naturally. If you make only one, make it for here."
+    },
+    {
+      "context": "The fortieth-day memorial",
+      "guidance": "Forty days after the death the family gathers again for a memorial service and a meal. A fuller tribute is very welcome at that meal, and by then you will have had time to make it well."
+    }
+  ],
+  "musicGuidance": [
+    "The services are sung a cappella in most Orthodox parishes — voices alone, no instruments. Recorded music has no place in them.",
+    "Please do not use recordings of Orthodox chant as a soundtrack under photographs. It is prayer being sung, and it is jarring to hear it used as backing.",
+    "For a video at the makaria or the fortieth day, gentle instrumental music is the usual choice, and silence is perfectly acceptable."
+  ],
+  "interviewAdjustments": [
+    {
+      "promptSlug": "faith-and-belief",
+      "note": "Ask about parish life concretely: the church they belonged to, their name day, the feasts they cooked for, the choir, the quiet work they did for other people."
+    },
+    {
+      "promptSlug": "beginnings",
+      "note": "Family history often reaches back to another country and another language. Ask about the village, the crossing, and who came first — and about the photographs that came with them."
+    }
+  ],
+  "checklistExtras": [
+    "Ring the parish office and ask what is allowed in the church, and what belongs at the makaria.",
+    "Ask who is preparing the kollyva for the memorial service, if it has not already been arranged.",
+    "Ask the hall where the makaria is held what equipment it has — screen, television, speakers, cables.",
+    "Note the third, ninth and fortieth days in the calendar now; they arrive quickly."
+  ],
+  "deliveryNotes": [
+    "Bring the video to the makaria hall on a USB stick formatted FAT32 or exFAT, and email a copy to whoever is running the hall.",
+    "Give the person setting up the printed card: it names the file, the length and the sound.",
+    "If the parish said no video in the church, write that plainly on the card so nobody has to decide on the day."
+  ],
+  "orderOfService": [
+    { "item": "Trisagion", "note": "At the funeral home, the evening before" },
+    { "item": "Receiving of the body at the church" },
+    { "item": "Psalm 118 and the Evlogitaria", "note": "Chanted" },
+    { "item": "Epistle" },
+    { "item": "Gospel" },
+    { "item": "Homily" },
+    { "item": "Idiomela of Saint John of Damascus", "note": "The hymns of the funeral" },
+    { "item": "The Last Kiss", "note": "The farewell of family and friends" },
+    { "item": "Dismissal and procession" },
+    { "item": "Trisagion at the graveside" },
+    { "item": "Makaria", "note": "The memorial meal, and where it is held" }
+  ],
+  "readings": [
+    {
+      "title": "Memory Eternal",
+      "source": "Traditional Orthodox acclamation (Vichnaya Pamyat) — public domain",
+      "text": "Blessed be your repose, our brother and sister, ever worthy of remembrance.\nMemory eternal. Memory eternal. Memory eternal."
+    },
+    {
+      "title": "The Kontakion of the Departed",
+      "source": "Traditional hymn of the Orthodox funeral service, in the common English translation — public domain",
+      "text": "With the saints give rest, O Christ, to the soul of thy servant, where there is neither sickness, nor sorrow, nor sighing, but life everlasting."
+    },
+    {
+      "title": "Psalm 23 — The Lord is my shepherd",
+      "source": "Psalm 23, King James Version, 1611 — public domain",
+      "text": "The Lord is my shepherd; I shall not want. He maketh me to lie down in green pastures: he leadeth me beside the still waters. He restoreth my soul: he leadeth me in the paths of righteousness for his name's sake. Yea, though I walk through the valley of the shadow of death, I will fear no evil: for thou art with me; thy rod and thy staff they comfort me. Thou preparest a table before me in the presence of mine enemies: thou anointest my head with oil; my cup runneth over. Surely goodness and mercy shall follow me all the days of my life: and I will dwell in the house of the Lord for ever."
+    },
+    {
+      "title": "The Trisagion prayer",
+      "source": "Traditional; the opening of the memorial service — public domain",
+      "text": "Holy God, Holy Mighty, Holy Immortal, have mercy on us.\nGlory to the Father, and to the Son, and to the Holy Spirit, now and ever and unto ages of ages. Amen."
+    }
+  ]
+}

@@ -1,0 +1,238 @@
+/*
+ * The program as paper.
+ *
+ * Four pages, each on its own sheet, set at the proportions of the paper the
+ * family will actually use. On screen the pages are outlined so a person can
+ * see what they are getting; on paper the outlines vanish and only the words
+ * and the photograph remain.
+ */
+
+.sheets {
+  max-width: 46rem;
+  margin: 0 auto;
+  padding: 40px 24px 96px;
+  color: var(--ink);
+}
+
+.page {
+  position: relative;
+  margin: 0 auto 40px;
+  padding: 48px 44px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--paper-raised);
+  /* Proportions of the paper, so what is on screen is what comes out. */
+  aspect-ratio: 210 / 297;
+  overflow: hidden;
+  break-after: page;
+  page-break-after: always;
+}
+
+.letter .page {
+  aspect-ratio: 8.5 / 11;
+}
+
+.pageLabel {
+  margin: 0 0 24px;
+  color: var(--ink-faint);
+  font-size: 0.85rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.pageTitle {
+  margin: 0 0 16px;
+  font-size: 1.5rem;
+  text-align: center;
+}
+
+/* --- the cover ------------------------------------------------------------ */
+
+.cover {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 100%;
+  text-align: center;
+}
+
+.coverLine {
+  margin: 0 0 20px;
+  font-family: var(--serif);
+  font-size: 1.2rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+}
+
+.portrait,
+.portraitBlank {
+  width: 62%;
+  aspect-ratio: 3 / 4;
+  object-fit: cover;
+  border-radius: 4px;
+}
+
+.portraitBlank {
+  border: 1px dashed var(--line);
+}
+
+.coverName {
+  margin: 28px 0 6px;
+  font-size: 2rem;
+  line-height: 1.2;
+}
+
+.coverDates {
+  margin: 0;
+  font-family: var(--serif);
+  font-size: 1.2rem;
+  color: var(--ink-soft);
+}
+
+.coverService {
+  margin: 20px 0 0;
+  color: var(--ink-soft);
+  font-size: 1rem;
+}
+
+/* --- inside --------------------------------------------------------------- */
+
+.order {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.orderItem {
+  padding: 9px 0;
+  border-bottom: 1px solid var(--line);
+  text-align: center;
+}
+
+.orderName {
+  display: block;
+  font-family: var(--serif);
+  font-size: 1.1rem;
+}
+
+.orderNote {
+  display: block;
+  margin-top: 2px;
+  color: var(--ink-soft);
+  font-size: 0.9rem;
+}
+
+.body {
+  margin: 0 0 14px;
+  font-family: var(--serif);
+  font-size: 1.02rem;
+  line-height: 1.65;
+}
+
+.reading {
+  margin-top: 24px;
+  padding-top: 20px;
+  border-top: 1px solid var(--line);
+  text-align: center;
+}
+
+.readingTitle {
+  margin: 0 0 10px;
+  font-size: 1.15rem;
+}
+
+.readingText {
+  margin: 0 0 10px;
+  font-family: var(--serif);
+  font-size: 1rem;
+  line-height: 1.7;
+  white-space: pre-wrap;
+}
+
+.readingSource {
+  margin: 0;
+  color: var(--ink-faint);
+  font-size: 0.85rem;
+}
+
+.back {
+  text-align: center;
+}
+
+.backNote {
+  margin-top: 24px;
+  font-family: var(--serif);
+  font-size: 1.05rem;
+  line-height: 1.7;
+}
+
+/* --- screen only ---------------------------------------------------------- */
+
+.screenOnly {
+  display: block;
+  margin-bottom: 32px;
+}
+
+.printHint {
+  display: block;
+  margin-top: 6px;
+  color: var(--ink-faint);
+  font-size: 0.95rem;
+  line-height: 1.6;
+}
+
+.textTitle {
+  margin: 28px 0 8px;
+  font-size: 1.15rem;
+}
+
+.note {
+  margin: 0 0 12px;
+  color: var(--ink-soft);
+  line-height: 1.6;
+}
+
+.text {
+  margin: 0;
+  padding: 16px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--paper-raised);
+  font-size: 0.9rem;
+  line-height: 1.5;
+  white-space: pre-wrap;
+  overflow-x: auto;
+}
+
+@media print {
+  @page {
+    margin: 14mm;
+  }
+
+  .screenOnly,
+  .pageLabel {
+    display: none;
+  }
+
+  .sheets {
+    max-width: none;
+    padding: 0;
+    color: #000;
+  }
+
+  .page {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    border-radius: 0;
+    background: none;
+    aspect-ratio: auto;
+    height: 100vh;
+  }
+
+  .page:last-child {
+    break-after: auto;
+    page-break-after: auto;
+  }
+}

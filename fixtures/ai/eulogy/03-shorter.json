@@ -1,0 +1,18 @@
+{
+  "id": "03-shorter",
+  "task": "eulogy",
+  "match": "make this a little shorter",
+  "note": "The 'A little shorter' button. Whole sentences gone, every specific detail kept — that is the instruction, and a fixture that trimmed adjectives instead would let a regression through.",
+  "response": {
+    "openingLine": "Thank you all for coming. Ruth would have said you shouldn't have gone to any trouble.",
+    "body": [
+      "Some of you set off before it was light. She would have counted this room, and then told me she wasn't counting.",
+      "Ruth never explained herself. The house was warm, there was always one more chair, and if you turned up at half past nine with a story it got listened to right through.",
+      "One of the first things I was told about her was this: \"{{memory:0}}\" That was {{memoryFrom:0}}. I have never found it to be untrue.",
+      "[pause]",
+      "Not one large heroic thing. Thousands of small ones, done quietly, for people who mostly never knew."
+    ],
+    "closingLine": "So: no fuss, and a cup of tea. Thank you for being here for her.",
+    "usedMemoryIds": ["{{memoryId:0}}"]
+  }
+}

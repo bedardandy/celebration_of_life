@@ -1,7 +1,7 @@
 'use server';
 
 import { redirect } from 'next/navigation';
-import { getMailTransport, organizerLoginEmail, requestLoginLink } from '@col/core';
+import { deliverEmail, requestLoginLink } from '@col/core';
 import { db } from '@/server/db';
 import { stashDevLink } from '@/server/session';
 
@@ -25,13 +25,12 @@ export async function requestLinkAction(
   }
 
   if (result.issued && result.memorial) {
-    const sent = await getMailTransport().send(
-      organizerLoginEmail({
-        to: result.organizer?.email ?? email,
-        decedentName: result.memorial.decedentName,
-        url: result.issued.url,
-      }),
-    );
+    const sent = await deliverEmail(db(), {
+      template: 'organizer-login',
+      to: result.organizer?.email ?? email,
+      memorialId: result.memorial.id,
+      data: { decedentName: result.memorial.decedentName, url: result.issued.url },
+    });
     await stashDevLink(sent.devPreviewLink);
   }
 

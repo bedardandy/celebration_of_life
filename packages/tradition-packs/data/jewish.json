@@ -40,5 +40,37 @@
   "deliveryNotes": [
     "For shiva, a laptop or a television with a USB port in the corner of the room is usually all you need.",
     "For a shloshim or first-anniversary gathering, bring the video on a USB stick formatted FAT32 or exFAT, and send a copy to the venue ahead of time."
+  ],
+  "orderOfService": [
+    { "item": "Gathering", "note": "The chapel or graveside fills quietly" },
+    { "item": "Psalms", "note": "Often Psalm 23 and Psalm 121" },
+    { "item": "Hesped", "note": "The eulogy, given by the rabbi or by family" },
+    { "item": "El Malei Rachamim", "note": "The memorial prayer, chanted" },
+    { "item": "Procession to the grave" },
+    { "item": "Burial", "note": "Mourners and friends place earth in the grave" },
+    { "item": "Mourner's Kaddish" },
+    { "item": "Words of comfort", "note": "Those present form two lines as the mourners pass" },
+    { "item": "Shiva at the house", "note": "Times for the days that follow" }
+  ],
+  "readings": [
+    {
+      "title": "Psalm 23 — The Lord is my shepherd",
+      "source": "Psalm 23, Jewish Publication Society translation, 1917 — public domain",
+      "text": "The Lord is my shepherd; I shall not want. He maketh me to lie down in green pastures; He leadeth me beside the still waters. He restoreth my soul; He guideth me in straight paths for His name's sake. Yea, though I walk through the valley of the shadow of death, I will fear no evil, for Thou art with me; Thy rod and Thy staff, they comfort me. Thou preparest a table before me in the presence of mine enemies; Thou hast anointed my head with oil; my cup runneth over. Surely goodness and mercy shall follow me all the days of my life; and I shall dwell in the house of the Lord for ever."
+    },
+    {
+      "title": "To every thing there is a season",
+      "source": "Ecclesiastes 3:1–4, Jewish Publication Society translation, 1917 — public domain",
+      "text": "To every thing there is a season, and a time to every purpose under the heaven: a time to be born, and a time to die; a time to plant, and a time to pluck up that which is planted; a time to kill, and a time to heal; a time to break down, and a time to build up; a time to weep, and a time to laugh; a time to mourn, and a time to dance."
+    },
+    {
+      "title": "A woman of valour",
+      "source": "Proverbs 31:10, 25–29, Jewish Publication Society translation, 1917 — public domain. Often read for a mother or grandmother.",
+      "text": "A woman of valour who can find? For her price is far above rubies. Strength and dignity are her clothing; and she laugheth at the time to come. She openeth her mouth with wisdom; and the law of kindness is on her tongue. She looketh well to the ways of her household, and eateth not the bread of idleness. Her children rise up, and call her blessed; her husband also, and he praiseth her."
+    },
+    {
+      "title": "Mourner's Kaddish",
+      "source": "Traditional Aramaic prayer. Printed in Hebrew and transliteration by the funeral home or synagogue — ask them for the sheet they use."
+    }
   ]
 }

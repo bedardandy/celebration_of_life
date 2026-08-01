@@ -12,6 +12,7 @@
  * showing a login link to whoever is looking at the screen.
  */
 import { isProduction } from '../env';
+import { resendFromEnv } from './resend';
 
 export type MailMessage = {
   to: string;
@@ -59,8 +60,31 @@ function defaultWrite(line: string): void {
 
 let transport: MailTransport | undefined;
 
+export type MailTransportName = 'console' | 'resend';
+
+/** What `MAIL_TRANSPORT` may say. Anything else is a typo worth failing on. */
+export const MAIL_TRANSPORTS: MailTransportName[] = ['console', 'resend'];
+
+export function mailTransportName(env: NodeJS.ProcessEnv = process.env): MailTransportName {
+  const configured = env['MAIL_TRANSPORT']?.trim().toLowerCase();
+  if (!configured) return 'console';
+  if ((MAIL_TRANSPORTS as string[]).includes(configured)) return configured as MailTransportName;
+  throw new Error(
+    `MAIL_TRANSPORT=${JSON.stringify(configured)} is not one of: ${MAIL_TRANSPORTS.join(', ')}.`,
+  );
+}
+
+/**
+ * The transport this process should use.
+ *
+ * Console stays the default so a developer never has to own a domain to walk
+ * the product. Production sets `MAIL_TRANSPORT=resend`; a misconfigured
+ * production transport throws here, at the first send, rather than silently
+ * printing somebody's login link into a server log.
+ */
 export function getMailTransport(): MailTransport {
-  transport ??= new DevConsoleTransport();
+  if (transport) return transport;
+  transport = mailTransportName() === 'resend' ? resendFromEnv() : new DevConsoleTransport();
   return transport;
 }
 

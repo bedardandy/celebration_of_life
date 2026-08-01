@@ -1,13 +1,17 @@
 import Link from 'next/link';
 import {
   computeChecklist,
+  countSpeeches,
   currentDoc,
+  currentProgram,
   dashboardBanner,
   describeLength,
   formatServiceDate,
   hasDeliverable,
   isRendering,
+  hasProgram,
   latestProject,
+  programProgress,
   projectCut,
   projectEdl,
   resumeIntakeStep,
@@ -64,6 +68,9 @@ export default async function DashboardPage({
     // The interview's own measure of progress: chapters a family can read back.
     storyChapters: currentDoc(db(), memorialId, subjectOf(memorial)).doc.chapters.length,
     slideshow: slideshowProgress(memorialId),
+    // The words half of the day: what people will say, and what is handed out.
+    speeches: countSpeeches(db(), memorialId),
+    program: programState(memorial),
   };
 
   const checklist = computeChecklist(memorial, counts);
@@ -147,6 +154,16 @@ function slideshowProgress(memorialId: string): ChecklistCounts['slideshow'] {
     delivered: hasDeliverable(db(), memorialId),
     rendering: isRendering(db(), memorialId),
   };
+}
+
+/**
+ * How far the printed program has got. "Started" is a saved document rather
+ * than a visited screen: opening a page and closing it again is not progress.
+ */
+function programState(memorial: Parameters<typeof currentProgram>[1]): ChecklistCounts['program'] {
+  const started = hasProgram(db(), memorial.id);
+  if (!started) return { started: false, ready: false };
+  return { started: true, ready: programProgress(currentProgram(db(), memorial).doc).ready };
 }
 
 function Banner({ banner }: { banner: DeadlineBanner }) {

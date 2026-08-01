@@ -195,3 +195,33 @@
 .steps li + li {
   margin-top: 8px;
 }
+
+/* --- sending it to people who cannot be there ------------------------------ */
+
+.share {
+  margin-top: 32px;
+  padding-top: 24px;
+  border-top: 1px solid var(--line);
+}
+
+.shareLink {
+  padding: 18px 22px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--paper-raised);
+}
+
+.shareRow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 18px;
+  align-items: center;
+  margin-top: 8px;
+}
+
+.shareHelp {
+  flex: 1 1 18rem;
+  color: var(--ink-soft);
+  font-size: 0.92rem;
+  line-height: 1.5;
+}

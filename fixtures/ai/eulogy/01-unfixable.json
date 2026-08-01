@@ -1,0 +1,7 @@
+{
+  "id": "01-unfixable",
+  "task": "eulogy",
+  "match": "Speaking: Wren Hollis",
+  "note": "The response that never becomes valid JSON, however many times we ask. Exercises the typed AiSchemaError and the calm sentence a person would actually see on the screen — never a blank page, never a stack trace. Matched on a speaker name so the studio tests can ask for it deliberately. Please do not delete.",
+  "response": "I don't think I should write this one. A eulogy for someone I know nothing about would be words you'd have to stand up and say, and they wouldn't be yours."
+}

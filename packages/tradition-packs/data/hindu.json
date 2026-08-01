@@ -1,0 +1,76 @@
+{
+  "slug": "hindu",
+  "label": "Hindu funeral and memorial rites",
+  "pacingPreset": "memorial-cycle",
+  "serviceTimelineNote": "The cremation (antim sanskar) usually happens within a day or two, led by the priest and the eldest son or another close relative. What follows is a cycle rather than a single day: the mourning period of roughly thirteen days, ending in the shraddha ceremony, and then the annual remembrance each year after. Customs differ a great deal by region, language and family — your priest and your elders are the right guides, and nothing here overrides them.",
+  "mediaPlacement": [
+    {
+      "context": "The garlanded photograph",
+      "guidance": "A framed portrait, garlanded with flowers, sits at the centre of almost everything — at the house, at the cremation, and again at the thirteenth-day ceremony. If you do one piece of media work first, make it this: find the photograph of them that looks most like themselves, and have it printed and framed at a good size."
+    },
+    {
+      "context": "The cremation rites",
+      "guidance": "The rites themselves are led by the priest and follow their own order. A slideshow is not part of them. Photography at the cremation ground is often unwelcome; ask the family before anyone raises a phone."
+    },
+    {
+      "context": "The thirteenth-day ceremony and the meal",
+      "guidance": "By the shraddha the household is fuller and calmer, and a photo tribute is genuinely welcome — often playing quietly during the meal while relatives who have travelled catch up. This is the natural home for a first video."
+    },
+    {
+      "context": "The annual remembrance",
+      "guidance": "Each year, on the anniversary by the traditional calendar, the family gathers again. A longer family cut belongs here, and it grows better every year as more relatives send photographs."
+    }
+  ],
+  "musicGuidance": [
+    "Bhajans and kirtan are often sung at the house during the mourning days. That singing is live and communal — please do not lay it under a slideshow as a backing track.",
+    "For a video shown at the shraddha or an annual remembrance, gentle instrumental music — bansuri, sitar, veena — is a safe and lovely choice.",
+    "If a particular bhajan mattered to them, we can build the video silent and timed to it so it can be sung or played live in the room."
+  ],
+  "interviewAdjustments": [
+    {
+      "promptSlug": "beginnings",
+      "note": "Ask about the village or city they came from and the languages spoken at home. Migration is often part of the story, and the oldest photographs are usually still there."
+    },
+    {
+      "promptSlug": "faith-and-belief",
+      "note": "Ask about practice rather than doctrine: the puja they kept, the festivals they cooked for, the temple they helped run, the fasts nobody could talk them out of."
+    }
+  ],
+  "checklistExtras": [
+    "Have a good portrait printed and framed early — it is needed sooner than anything else.",
+    "Ask the priest what the family is expected to prepare for the thirteenth-day ceremony.",
+    "Ask relatives abroad to send photographs to the shared link; they often hold the earliest ones."
+  ],
+  "deliveryNotes": [
+    "For the house and the thirteenth-day gathering, a television with a USB port is usually the simplest thing that works.",
+    "Bring the video on a USB stick formatted FAT32 or exFAT, and email a copy to whoever is arranging the hall.",
+    "If the video is silent so a bhajan can be sung live, say so plainly on the printed card."
+  ],
+  "orderOfService": [
+    { "item": "Gathering at the home", "note": "The garlanded photograph, the lamp, and prayers" },
+    { "item": "Final rites at the home", "note": "Led by the priest, with the family present" },
+    { "item": "Procession to the crematorium" },
+    { "item": "Mantras and offerings", "note": "Chanted by the priest" },
+    { "item": "Antim sanskar", "note": "The cremation, performed by the chief mourner" },
+    { "item": "Shanti prayers", "note": "For peace, for the one who has died and for those left" },
+    { "item": "Mourning days at the house", "note": "Prayers and bhajans each evening" },
+    { "item": "Shraddha", "note": "The thirteenth-day ceremony and the meal" }
+  ],
+  "readings": [
+    {
+      "title": "As a man casts off worn-out garments",
+      "source": "Bhagavad Gita 2:22, translated by Sir Edwin Arnold in The Song Celestial, 1885 — public domain",
+      "text": "As the man casts off his worn-out robes and takes new ones, so the dweller in the body, casting off worn-out bodies, enters into others that are new. Never the spirit was born; the spirit shall cease to be never; never was time it was not; end and beginning are dreams."
+    },
+    {
+      "title": "Lead me from the unreal to the real",
+      "source": "Brihadaranyaka Upanishad 1.3.28. Transliteration and a plain English rendering.",
+      "text": "Asato ma sad gamaya.\nTamaso ma jyotir gamaya.\nMrityor ma amritam gamaya.\nOm shanti, shanti, shanti.\n\nLead me from the unreal to the real.\nLead me from darkness to light.\nLead me from death to life without end.\nPeace, peace, peace."
+    },
+    {
+      "title": "Let only that little be left of me",
+      "source": "Rabindranath Tagore, Gitanjali, 1912 English edition — public domain",
+      "text": "Let only that little be left of me whereby I may name thee my all.\nLet only that little be left of my will whereby I may feel thee on every side, and come to thee in everything, and offer to thee my love every moment.\nLet only that little be left of me whereby I may never hide thee."
+    }
+  ]
+}

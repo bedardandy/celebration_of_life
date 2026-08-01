@@ -71,6 +71,23 @@ writes `- <assetId> :: <path>` lines into the prompt, and the mock reads them
 back and keys each canned analysis by the file's **basename**. Job and mock
 share `parseAssetLines`, so the two cannot drift apart.
 
+### EDL proposals and eulogy drafts are different too
+
+Both of them have to name things that only exist once a real family has uploaded
+and approved something, so both fixtures are written as **templates** and filled
+from the prompt the job just built:
+
+- `edl/` — `{{asset:N}}`, `{{memory:N}}`, `{{memoryFrom:N}}`
+- `eulogy/` — `{{memory:N}}`, `{{memoryFrom:N}}`, `{{memoryId:N}}`
+
+Placeholders with nothing to fill them are pruned rather than left dangling, so a
+fixture written for four memories still works for a speaker who ticked two.
+
+Quoted text in a eulogy fixture must always be a placeholder. A literal sentence
+there would be words nobody said, standing in quotation marks, in a speech
+somebody reads out at a funeral — which is the precise failure the verbatim
+check exists to catch.
+
 ## Cases every phase must keep
 
 These are load-bearing for the Phase 3 acceptance criteria:
@@ -86,11 +103,20 @@ These are load-bearing for the Phase 3 acceptance criteria:
 - **`edl/broken-once.json`** — the repair loop with a toy schema.
 - **`edl/unfixable.json`** — the error path with a toy schema.
 
+And for the eulogy studio:
+
+- **`eulogy/00-misquote.json`** — a draft that puts quotation marks around a
+  sentence nobody wrote, and claims a memory that was never chosen. Assembly
+  must strip the quotation marks and drop the id. Do not "fix" the quote.
+- **`eulogy/01-unfixable.json`** — never becomes JSON, so the studio has to show
+  one calm sentence and keep the speech that is already written.
+
 ## Rules
 
 - No real photos, no real names, no real story text. These files are committed;
   everything in them is invented. "Ruth" is nobody.
 - Write them warm and specific anyway. A fixture that reads like lorem ipsum
   makes it very easy to ship an interview that reads like lorem ipsum too.
-- No templating, no clock, no randomness. A fixture that varies is a flaky test
-  wearing a disguise.
+- No clock, no randomness, and no templating beyond the two placeholder sets
+  above — which are deterministic substitutions from the request itself. A
+  fixture that varies is a flaky test wearing a disguise.

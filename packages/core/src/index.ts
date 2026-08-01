@@ -8,6 +8,10 @@ export * from './auth/tokens';
 export * from './auth/access';
 
 export * from './mail/transport';
+export * from './mail/resend';
+export * from './mail/deliver';
+
+export * from './watch/links';
 
 export * from './interview';
 
@@ -33,6 +37,9 @@ export * from './music/library';
 export * from './music/seed';
 export * from './music/recommend';
 export * from './music/selection';
+
+export * from './eulogy';
+export * from './program';
 
 export * from './deliver/filenames';
 export * from './deliver/render-jobs';

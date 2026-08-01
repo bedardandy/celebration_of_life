@@ -51,3 +51,55 @@ jobs:
 
       - name: Migrations apply to a fresh database
         run: pnpm db:migrate
+
+  # The end-to-end journey is a separate job on purpose. It builds the web app,
+  # starts a real server and a real worker, and renders a real (small) video, so
+  # it takes minutes rather than seconds — and a unit-test failure should be
+  # reported in seconds. `pnpm test` excludes it; `pnpm e2e` is the only way in.
+  #
+  # Enable this once CI has a machine with a Chromium available: Remotion needs
+  # one to render, and Playwright needs one to drive. Both are found from
+  # PLAYWRIGHT_BROWSERS_PATH, which is why `playwright install --with-deps
+  # chromium` is the only extra step.
+  e2e:
+    name: end-to-end journey
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    # Not on every push: it is a slow, whole-product check, and the unit suite
+    # catches almost everything first.
+    if: github.event_name == 'pull_request'
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install ffmpeg
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y --no-install-recommends ffmpeg
+
+      - uses: pnpm/action-setup@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+
+      - run: pnpm install --frozen-lockfile
+
+      - name: Install the browser Playwright and Remotion both drive
+        run: pnpm exec playwright install --with-deps chromium
+
+      - name: Build the bundled music library
+        # Committed audio is not in the repo's LFS-free form on a fresh clone;
+        # the worker seeds whatever `content/music-library` holds.
+        run: pnpm music:build
+
+      - name: The whole journey
+        run: pnpm e2e
+
+      - uses: actions/upload-artifact@v4
+        if: failure()
+        with:
+          name: playwright-trace
+          path: apps/web/test-results/
+          retention-days: 7

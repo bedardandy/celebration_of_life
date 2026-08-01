@@ -1,0 +1,15 @@
+{
+  "id": "default",
+  "task": "eulogy",
+  "note": "Served when nothing else matches — most often a speech begun before anybody has ticked a memory. Short on purpose: with nothing to work from, the honest draft is a short one, and a fixture that invented three paragraphs here would be teaching the studio a bad habit.",
+  "response": {
+    "openingLine": "Thank you all for coming today.",
+    "body": [
+      "I want to say a few things about her, and then sit down.",
+      "[pause]",
+      "She was ours, and we were lucky, and this room is full because of it."
+    ],
+    "closingLine": "Thank you for being here.",
+    "usedMemoryIds": []
+  }
+}

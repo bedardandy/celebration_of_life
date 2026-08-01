@@ -45,5 +45,50 @@
     "Bring the video to the vigil venue on a USB stick formatted FAT32 or exFAT, and email a copy to the funeral director as a backup.",
     "Give the funeral director the printed card: it lists the length, the sound requirements, and when the video should play.",
     "If the parish said no video during the Mass, note that plainly on the card so nobody has to make that decision on the day."
+  ],
+  "orderOfService": [
+    {
+      "item": "Reception of the Body",
+      "note": "Sprinkling with holy water and the placing of the pall"
+    },
+    { "item": "Entrance Hymn" },
+    { "item": "Opening Prayer" },
+    { "item": "First Reading", "note": "Usually from the Old Testament" },
+    { "item": "Responsorial Psalm" },
+    { "item": "Second Reading", "note": "Usually from the New Testament letters" },
+    { "item": "Gospel Acclamation" },
+    { "item": "Gospel" },
+    { "item": "Homily" },
+    { "item": "Prayers of the Faithful" },
+    { "item": "Liturgy of the Eucharist" },
+    { "item": "Communion" },
+    {
+      "item": "Words of Remembrance",
+      "note": "One brief personal tribute, where the parish allows it"
+    },
+    { "item": "Final Commendation and Farewell" },
+    { "item": "Recessional Hymn" }
+  ],
+  "readings": [
+    {
+      "title": "Psalm 23 — The Lord is my shepherd",
+      "source": "Psalm 22 (23), Douay-Rheims Bible, 1899 edition — public domain",
+      "text": "The Lord ruleth me: and I shall want nothing. He hath set me in a place of pasture. He hath brought me up, on the water of refreshment: he hath converted my soul. He hath led me on the paths of justice, for his own name's sake. For though I should walk in the midst of the shadow of death, I will fear no evils, for thou art with me. Thy rod and thy staff, they have comforted me. Thou hast prepared a table before me against them that afflict me. Thou hast anointed my head with oil; and my chalice which inebriateth me, how goodly is it! And thy mercy will follow me all the days of my life. And that I may dwell in the house of the Lord unto length of days."
+    },
+    {
+      "title": "Let not your heart be troubled",
+      "source": "John 14:1–3, Douay-Rheims Bible, 1899 edition — public domain",
+      "text": "Let not your heart be troubled. You believe in God, believe also in me. In my Father's house there are many mansions. If not, I would have told you: because I go to prepare a place for you. And if I shall go, and prepare a place for you, I will come again, and will take you to myself; that where I am, you also may be."
+    },
+    {
+      "title": "Eternal rest",
+      "source": "Traditional prayer for the dead — public domain",
+      "text": "Eternal rest grant unto them, O Lord, and let perpetual light shine upon them. May they rest in peace. Amen."
+    },
+    {
+      "title": "Prayer of Saint Francis",
+      "source": "Anonymous, first printed 1912 — public domain",
+      "text": "Lord, make me an instrument of your peace. Where there is hatred, let me sow love; where there is injury, pardon; where there is doubt, faith; where there is despair, hope; where there is darkness, light; and where there is sadness, joy. O Divine Master, grant that I may not so much seek to be consoled as to console; to be understood as to understand; to be loved as to love. For it is in giving that we receive; it is in pardoning that we are pardoned; and it is in dying that we are born to eternal life."
+    }
   ]
 }

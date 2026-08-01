@@ -109,10 +109,52 @@ label {
   margin-bottom: 8px;
 }
 
-/* Nothing in this product should animate itself at someone. */
+/*
+ * Text for a screen reader and nobody else.
+ *
+ * Used where the visible page already carries the words — the interview
+ * question is the page heading, so repeating it above the box would say it
+ * twice — but the control still needs a name of its own.
+ */
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
+}
+
+/*
+ * Focus has to be visible everywhere, including on things the browser does not
+ * outline by default. `:focus-visible` alone misses `<summary>` and anything
+ * given a tabindex, and those are how the guidance accordions are reached.
+ */
+summary:focus-visible,
+[tabindex]:focus-visible,
+details:focus-visible {
+  outline: 3px solid var(--focus);
+  outline-offset: 3px;
+}
+
+/*
+ * Nothing in this product should animate itself at someone.
+ *
+ * This reaches the page chrome around the slideshow player too — the progress
+ * bar, the fades on the venue screen, the player's own controls. It does not
+ * reach the slideshow itself: the composition moves by computing a transform
+ * for each frame, not with CSS animation, so a Ken Burns pan is unaffected and
+ * the preview stays frame-identical to the file. That is deliberate; the video
+ * is the thing being made, not decoration on a page.
+ */
 @media (prefers-reduced-motion: reduce) {
   * {
     animation: none !important;
     transition: none !important;
+    scroll-behavior: auto !important;
   }
 }

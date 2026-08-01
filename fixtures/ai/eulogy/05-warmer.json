@@ -1,0 +1,19 @@
+{
+  "id": "05-warmer",
+  "task": "eulogy",
+  "match": "make this warmer",
+  "note": "The 'Warmer' button. Same facts, plainer voice, and — the part that matters — it still never tells the speaker how they feel. Nothing in here says 'I am heartbroken'; that is the speaker's to say or not say.",
+  "response": {
+    "openingLine": "Thank you for coming. Ruth would have told you not to make a fuss, and then she would have put the kettle on for all of you.",
+    "body": [
+      "Some of you were on the road before it was light. She would have counted this room twice and then said she wasn't counting.",
+      "She never explained herself. She just did things, and you found out years later from somebody else. The house was warm. There was another chair, always, already pulled out. If you turned up at half past nine at night with a story, you got tea and you got listened to, right to the end.",
+      "One of the first things I was ever told about her was this: \"{{memory:0}}\" That was {{memoryFrom:0}}. It has held up.",
+      "{{memoryFrom:1}} reminded me of something else this week. {{memory:1}} That was her. That was exactly her.",
+      "[pause]",
+      "It was all small things. Thousands of them, quietly, for years, mostly for people who never found out."
+    ],
+    "closingLine": "No fuss, then. Just a cup of tea, and thank you for being here for her.",
+    "usedMemoryIds": ["{{memoryId:0}}", "{{memoryId:1}}"]
+  }
+}

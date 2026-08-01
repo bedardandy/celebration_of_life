@@ -1,5 +1,6 @@
 import { z } from 'zod';
 import { PacingPresetSchema, SlugSchema } from './common';
+import { OrderOfServiceItemSchema, ProgramReadingSchema } from './program';
 
 /**
  * Faith/culture awareness is data, never branching code. Every pack answers the
@@ -38,6 +39,17 @@ export const TraditionPackSchema = z
       .default([]),
     checklistExtras: z.array(z.string().min(1).max(300)).default([]),
     deliveryNotes: z.array(z.string().min(1).max(600)).default([]),
+    /**
+     * The usual shape of the service, as a starting point for a printed
+     * program. A suggestion the organizer edits, never a running order they
+     * are held to — and empty is valid, for a pack that would rather not say.
+     */
+    orderOfService: z.array(OrderOfServiceItemSchema).max(40).default([]),
+    /**
+     * Readings this tradition reaches for. Public-domain texts carry their
+     * words; anything still in copyright is named and sourced only.
+     */
+    readings: z.array(ProgramReadingSchema).max(20).default([]),
   })
   .strict();
 export type TraditionPack = z.infer<typeof TraditionPackSchema>;

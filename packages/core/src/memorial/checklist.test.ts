@@ -17,9 +17,9 @@ function card(cards: ChecklistCard[], id: CardId): ChecklistCard {
 }
 
 describe('computeChecklist', () => {
-  it('always returns the same three cards, in the same order', () => {
+  it('always returns the same four cards, in the same order', () => {
     const { cards } = computeChecklist(memorial, { photos: 0, memories: 0 });
-    expect(cards.map((c) => c.id)).toEqual(['photos', 'story', 'slideshow']);
+    expect(cards.map((c) => c.id)).toEqual(['photos', 'story', 'slideshow', 'speeches']);
   });
 
   it('starts everything empty but never blank', () => {
@@ -180,6 +180,8 @@ describe('computeChecklist', () => {
       enoughPhotos: true,
       readyToBuild: true,
       hasSlideshow: false,
+      hasSpeech: false,
+      programReady: false,
       // Delivery flags: false rather than absent, so a diff over time can tell
       // "not yet" from "this memorial predates the question".
       musicChosen: false,
@@ -192,6 +194,62 @@ describe('computeChecklist', () => {
   it('points every card at a route under the memorial', () => {
     const { cards } = computeChecklist(memorial, { photos: 0, memories: 0 });
     for (const c of cards) expect(c.href.startsWith('/m/m-1/')).toBe(true);
+  });
+});
+
+describe('the speeches and program card', () => {
+  const memorial = { id: 'm-1', intakeCompletedAt: null };
+  const speechCard = (counts: Parameters<typeof computeChecklist>[1]) =>
+    computeChecklist(memorial, counts).cards.find((card) => card.id === 'speeches');
+
+  it('offers itself from the very first evening, with nothing else in place', () => {
+    const card = speechCard({ photos: 0, memories: 0 });
+    expect(card?.state).toBe('not-started');
+    // Never locked: a eulogy is often the first thing an organiser wants to do.
+    expect(card?.lockedReason).toBeUndefined();
+    expect(card?.href).toBe('/m/m-1/speeches');
+    expect(card?.statusLine).toContain('eulogy');
+  });
+
+  it('says a speech is waiting once one has been set up', () => {
+    const card = speechCard({ photos: 0, memories: 0, speeches: { started: 1, drafted: 0 } });
+    expect(card?.state).toBe('in-progress');
+    expect(card?.statusLine).toContain('waiting for its first draft');
+  });
+
+  it('counts written speeches and the program together', () => {
+    const card = speechCard({
+      photos: 0,
+      memories: 0,
+      speeches: { started: 2, drafted: 2 },
+      program: { started: true, ready: false },
+    });
+    expect(card?.state).toBe('in-progress');
+    expect(card?.statusLine).toContain('2 speeches written');
+    expect(card?.statusLine).toContain('part-way');
+  });
+
+  it('reads as ready only when there is a speech and a printable program', () => {
+    const card = speechCard({
+      photos: 0,
+      memories: 0,
+      speeches: { started: 1, drafted: 1 },
+      program: { started: true, ready: true },
+    });
+    expect(card?.state).toBe('ready');
+    expect(card?.statusLine).toContain('1 speech written');
+    expect(card?.statusLine).toContain('ready to print');
+  });
+
+  it('flags a written speech and a finished program', () => {
+    const { flags } = computeChecklist(memorial, {
+      photos: 0,
+      memories: 0,
+      speeches: { started: 1, drafted: 1 },
+      program: { started: true, ready: true },
+    });
+    expect(flags['hasSpeech']).toBe(true);
+    expect(flags['programReady']).toBe(true);
   });
 });
 

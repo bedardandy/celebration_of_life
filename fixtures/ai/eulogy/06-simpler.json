@@ -1,0 +1,19 @@
+{
+  "id": "06-simpler",
+  "task": "eulogy",
+  "match": "use simpler words",
+  "note": "The 'Simpler words' button. Read this one out loud: if any sentence in it sounds like writing rather than like a person talking, the fixture needs changing, not the code.",
+  "response": {
+    "openingLine": "Thank you for coming. Ruth would have said not to make a fuss, and then made you tea.",
+    "body": [
+      "Some of you left home before it was light. She would have counted this room. Twice.",
+      "She did not explain herself. She just did things. You found out later, from someone else. The house was warm. There was always one more chair. If you came round late with a story, she listened to all of it.",
+      "The first thing I was told about her was this: \"{{memory:0}}\" That was {{memoryFrom:0}}. It was true.",
+      "{{memoryFrom:1}} told me something else this week. {{memory:1}} That was her.",
+      "[pause]",
+      "None of it was big. It was small things, done for years, for people who mostly never knew."
+    ],
+    "closingLine": "No fuss. Just tea. Thank you for coming today.",
+    "usedMemoryIds": ["{{memoryId:0}}", "{{memoryId:1}}"]
+  }
+}

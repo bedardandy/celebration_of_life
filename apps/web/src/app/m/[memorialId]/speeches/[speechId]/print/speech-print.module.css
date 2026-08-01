@@ -1,0 +1,110 @@
+/*
+ * Large print, for reading aloud.
+ *
+ * Everything here follows from one fact: the person holding this paper will be
+ * standing up, in front of people, at the worst moment of their year. So the
+ * type is large, the leading is generous, the measure is short enough that the
+ * eye finds the next line without hunting, and no paragraph is ever split
+ * across a page break.
+ */
+
+.sheet {
+  max-width: 40rem;
+  margin: 0 auto;
+  padding: 48px 24px 96px;
+  color: var(--ink);
+}
+
+.header {
+  margin-bottom: 40px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid var(--line);
+}
+
+.eyebrow {
+  margin: 0 0 6px;
+  color: var(--ink-faint);
+  font-size: 1rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.title {
+  margin: 0 0 8px;
+  font-size: 2rem;
+}
+
+.meta {
+  margin: 0;
+  color: var(--ink-soft);
+  font-size: 1.05rem;
+}
+
+.paragraph {
+  margin: 0 0 28px;
+  font-family: var(--serif);
+  font-size: 1.5rem;
+  line-height: 1.9;
+  /* Never split a paragraph across a page. Turning a page mid-sentence, out
+     loud, in front of a room, is the failure this file exists to prevent. */
+  break-inside: avoid;
+  page-break-inside: avoid;
+  orphans: 3;
+  widows: 3;
+}
+
+.pause {
+  margin: 0 0 28px;
+  color: var(--ink-faint);
+  font-size: 1.5rem;
+  letter-spacing: 0.5em;
+  break-inside: avoid;
+}
+
+.end {
+  margin-top: 48px;
+  color: var(--ink-faint);
+  font-size: 1.1rem;
+}
+
+.screenOnly {
+  display: block;
+  margin-bottom: 32px;
+}
+
+.printHint {
+  display: block;
+  margin-top: 6px;
+  color: var(--ink-faint);
+  font-size: 0.95rem;
+  line-height: 1.5;
+}
+
+@media print {
+  @page {
+    margin: 20mm;
+  }
+
+  .screenOnly {
+    display: none;
+  }
+
+  .sheet {
+    max-width: none;
+    padding: 0;
+    color: #000;
+  }
+
+  .paragraph {
+    font-size: 20pt;
+    line-height: 1.8;
+  }
+
+  .pause {
+    font-size: 20pt;
+  }
+
+  .header {
+    border-bottom-color: #000;
+  }
+}

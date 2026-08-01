@@ -115,34 +115,33 @@ export function UploadArea({ token, nextHref }: { token: string; nextHref: strin
     if (!uppy || chosen.length === 0) return;
 
     setBusy(true);
-    setFiles((current) => [
-      ...current,
-      ...chosen.map((file) => ({
-        id: `${file.name}-${file.size}-${file.lastModified}`,
-        name: file.name,
-        progress: 0,
-        state: 'waiting' as const,
-      })),
-    ]);
 
+    // The row is keyed by the id Uppy hands back, not one made up here: the
+    // progress and success events arrive carrying Uppy's id, and a row keyed by
+    // anything else silently never updates — three photographs sitting at 0%
+    // forever while they upload perfectly well behind the screen.
+    const rows: FileState[] = [];
     for (const file of chosen) {
       try {
-        uppy.addFile({
+        const id = uppy.addFile({
           name: file.name,
           type: file.type || 'application/octet-stream',
           data: file,
           source: 'file-input',
         });
+        rows.push({ id, name: file.name, progress: 0, state: 'waiting' });
       } catch {
-        setFiles((current) =>
-          current.map((item) =>
-            item.name === file.name
-              ? { ...item, state: 'failed', error: 'That one did not go through.' }
-              : item,
-          ),
-        );
+        rows.push({
+          id: `rejected-${file.name}-${file.lastModified}`,
+          name: file.name,
+          progress: 0,
+          state: 'failed',
+          error: 'That one did not go through.',
+        });
       }
     }
+    setFiles((current) => [...current, ...rows]);
+
     // The same input can be used again for a second batch.
     event.target.value = '';
   }

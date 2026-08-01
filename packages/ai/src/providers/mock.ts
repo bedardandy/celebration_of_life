@@ -28,6 +28,7 @@ import { findFixture, fixtureResponseText, fixturesDir, type FixtureCase } from 
 import { hasRepairTurn, requestMatchText } from '../generate-object';
 import { parseAssetLines } from '../prompts/photo-analysis';
 import { EDL_TASK, parseEdlAssetLines, parseEdlQuoteLines } from '../prompts/edl';
+import { EULOGY_TASK, parseEulogyMemoryLines } from '../prompts/eulogy';
 import { synthesizeFromJsonSchema } from '../schema-walker';
 
 /** Task tag the photo-analysis batch job uses; also its fixture folder. */
@@ -87,7 +88,7 @@ function scriptedResponse(fixture: FixtureCase, cursorKey: string): unknown {
 
 export type MockResolution = {
   text: string;
-  source: 'fixture' | 'photo-batch' | 'edl-proposal' | 'schema' | 'echo';
+  source: 'fixture' | 'photo-batch' | 'edl-proposal' | 'eulogy-draft' | 'schema' | 'echo';
   fixtureId?: string;
 };
 
@@ -104,6 +105,9 @@ export function resolveMockResponse(
 
   const proposal = edlProposalResponse(request, matchText, fixture);
   if (proposal) return proposal;
+
+  const eulogy = eulogyDraftResponse(request, matchText, fixture);
+  if (eulogy) return eulogy;
 
   if (fixture) {
     const value = scriptedResponse(fixture, `${dir}::${task}::${fixture.id}`);
@@ -204,6 +208,70 @@ export function edlProposalResponse(
     text: JSON.stringify(pruneUnfilled(parsed as Record<string, unknown>), null, 2),
     source: 'edl-proposal',
     ...(fixture?.id ? { fixtureId: fixture.id } : {}),
+  };
+}
+
+/**
+ * Eulogy drafts have exactly the problem EDL proposals do.
+ *
+ * A canned eulogy cannot quote a memory that only exists once a real family has
+ * written one, and the whole point of the verbatim rule is that the words in
+ * quotation marks are somebody's actual words. So the fixture is a template —
+ * `{{memory:0}}`, `{{memoryFrom:0}}`, `{{memoryId:0}}` — filled from the very
+ * prompt the studio just built, and any paragraph whose placeholder has nothing
+ * to fill it is dropped rather than left dangling.
+ */
+export function eulogyDraftResponse(
+  request: AiCompleteRequest,
+  matchText: string,
+  fixture: FixtureCase | undefined,
+): MockResolution | undefined {
+  if (request.taskTag !== EULOGY_TASK) return undefined;
+  const template = plainObject(fixture?.response);
+  if (!template) return undefined;
+
+  const memories = parseEulogyMemoryLines(matchText);
+  const filled = JSON.stringify(template).replace(
+    /\{\{(memory|memoryFrom|memoryId):(\d+)\}\}/g,
+    (whole, kind: string, rawIndex: string) => {
+      const memory = memories.find((m) => m.index === Number.parseInt(rawIndex, 10));
+      if (!memory) return whole;
+      if (kind === 'memoryFrom') return jsonSafe(memory.attribution);
+      return jsonSafe(kind === 'memoryId' ? memory.id : memory.text);
+    },
+  );
+
+  let parsed: unknown;
+  try {
+    parsed = JSON.parse(filled);
+  } catch {
+    return undefined;
+  }
+  return {
+    text: JSON.stringify(pruneUnfilledEulogy(parsed as Record<string, unknown>), null, 2),
+    source: 'eulogy-draft',
+    ...(fixture?.id ? { fixtureId: fixture.id } : {}),
+  };
+}
+
+const UNFILLED_MEMORY = /\{\{(memory|memoryFrom|memoryId):\d+\}\}/;
+
+/**
+ * A fixture written for four memories, used by a speaker who ticked two: the
+ * paragraphs that have nothing to say are removed, and `body` keeps at least
+ * one paragraph so the result is still a valid draft.
+ */
+function pruneUnfilledEulogy(draft: Record<string, unknown>): Record<string, unknown> {
+  const body = (Array.isArray(draft['body']) ? draft['body'] : []).filter(
+    (paragraph) => !UNFILLED_MEMORY.test(String(paragraph)),
+  );
+  const used = (Array.isArray(draft['usedMemoryIds']) ? draft['usedMemoryIds'] : []).filter(
+    (memoryId) => !UNFILLED_MEMORY.test(String(memoryId)),
+  );
+  return {
+    ...draft,
+    body: body.length > 0 ? body : ['(nothing to say here yet)'],
+    usedMemoryIds: used,
   };
 }
 

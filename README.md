@@ -35,7 +35,16 @@ autosaves. Everything can be undone. Nothing auto-plays, upsells, or rushes.
   loudness-normalized to −16 LUFS, ffprobe-verified before it is ever called done. Dignified
   filenames, USB/FAT32 instructions, and a printable funeral-director card ("please test it on
   the venue's own equipment before the service").
-- **Faith-aware, data-driven** — tradition packs (Catholic, Jewish, secular, and growing) carry
+- **Speeches & program** — a eulogy studio for each person speaking: a guided setup (who,
+  how long, how it should sound, which memories), one AI call for a first draft built only
+  from the memories that speaker ticked, versioned editing with "a little shorter / warmer /
+  simpler words", a read-aloud timer that adds the 25% everyone loses to emotion on the day,
+  large-print and graveside versions. Anything in quotation marks must be word-for-word what
+  somebody actually wrote, or the quotation marks come off. Alongside it, a printable
+  order-of-service program: cover, order (prefilled from the tradition pack), life sketch,
+  a public-domain reading, and the thank you.
+- **Faith-aware, data-driven** — tradition packs (Catholic, Protestant, Orthodox, Jewish,
+  Muslim, Hindu, Buddhist, homegoing, secular) carry
   pacing, media-placement guidance ("slideshows belong at the vigil or reception, generally not
   the Mass"), and music guidance in their own words. There is no `if (catholic)` anywhere in the
   code; a new tradition is a JSON file, not a feature branch.
@@ -103,8 +112,7 @@ See [docs/adr/](docs/adr/) for the reasoning behind the big choices.
 
 ## Status
 
-The MVP (story + slideshow, end to end) is complete. On the roadmap: eulogy studio, hosted
-watch pages and live venue playback, voice interview input, printable order-of-service
-programs, Google Photos Picker import, local face clustering for finding photos of the person
-across decades, and more tradition packs — Muslim, Hindu, Buddhist, Orthodox, and Black church
-homegoing traditions among them.
+The MVP (story + slideshow, end to end) is complete, and so are the eulogy studio, the
+printable order-of-service program, and nine tradition packs. On the roadmap: hosted watch
+pages and live venue playback, voice interview input, Google Photos Picker import, and local
+face clustering for finding photos of the person across decades.

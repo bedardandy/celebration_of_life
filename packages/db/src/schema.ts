@@ -9,7 +9,15 @@
  */
 import { sql } from 'drizzle-orm';
 import { index, integer, real, sqliteTable, text, uniqueIndex } from 'drizzle-orm/sqlite-core';
-import type { BeatGrid, Edl, JobType, LifeStoryDocument, PhotoAnalysis } from '@col/schemas';
+import type {
+  BeatGrid,
+  Edl,
+  EulogyNotes,
+  JobType,
+  LifeStoryDocument,
+  PhotoAnalysis,
+  ProgramDocument,
+} from '@col/schemas';
 import { newId } from './ids';
 
 const id = () =>
@@ -473,6 +481,81 @@ export const renderJobs = sqliteTable(
 );
 
 /* -------------------------------------------------------------------------- */
+/* eulogy_drafts (append-only, versioned)                                      */
+/* -------------------------------------------------------------------------- */
+
+/**
+ * One row per version of one speech.
+ *
+ * `speechId` is what a speech *is* — several people speak at a funeral, and each
+ * of them keeps their own drafts. Versions share the sequence within a speech,
+ * so "the previous one" is always one row back whatever produced it, and
+ * nothing a person wrote is ever overwritten by a model or by a tool button.
+ */
+export const eulogyDrafts = sqliteTable(
+  'eulogy_drafts',
+  {
+    id: id(),
+    memorialId: text('memorial_id')
+      .notNull()
+      .references(() => memorials.id, { onDelete: 'cascade' }),
+    /** Stable across every version of this speech. */
+    speechId: text('speech_id').notNull(),
+    version: integer('version').notNull(),
+    /** The full speech, or the ninety-second graveside form of it. */
+    variant: text('variant', { enum: ['full', 'graveside'] })
+      .notNull()
+      .default('full'),
+    speakerName: text('speaker_name').notNull().default(''),
+    /** How they were related, in their own words: "her daughter". */
+    relationship: text('relationship'),
+    targetMinutes: integer('target_minutes').notNull().default(5),
+    tone: text('tone', { enum: ['warm-with-laughter', 'quiet-and-simple', 'faithful'] })
+      .notNull()
+      .default('warm-with-laughter'),
+    /** Paragraphs, blank-line separated, with `[pause]` markers left in place. */
+    body: text('body').notNull().default(''),
+    /** Opening/closing lines, chosen memories, and what assembly had to change. */
+    notes: text('notes', { mode: 'json' }).$type<EulogyNotes>(),
+    status: text('status', { enum: ['setup', 'draft', 'ready'] })
+      .notNull()
+      .default('setup'),
+    /** 'ai' | 'organizer' — who produced this version. */
+    createdBy: text('created_by').notNull().default('organizer'),
+    /** Why this version exists: "A little shorter", "Edited by hand". */
+    note: text('note'),
+    createdAt: createdAt(),
+    /** Soft delete removes a whole speech; every version carries the tombstone. */
+    deletedAt: integer('deleted_at'),
+  },
+  (t) => [
+    uniqueIndex('eulogy_drafts_speech_version_idx').on(t.speechId, t.version),
+    index('eulogy_drafts_memorial_idx').on(t.memorialId),
+  ],
+);
+
+/* -------------------------------------------------------------------------- */
+/* program_docs (append-only, versioned)                                       */
+/* -------------------------------------------------------------------------- */
+
+export const programDocs = sqliteTable(
+  'program_docs',
+  {
+    id: id(),
+    memorialId: text('memorial_id')
+      .notNull()
+      .references(() => memorials.id, { onDelete: 'cascade' }),
+    version: integer('version').notNull(),
+    doc: text('doc', { mode: 'json' }).$type<ProgramDocument>().notNull(),
+    /** 'organizer' | 'ai' | 'system' — who produced this revision. */
+    createdBy: text('created_by').notNull().default('organizer'),
+    note: text('note'),
+    createdAt: createdAt(),
+  },
+  (t) => [uniqueIndex('program_docs_memorial_version_idx').on(t.memorialId, t.version)],
+);
+
+/* -------------------------------------------------------------------------- */
 /* jobs (generic durable queue)                                                */
 /* -------------------------------------------------------------------------- */
 
@@ -528,6 +611,8 @@ export const schema = {
   musicTracks,
   musicSelections,
   renderJobs,
+  eulogyDrafts,
+  programDocs,
   jobs,
 };
 
@@ -547,6 +632,8 @@ export const TABLE_NAMES = [
   'music_tracks',
   'music_selections',
   'render_jobs',
+  'eulogy_drafts',
+  'program_docs',
   'jobs',
 ] as const;
 
@@ -578,6 +665,10 @@ export type MusicSelection = typeof musicSelections.$inferSelect;
 export type NewMusicSelection = typeof musicSelections.$inferInsert;
 export type RenderJob = typeof renderJobs.$inferSelect;
 export type NewRenderJob = typeof renderJobs.$inferInsert;
+export type EulogyDraftRow = typeof eulogyDrafts.$inferSelect;
+export type NewEulogyDraftRow = typeof eulogyDrafts.$inferInsert;
+export type ProgramDocRow = typeof programDocs.$inferSelect;
+export type NewProgramDocRow = typeof programDocs.$inferInsert;
 export type JobRow = typeof jobs.$inferSelect;
 export type NewJobRow = typeof jobs.$inferInsert;
 

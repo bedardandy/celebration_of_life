@@ -159,6 +159,10 @@ function PhotoCard({ memorialId, card }: { memorialId: string; card: CurationCar
           type="submit"
           className={styles.tapButton}
           aria-pressed={card.approved}
+          // The picture's alt text names the photograph; the button also has to
+          // say what pressing it does, which a screen reader would otherwise
+          // have to infer from a filename.
+          aria-label={card.approved ? `Keeping ${label}` : `Keep ${label}`}
           title={card.approved ? 'Keeping this one' : 'Tap to keep this one'}
         >
           {card.problem ? (

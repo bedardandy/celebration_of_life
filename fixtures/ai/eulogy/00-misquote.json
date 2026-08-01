@@ -1,0 +1,16 @@
+{
+  "id": "00-misquote",
+  "task": "eulogy",
+  "match": "Speaking: Marion Hartley, her niece",
+  "note": "The failure this whole feature is built around: a draft that puts quotation marks around a sentence nobody actually wrote, and claims a memory id that was never chosen. Assembly must take the quotation marks off (leaving the sentence as narrative), drop the invented id, and say so. Matched on the speaker's name so the studio tests can ask for it deliberately. Please do not delete, and please do not 'fix' the quote.",
+  "response": {
+    "openingLine": "I am Marion, and Ruth was my aunt.",
+    "body": [
+      "She never let anybody leave that house hungry, and she would tell you so herself: \"Nobody has ever gone out of my front door on an empty stomach, and nobody ever will.\"",
+      "\"{{memory:0}}\" is how it was put to me, and that is exactly the woman I knew.",
+      "The rest of what I have to say is short, because she would have wanted it short."
+    ],
+    "closingLine": "Thank you for coming out for her today.",
+    "usedMemoryIds": ["{{memoryId:0}}", "a-memory-that-was-never-chosen"]
+  }
+}

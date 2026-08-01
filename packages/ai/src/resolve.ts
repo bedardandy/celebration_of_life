@@ -26,6 +26,11 @@ export const AI_TASK_ALIASES = {
   'photo-analysis': 'vision',
   'edl-generation': 'edl',
   'copy-drafting': 'caption',
+  // Writing work: the eulogy studio and the printed program. Both are drafting
+  // prose for a family to rewrite, so they share the copy provider unless
+  // somebody deliberately splits them later.
+  eulogy: 'caption',
+  program: 'caption',
 } as const satisfies Record<string, AiTask>;
 
 export type AiTaskName = AiTask | keyof typeof AI_TASK_ALIASES;

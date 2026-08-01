@@ -3,6 +3,7 @@ export * from './exif';
 export * from './phash';
 export * from './quality';
 export * from './photo';
+export * from './poster';
 export * from './audio';
 export * from './beat-grid';
 export * from './tempo';

@@ -1,0 +1,80 @@
+{
+  "slug": "buddhist",
+  "label": "Buddhist funeral and memorial days",
+  "pacingPreset": "memorial-cycle",
+  "serviceTimelineNote": "Buddhist practice varies widely — Theravada, Mahayana, Zen, Tibetan, and every family's own way within them. What most share is time: a funeral or cremation in the first days, then memorial services every seventh day up to the forty-ninth, and often again at one hundred days and at the year. There is no need to have everything ready at once. The monastery or temple will tell you what belongs on which day.",
+  "mediaPlacement": [
+    {
+      "context": "The altar photograph",
+      "guidance": "A framed portrait stands on the altar beside the incense, the flowers and the offerings, through the funeral and often for the forty-nine days. Choose the picture that most looks like them, and have it printed well and framed. It is the piece of media that matters most."
+    },
+    {
+      "context": "The funeral or cremation service",
+      "guidance": "The service is chanting, offerings and the giving of merit, and it holds its own shape. A slideshow is usually not part of it. Some temples are glad to show one before the service begins, as people arrive; ask, and they will say plainly."
+    },
+    {
+      "context": "The seventh-day services and the forty-ninth day",
+      "guidance": "These gatherings are smaller and calmer, and a photo tribute is welcome at most of them — often at the meal afterwards. The forty-ninth day, the last of the cycle, is where many families show a fuller video for the first time."
+    },
+    {
+      "context": "The meal after the service",
+      "guidance": "A quiet loop while people eat and talk suits this perfectly. Nobody has to watch from the beginning, which is right for a room where people are catching up."
+    }
+  ],
+  "musicGuidance": [
+    "Chanting is practice, not a soundtrack. Please do not lay recorded chanting under photographs; if there is to be chanting, let it be live and let it stand on its own.",
+    "For a video shown at a seventh-day service or the forty-ninth day, quiet instrumental music is a safe and common choice — or no music at all, which many families prefer.",
+    "Silence is a real option here, and often the most fitting one. A silent slideshow in a room of people is not an empty thing."
+  ],
+  "interviewAdjustments": [
+    {
+      "promptSlug": "faith-and-belief",
+      "note": "Ask about practice rather than belief: whether they sat, which temple they belonged to, the teacher they followed, the way they were with animals and strangers."
+    },
+    {
+      "promptSlug": "hands-and-hobbies",
+      "note": "Attention and care show up in small habits — the garden, the tea, the walking, the way they kept a room. Ask about those; they carry the person."
+    }
+  ],
+  "checklistExtras": [
+    "Have a good portrait printed and framed for the altar early.",
+    "Ask the temple which days the family is expected to attend, and what is prepared for each.",
+    "Ask whether a slideshow before the service begins would be welcome, rather than assuming either way."
+  ],
+  "deliveryNotes": [
+    "For a temple hall or a meal afterwards, a laptop or a television with a USB port is usually all that is needed.",
+    "Bring the video on a USB stick formatted FAT32 or exFAT, and email a copy to whoever is arranging the hall.",
+    "If the video is silent by choice, write that on the printed card so nobody spends the service looking for the sound."
+  ],
+  "orderOfService": [
+    { "item": "Gathering", "note": "The altar, the portrait, incense and flowers" },
+    { "item": "Taking refuge and the precepts" },
+    { "item": "Chanting", "note": "Led by the monastics or the teacher" },
+    { "item": "Offering of incense", "note": "Family first, then everyone who wishes" },
+    { "item": "Dharma talk", "note": "Brief words on impermanence and on this life" },
+    { "item": "Words of remembrance", "note": "By family and friends" },
+    {
+      "item": "Transfer of merit",
+      "note": "The merit of the gathering dedicated to the one who has died"
+    },
+    { "item": "Closing chant" },
+    { "item": "The meal", "note": "And the dates of the seventh-day services" }
+  ],
+  "readings": [
+    {
+      "title": "All that is ours",
+      "source": "Dhammapada, verses 277–279, translated by F. Max Müller, 1881 — public domain",
+      "text": "All created things perish; he who knows and sees this becomes passive in pain; this is the way to purity.\nAll created things are grief and pain; he who knows and sees this becomes passive in pain; this is the way that leads to purity.\nAll forms are unreal; he who knows and sees this becomes passive in pain; this is the way that leads to purity."
+    },
+    {
+      "title": "May all beings be at ease",
+      "source": "From the Karaniya Metta Sutta. Plain English rendering of the traditional verses.",
+      "text": "May all beings be at ease.\nWhatever living beings there are — weak or strong, tall or small, seen or unseen, near or far, born or still to be born — may they all be at ease.\nAs a mother would guard her only child with her life, so let one cultivate a boundless heart towards all beings."
+    },
+    {
+      "title": "The lamp",
+      "source": "Traditional words of dedication at a memorial service. Plain English rendering.",
+      "text": "We light this lamp for one who has gone before us.\nWhatever good was done in this life, whatever kindness, whatever patience — may it be shared with all beings.\nMay they be free from suffering. May they be at peace."
+    }
+  ]
+}

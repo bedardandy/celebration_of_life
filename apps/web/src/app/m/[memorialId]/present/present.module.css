@@ -1,0 +1,165 @@
+/*
+ * The venue screen.
+ *
+ * Everything here is black, because the projector is showing whatever this page
+ * shows and a cream-coloured product chrome behind a tribute video is the wrong
+ * thing to put in front of a room. The only colours are black, white and one
+ * grey — nothing that reads as an app.
+ */
+
+.stage {
+  position: fixed;
+  inset: 0;
+  background: #000;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.video {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  background: #000;
+}
+
+/* Held black: the pre-roll, and the end. Sits over the video, not instead of
+   it, so nothing reflows when it lifts. */
+.curtain {
+  position: absolute;
+  inset: 0;
+  background: #000;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 28px;
+  text-align: center;
+  padding: 32px;
+}
+
+.name {
+  margin: 0;
+  font-family: var(--serif);
+  font-size: clamp(1.6rem, 4vw, 2.4rem);
+  color: #f2efe9;
+  letter-spacing: 0.01em;
+}
+
+.play {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 18rem;
+  min-height: 6rem;
+  padding: 0 48px;
+  border: 2px solid #f2efe9;
+  border-radius: 12px;
+  background: transparent;
+  color: #f2efe9;
+  font-size: 2rem;
+  cursor: pointer;
+}
+
+.play:hover {
+  background: #f2efe9;
+  color: #000;
+}
+
+.play:focus-visible {
+  outline: 3px solid #8fc4de;
+  outline-offset: 4px;
+}
+
+.hint {
+  margin: 0;
+  color: #9a948a;
+  font-size: 1rem;
+  line-height: 1.6;
+  max-width: 34rem;
+}
+
+/* The chrome that fades away once it is playing. */
+.chrome {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px 24px;
+  align-items: center;
+  justify-content: center;
+  padding: 20px 24px 26px;
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.85), rgba(0, 0, 0, 0));
+  transition: opacity 800ms ease;
+}
+
+.chromeHidden {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.chromeButton {
+  display: inline-flex;
+  align-items: center;
+  min-height: var(--tap);
+  padding: 0 14px;
+  border: 1px solid #4a463f;
+  border-radius: 8px;
+  background: transparent;
+  color: #d8d3c9;
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+.chromeButton:hover {
+  border-color: #d8d3c9;
+  color: #fff;
+}
+
+.chromeNote {
+  color: #9a948a;
+  font-size: 0.95rem;
+}
+
+/* The pre-flight check. */
+.check {
+  max-width: 34rem;
+  text-align: left;
+}
+
+.checkTitle {
+  margin: 0 0 12px;
+  font-family: var(--serif);
+  font-size: 1.5rem;
+  color: #f2efe9;
+}
+
+.checkList {
+  margin: 0 0 20px;
+  padding-left: 22px;
+  color: #d8d3c9;
+  line-height: 1.7;
+}
+
+.checkRow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  align-items: center;
+}
+
+.answer {
+  margin: 16px 0 0;
+  color: #d8d3c9;
+  line-height: 1.6;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .chrome {
+    transition: none;
+  }
+}

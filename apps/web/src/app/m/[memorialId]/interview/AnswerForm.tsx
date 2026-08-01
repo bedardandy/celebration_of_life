@@ -17,6 +17,7 @@ import { useRouter } from 'next/navigation';
 import { step } from '@/components/StepScreen';
 import { SavedIndicator, type SaveState } from '@/components/SavedIndicator';
 import { answerAction, pauseInterviewAction, saveDraftAction } from './actions';
+import { SpeakButton } from './SpeakButton';
 import styles from './interview.module.css';
 
 export const DRAFT_SAVE_DELAY_MS = 800;
@@ -69,12 +70,32 @@ export function AnswerForm({
     [memorialId, sessionId],
   );
 
-  function onChange(value: string) {
-    setText(value);
-    setSaveState('saving');
-    clearTimeout(timer.current);
-    timer.current = setTimeout(() => flush(value), DRAFT_SAVE_DELAY_MS);
-  }
+  const onChange = useCallback(
+    (value: string) => {
+      setText(value);
+      setSaveState('saving');
+      clearTimeout(timer.current);
+      timer.current = setTimeout(() => flush(value), DRAFT_SAVE_DELAY_MS);
+    },
+    [flush],
+  );
+
+  /**
+   * Spoken words land in the box exactly as typed ones do — same state, same
+   * debounced save — so there is one answer, not a transcript and a draft.
+   */
+  const onTranscript = useCallback(
+    (next: (existing: string) => string) => {
+      setText((existing) => {
+        const value = next(existing);
+        setSaveState('saving');
+        clearTimeout(timer.current);
+        timer.current = setTimeout(() => flush(value), DRAFT_SAVE_DELAY_MS);
+        return value;
+      });
+    },
+    [flush],
+  );
 
   function submit(skipped: boolean) {
     clearTimeout(timer.current);
@@ -102,8 +123,10 @@ export function AnswerForm({
         </p>
       ) : null}
 
-      <label className={step.field} htmlFor="answer">
-        <span className="visually-hidden">{question}</span>
+      {/* The question is already the page's heading; this names the box for a
+          screen reader without saying it twice on screen. */}
+      <label className="visually-hidden" htmlFor="answer">
+        {question}
       </label>
       <textarea
         id="answer"
@@ -118,6 +141,9 @@ export function AnswerForm({
       <div className={styles.savedRow}>
         <SavedIndicator state={saveState} />
       </div>
+
+      <SpeakButton onTranscript={onTranscript} disabled={pending} />
+
       <p className={styles.answerHint}>
         Everything here saves itself. You can close this and come back whenever you like.
       </p>

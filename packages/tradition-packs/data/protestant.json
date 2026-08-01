@@ -1,0 +1,86 @@
+{
+  "slug": "protestant",
+  "label": "Protestant funeral or memorial service",
+  "pacingPreset": "days3to7",
+  "serviceTimelineNote": "Most Protestant funerals happen three to seven days after the death, sometimes with a visitation or viewing the evening before. The service itself is usually held in the church, the funeral home chapel or at the graveside, and is followed by a reception — very often in the church hall, with food brought by the congregation. Congregations differ a great deal in what they include, and the pastor will tell you plainly what is usual in theirs.",
+  "mediaPlacement": [
+    {
+      "context": "During the service",
+      "guidance": "Photo tributes and personal eulogies are generally welcome in the service itself — many churches have a screen and are used to playing a video, often just before or after the message. Please ring the church office and ask; practice varies from congregation to congregation, and they will answer straight away."
+    },
+    {
+      "context": "The visitation the evening before",
+      "guidance": "A looping slideshow near the entrance gives people something to gather around while they wait to speak to the family. It takes the pressure off a receiving line, which is worth a great deal."
+    },
+    {
+      "context": "The reception afterwards",
+      "guidance": "The longer family cut belongs here — the extra photographs, the ones that are blurry but beloved. It can loop quietly while people eat, and nobody has to watch from the beginning."
+    },
+    {
+      "context": "Words from family and friends",
+      "guidance": "Most Protestant services make real room for personal tributes. Two or three people, five minutes each, is the usual shape. Agree the order with the pastor beforehand so nobody is guessing on the day."
+    }
+  ],
+  "musicGuidance": [
+    "Hymns are usually chosen with the pastor or the church musician. Ask early — they will have suggestions, and they are glad to be asked.",
+    "Their favourite songs, the ones from the car and the kitchen radio, fit the visitation and the reception, and many churches are happy to have one in the service too.",
+    "If a hymn mattered to them, say so when you meet the pastor. It is nearly always possible, and it means a great deal to a family to hear it sung."
+  ],
+  "interviewAdjustments": [
+    {
+      "promptSlug": "faith-and-belief",
+      "note": "Ask about church life concretely: the congregation they belonged to, what they did there, the choir, the Sunday school class, the casseroles delivered to people having a hard year."
+    },
+    {
+      "promptSlug": "characteristic-saying",
+      "note": "A favourite verse or hymn line is often the truest thing to close a service with. Ask whether one was theirs."
+    }
+  ],
+  "checklistExtras": [
+    "Ring the church office and ask what they can play, and what connection their system needs.",
+    "Agree the hymns with the pastor or church musician.",
+    "Decide who is speaking, in what order, and how long each has — then tell them.",
+    "Ask who is arranging the reception; in most congregations somebody has already offered."
+  ],
+  "deliveryNotes": [
+    "Take the video to the church on a USB stick formatted FAT32 or exFAT, and email a copy to the church office as a backup.",
+    "Ask to test it on the church system before the day. Ten minutes on a weekday is worth more than any amount of hoping.",
+    "Give whoever runs the sound desk the printed card: it names the file, the length and when it should play."
+  ],
+  "orderOfService": [
+    { "item": "Prelude", "note": "Music as people gather" },
+    { "item": "Welcome and opening prayer" },
+    { "item": "Hymn" },
+    { "item": "Scripture reading" },
+    { "item": "Words of remembrance", "note": "Family and friends" },
+    { "item": "Photo tribute" },
+    { "item": "Message", "note": "By the pastor" },
+    { "item": "Hymn" },
+    { "item": "Prayer and benediction" },
+    { "item": "Postlude", "note": "Music as people leave" },
+    { "item": "Committal", "note": "At the graveside, family and friends welcome" },
+    { "item": "Reception", "note": "Where it is held, and that everyone is welcome" }
+  ],
+  "readings": [
+    {
+      "title": "Psalm 23 — The Lord is my shepherd",
+      "source": "Psalm 23, King James Version, 1611 — public domain",
+      "text": "The Lord is my shepherd; I shall not want. He maketh me to lie down in green pastures: he leadeth me beside the still waters. He restoreth my soul: he leadeth me in the paths of righteousness for his name's sake. Yea, though I walk through the valley of the shadow of death, I will fear no evil: for thou art with me; thy rod and thy staff they comfort me. Thou preparest a table before me in the presence of mine enemies: thou anointest my head with oil; my cup runneth over. Surely goodness and mercy shall follow me all the days of my life: and I will dwell in the house of the Lord for ever."
+    },
+    {
+      "title": "In my Father's house are many mansions",
+      "source": "John 14:1–3, King James Version, 1611 — public domain",
+      "text": "Let not your heart be troubled: ye believe in God, believe also in me. In my Father's house are many mansions: if it were not so, I would have told you. I go to prepare a place for you. And if I go and prepare a place for you, I will come again, and receive you unto myself; that where I am, there ye may be also."
+    },
+    {
+      "title": "He shall wipe away all tears",
+      "source": "Revelation 21:3–4, King James Version, 1611 — public domain",
+      "text": "And I heard a great voice out of heaven saying, Behold, the tabernacle of God is with men, and he will dwell with them, and they shall be his people, and God himself shall be with them, and be their God. And God shall wipe away all tears from their eyes; and there shall be no more death, neither sorrow, nor crying, neither shall there be any more pain: for the former things are passed away."
+    },
+    {
+      "title": "Amazing Grace",
+      "source": "John Newton, 1779 — public domain",
+      "text": "Amazing grace! how sweet the sound,\nThat saved a wretch like me!\nI once was lost, but now am found,\nWas blind, but now I see.\n\n'Twas grace that taught my heart to fear,\nAnd grace my fears relieved;\nHow precious did that grace appear\nThe hour I first believed!\n\nThrough many dangers, toils and snares,\nI have already come;\n'Tis grace hath brought me safe thus far,\nAnd grace will lead me home."
+    }
+  ]
+}

@@ -19,6 +19,8 @@ export * from './providers/openai-api';
 export * from './prompts/interview';
 export * from './prompts/photo-analysis';
 export * from './prompts/edl';
+export * from './prompts/eulogy';
+export * from './prompts/program';
 
 import { registerProvider } from './registry';
 import { mockProvider } from './providers/mock';

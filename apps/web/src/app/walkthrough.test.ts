@@ -304,7 +304,7 @@ describe('the intake wizard', () => {
 });
 
 describe('the dashboard', () => {
-  it('greets a brand new memorial with a calm banner and three cards', async () => {
+  it('greets a brand new memorial with a calm banner and four cards', async () => {
     const { memorialId } = await createMemorial();
     const memorial = reload(memorialId);
 
@@ -319,6 +319,7 @@ describe('the dashboard', () => {
       'Collect photos',
       'Tell their story',
       'Build the slideshow',
+      'Speeches & program',
     ]);
     expect(checklist.cards[2]?.state).toBe('locked');
     expect(banner.headline).toBe('No date yet, so there is no rush.');

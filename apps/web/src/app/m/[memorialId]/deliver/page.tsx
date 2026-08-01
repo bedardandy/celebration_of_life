@@ -20,21 +20,31 @@ import type { CutName, RenderPreset } from '@col/schemas';
 import {
   RENDER_PRESET_LABELS,
   USB_STEPS,
+  WATCH_DOWNLOAD_HELP,
+  WATCH_LINK_HELP,
   deliverableFilename,
   describeLength,
   describeRenderProgress,
   latestProject,
   latestRender,
+  listWatchLinks,
   projectCut,
   projectEdl,
   summariseMusic,
+  type WatchLink,
 } from '@col/core';
 import { getPack } from '@col/tradition-packs';
 import { StepScreen, step } from '@/components/StepScreen';
 import { db } from '@/server/db';
 import { requireOrganizer } from '@/server/auth';
+import { CopyBox } from '../photos/CopyBox';
 import { RenderWatch } from './RenderWatch';
-import { startRenderAction } from './actions';
+import {
+  createWatchLinkAction,
+  revokeWatchLinkAction,
+  setWatchDownloadAction,
+  startRenderAction,
+} from './actions';
 import styles from './deliver.module.css';
 
 export const dynamic = 'force-dynamic';
@@ -91,6 +101,7 @@ export default async function DeliverPage({
 
   const working = rows.some((row) => row.progress.working);
   const ready = rows.filter((row) => row.progress.done && row.job.outputBlobKey);
+  const watchLinks = listWatchLinks(db(), memorialId).filter((link) => link.active);
 
   return (
     <StepScreen
@@ -121,7 +132,7 @@ export default async function DeliverPage({
             <input type="hidden" name="cut" value={cut} />
             <input type="hidden" name="preset" value="draft360" />
             <button type="submit" className={step.quiet}>
-              Quick preview render (small and fast)
+              Make a quick, small copy to check first
             </button>
           </form>
           <Link href={`/m/${memorialId}/preview`}>Change something first</Link>
@@ -188,7 +199,13 @@ export default async function DeliverPage({
                     >
                       <span className={styles.barFill} style={{ width: `${progress.percent}%` }} />
                     </div>
-                    <p className={progress.failed ? styles.problem : styles.progressLine}>
+                    {/* Announced, because the person waiting may not be
+                        looking at the screen while a render runs. */}
+                    <p
+                      className={progress.failed ? styles.problem : styles.progressLine}
+                      role="status"
+                      aria-live="polite"
+                    >
                       {progress.message}
                     </p>
                   </div>
@@ -202,6 +219,19 @@ export default async function DeliverPage({
       {ready.length > 0 ? (
         <section className={styles.guides}>
           <h2 className={styles.guidesTitle}>Getting it into the room</h2>
+
+          <details className={styles.accordion} open>
+            <summary className={styles.summary}>Playing it at the venue</summary>
+            <p className={styles.guideBody}>
+              A full-screen player made for a laptop plugged into a projector. It plays the file you
+              made — not a preview — and starts and ends on black.
+            </p>
+            <p>
+              <Link className={styles.guideLink} href={`/m/${memorialId}/present`}>
+                Open the playback screen
+              </Link>
+            </p>
+          </details>
 
           <details className={styles.accordion}>
             <summary className={styles.summary}>Putting it on a USB stick</summary>
@@ -264,9 +294,99 @@ export default async function DeliverPage({
               </ul>
             </details>
           ) : null}
+
+          <Sharing
+            memorialId={memorialId}
+            links={watchLinks}
+            justShared={query['shared'] === '1'}
+            justTurnedOff={query['watchoff'] === '1'}
+          />
         </section>
       ) : null}
     </StepScreen>
+  );
+}
+
+/**
+ * Sending it to people who could not come.
+ *
+ * A viewing link, not an attachment: the file is hundreds of megabytes and half
+ * the people who need it are on a phone. Downloads are off to begin with,
+ * because sharing a video and handing over the file are different acts and only
+ * the family gets to decide which one this is.
+ */
+function Sharing({
+  memorialId,
+  links,
+  justShared,
+  justTurnedOff,
+}: {
+  memorialId: string;
+  links: WatchLink[];
+  justShared: boolean;
+  justTurnedOff: boolean;
+}) {
+  return (
+    <section className={styles.share} id="watch">
+      <h2 className={styles.guidesTitle}>For people who cannot be there</h2>
+
+      {justTurnedOff ? (
+        <p className={styles.started}>
+          That link has been turned off. It no longer opens anything.
+        </p>
+      ) : null}
+
+      {links.length === 0 ? (
+        <form action={createWatchLinkAction}>
+          <input type="hidden" name="memorialId" value={memorialId} />
+          <p className={styles.guideBody}>{WATCH_LINK_HELP}</p>
+          <button type="submit" className={step.quiet}>
+            Share a private viewing link
+          </button>
+        </form>
+      ) : (
+        <>
+          {justShared ? (
+            <p className={styles.started}>Here is the link. Send it to whoever you like.</p>
+          ) : null}
+          {links.map((link) => (
+            <div key={link.row.id} className={styles.shareLink}>
+              {link.url ? (
+                <CopyBox label="Private viewing link" value={link.url} />
+              ) : (
+                <p className={styles.guideBody}>
+                  This link cannot be shown again on this server. Making a new one takes a moment.
+                </p>
+              )}
+              <p className={styles.guideBody}>{WATCH_LINK_HELP}</p>
+
+              <form action={setWatchDownloadAction} className={styles.shareRow}>
+                <input type="hidden" name="memorialId" value={memorialId} />
+                <input type="hidden" name="tokenId" value={link.row.id} />
+                <input type="hidden" name="allow" value={link.allowDownload ? 'no' : 'yes'} />
+                <button type="submit" className={step.quiet}>
+                  {link.allowDownload
+                    ? 'Stop letting people save a copy'
+                    : 'Let people save a copy'}
+                </button>
+                <span className={styles.shareHelp}>{WATCH_DOWNLOAD_HELP}</span>
+              </form>
+
+              <form action={revokeWatchLinkAction} className={styles.shareRow}>
+                <input type="hidden" name="memorialId" value={memorialId} />
+                <input type="hidden" name="tokenId" value={link.row.id} />
+                <button type="submit" className={step.quiet}>
+                  Turn this link off
+                </button>
+                <span className={styles.shareHelp}>
+                  It stops opening straight away. You can make a new one later.
+                </span>
+              </form>
+            </div>
+          ))}
+        </>
+      )}
+    </section>
   );
 }
 

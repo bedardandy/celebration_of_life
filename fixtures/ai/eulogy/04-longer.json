@@ -1,0 +1,20 @@
+{
+  "id": "04-longer",
+  "task": "eulogy",
+  "match": "make this a little longer",
+  "note": "The 'A little longer' button. More room for what is already there — never a new fact, never a new scene. If this fixture ever grows a detail the family did not write, the button has stopped being safe.",
+  "response": {
+    "openingLine": "Thank you all for coming. Ruth would have said you shouldn't have gone to any trouble, and then she would have put the kettle on.",
+    "body": [
+      "I know some of you set off before it was light this morning, and some of you have come a very long way. She would have counted this room. She would have counted it twice, and then told me she wasn't counting.",
+      "Ruth was not a person who explained herself. She just did things, and you found out about them years later from somebody else, usually by accident. The house was always warm. There was always one more chair, and it was always already pulled out. If you turned up at half past nine at night with a story, you got a cup of tea and the whole story got listened to, right through to the end, without her once looking at the clock.",
+      "One of the first things I was told about her was this: \"{{memory:0}}\" That was {{memoryFrom:0}}. I have never once found it to be untrue, and I have had a long time to test it.",
+      "{{memoryFrom:1}} reminded me of something else this week, and I have not been able to stop thinking about it since. {{memory:1}} That is exactly right. That was her, in one go.",
+      "[pause]",
+      "What I keep coming back to is how ordinary most of it was. Not one large heroic thing that you could point at. Thousands of small ones, done quietly, for years, for people who mostly never knew, and who never got the chance to say thank you.",
+      "I got the ordinary version of her — the one who sang badly in the car, and who could not be told one thing about the route. I would not trade that for a more impressive one."
+    ],
+    "closingLine": "So: no fuss, and no trouble, and a cup of tea. Thank you for being here for her today.",
+    "usedMemoryIds": ["{{memoryId:0}}", "{{memoryId:1}}"]
+  }
+}

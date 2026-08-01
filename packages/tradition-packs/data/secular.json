@@ -40,5 +40,40 @@
   "deliveryNotes": [
     "Bring the video on a USB stick formatted FAT32 or exFAT, and email a copy to whoever is running the sound desk.",
     "Take the printed card for the venue so the person pressing play knows the order and the length."
+  ],
+  "orderOfService": [
+    { "item": "Music as people arrive" },
+    { "item": "Welcome", "note": "Whoever is leading the gathering" },
+    { "item": "Opening words" },
+    { "item": "The story of their life" },
+    { "item": "Tributes", "note": "Two or three people, five minutes each" },
+    { "item": "A reading or a poem" },
+    { "item": "Photo tribute" },
+    { "item": "A quiet moment", "note": "For everyone to remember in their own way" },
+    { "item": "Closing words" },
+    { "item": "Music as people leave" },
+    { "item": "Refreshments", "note": "Where, and that everyone is welcome" }
+  ],
+  "readings": [
+    {
+      "title": "Do Not Stand at My Grave and Weep",
+      "source": "Attributed to Mary Elizabeth Frye, 1932. She never claimed copyright and the poem circulated anonymously for decades; it is treated as public domain and is read at funerals everywhere.",
+      "text": "Do not stand at my grave and weep,\nI am not there, I do not sleep.\nI am a thousand winds that blow,\nI am the diamond glints on snow.\nI am the sunlight on ripened grain,\nI am the gentle autumn rain.\nWhen you awaken in the morning's hush,\nI am the swift uplifting rush\nOf quiet birds in circled flight.\nI am the soft stars that shine at night.\nDo not stand at my grave and cry,\nI am not there, I did not die."
+    },
+    {
+      "title": "Crossing the Bar",
+      "source": "Alfred, Lord Tennyson, 1889 — public domain",
+      "text": "Sunset and evening star,\nAnd one clear call for me!\nAnd may there be no moaning of the bar,\nWhen I put out to sea,\n\nBut such a tide as moving seems asleep,\nToo full for sound and foam,\nWhen that which drew from out the boundless deep\nTurns again home.\n\nTwilight and evening bell,\nAnd after that the dark!\nAnd may there be no sadness of farewell,\nWhen I embark;\n\nFor tho' from out our bourne of Time and Place\nThe flood may bear me far,\nI hope to see my Pilot face to face\nWhen I have crost the bar."
+    },
+    {
+      "title": "Death is Nothing at All",
+      "source": "Henry Scott Holland, from a sermon preached in 1910 — public domain",
+      "text": "Death is nothing at all. I have only slipped away to the next room. I am I, and you are you. Whatever we were to each other, that we still are. Call me by my old familiar name, speak to me in the easy way which you always used. Put no difference in your tone, wear no forced air of solemnity or sorrow. Laugh as we always laughed at the little jokes we enjoyed together. Play, smile, think of me, pray for me. Let my name be ever the household word that it always was. Let it be spoken without effect, without the trace of a shadow on it. Life means all that it ever meant. It is the same as it ever was; there is absolutely unbroken continuity. Why should I be out of mind because I am out of sight? I am but waiting for you, for an interval, somewhere very near, just around the corner. All is well."
+    },
+    {
+      "title": "Remember",
+      "source": "Christina Rossetti, 1862 — public domain",
+      "text": "Remember me when I am gone away,\nGone far away into the silent land;\nWhen you can no more hold me by the hand,\nNor I half turn to go, yet turning stay.\nRemember me when no more day by day\nYou tell me of our future that you plann'd:\nOnly remember me; you understand\nIt will be late to counsel then or pray.\nYet if you should forget me for a while\nAnd afterwards remember, do not grieve:\nFor if the darkness and corruption leave\nA vestige of the thoughts that once I had,\nBetter by far you should forget and smile\nThan that you should remember and be sad."
+    }
   ]
 }

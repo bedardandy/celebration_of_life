@@ -1,0 +1,20 @@
+{
+  "id": "02-draft",
+  "task": "eulogy",
+  "match": "chose these memories to build the speech around",
+  "note": "The happy path: a whole first draft in one call. Written as a template because a canned eulogy cannot quote a memory that only exists once a real family has written one — the mock fills {{memory:N}} / {{memoryFrom:N}} / {{memoryId:N}} from the prompt's own list and drops any paragraph it cannot fill. Keep the quoted paragraph as a placeholder: a literal sentence here would be words nobody said, delivered at a funeral, which is the exact failure the verbatim check exists to catch.",
+  "response": {
+    "openingLine": "Thank you all for coming. Ruth would have said you shouldn't have gone to any trouble, and then she would have put the kettle on.",
+    "body": [
+      "I know some of you set off before it was light this morning. She would have counted this room. She would have counted it twice, and then told me she wasn't counting.",
+      "Ruth was not a person who explained herself. She just did things, and you found out about them years later from somebody else. The house was always warm. There was always one more chair. If you turned up at half past nine at night with a story, you got a cup of tea and the whole story got listened to, right through to the end, without her once looking at the clock.",
+      "One of the first things I was told about her was this: \"{{memory:0}}\" That was {{memoryFrom:0}}. I have never once found it to be untrue.",
+      "{{memoryFrom:1}} reminded me of something else this week, and I have not been able to stop thinking about it. {{memory:1}} That is exactly right. That was her, in one go.",
+      "[pause]",
+      "What I keep coming back to is how ordinary most of it was. Not one large heroic thing. Thousands of small ones, done quietly, for years, for people who mostly never knew.",
+      "I got the ordinary version of her — the one who sang badly in the car, and who could not be told one thing about the route. I would not trade that for a more impressive one."
+    ],
+    "closingLine": "So: no fuss, and no trouble, and a cup of tea. Thank you for being here for her.",
+    "usedMemoryIds": ["{{memoryId:0}}", "{{memoryId:1}}"]
+  }
+}

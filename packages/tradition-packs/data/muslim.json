@@ -1,0 +1,75 @@
+{
+  "slug": "muslim",
+  "label": "Muslim funeral (janazah)",
+  "pacingPreset": "urgent24h",
+  "serviceTimelineNote": "Burial comes quickly — usually within 24 hours, often the same day. The washing (ghusl), shrouding (kafan) and the funeral prayer (salat al-janazah) are handled by the mosque or an Islamic funeral service, and they will guide you through each step. The days of condolence that follow, when family and neighbours visit, are where remembering happens slowly. Practice varies a great deal between communities and families; the mosque is the right place to ask, and they are used to being asked.",
+  "mediaPlacement": [
+    {
+      "context": "The janazah prayer",
+      "guidance": "The funeral prayer is short and entirely prayer-centred. There is no music, no slideshow and no screen — nothing is added to it. This is not a restriction on your family's love; it is simply the shape of the prayer. Please do not spend the first day trying to make anything for it."
+    },
+    {
+      "context": "The burial",
+      "guidance": "At the graveside there are prayers and quiet. Photographs and recordings are usually kept away; some families ask that no cameras are used at all. If you are unsure, ask whoever is leading, before the day."
+    },
+    {
+      "context": "The days of condolence at home",
+      "guidance": "This is where photographs belong. Family and neighbours come to sit, eat and talk, often for three days and beyond. Printed pictures on a table, or a quiet loop on a laptop in the corner, give visitors somewhere to begin. Keep it silent or very soft; the room is for talking."
+    },
+    {
+      "context": "A later gathering",
+      "guidance": "Many families hold a gathering weeks or months later — after forty days, or at the year — where a fuller tribute is welcome. You will have had time to make it properly, and nobody will be rushing."
+    }
+  ],
+  "musicGuidance": [
+    "Music is not part of the janazah, and many families keep the house free of it during the days of condolence. Take your lead from the family elders and the mosque.",
+    "Qur'anic recitation is not music and is not a soundtrack — please do not lay it under photographs. If recitation is wanted, let it be heard on its own.",
+    "For a later gathering, a silent slideshow is the safest and most widely welcome choice. If music is wanted there, something gentle and instrumental is usually right."
+  ],
+  "interviewAdjustments": [
+    {
+      "promptSlug": "faith-and-belief",
+      "note": "Ask about practice and character together: the mosque they went to, the fasts they kept, the neighbours they fed, the charity nobody was supposed to know about."
+    },
+    {
+      "promptSlug": "home-and-people",
+      "note": "Family often reaches across countries. Ask who is travelling, who is being telephoned, and whose photographs are in another country — those pictures are usually the oldest ones."
+    }
+  ],
+  "checklistExtras": [
+    "Ring the mosque or the Islamic funeral service first; they will take most of the first day off your hands.",
+    "Do nothing about photographs on the first day. Gathering them can wait until after the burial.",
+    "Ask relatives abroad to send photographs to the shared link during the days of condolence.",
+    "Ask the family whether photographs at the graveside are welcome before anyone takes any."
+  ],
+  "deliveryNotes": [
+    "For the condolence gathering, a laptop or a television with a USB port in the corner of the room is usually all that is needed.",
+    "If you make a video for a later gathering, bring it on a USB stick formatted FAT32 or exFAT and send a copy to the venue ahead of time.",
+    "Write plainly on the printed card that the video is silent, if it is, so nobody tries to fix the sound."
+  ],
+  "orderOfService": [
+    { "item": "Ghusl and kafan", "note": "The washing and shrouding, arranged through the mosque" },
+    { "item": "Gathering at the mosque or prayer hall" },
+    { "item": "Salat al-Janazah", "note": "The funeral prayer, standing, without bowing" },
+    { "item": "Procession to the cemetery" },
+    { "item": "Burial", "note": "The body is laid on its right side, facing the qiblah" },
+    { "item": "Du'a at the graveside", "note": "Supplication for the one who has died" },
+    { "item": "Condolences", "note": "Where the family will receive visitors, and on which days" }
+  ],
+  "readings": [
+    {
+      "title": "Inna lillahi wa inna ilayhi raji'un",
+      "source": "Qur'an 2:156, transliteration and a plain English rendering. Printed Arabic should come from the mosque's own sheet.",
+      "text": "Inna lillahi wa inna ilayhi raji'un.\n\nSurely we belong to God, and to Him we return."
+    },
+    {
+      "title": "Surah Al-Fatihah",
+      "source": "Qur'an 1:1–7. Recited rather than printed in most families — ask the mosque for the sheet they use if you would like it in the program."
+    },
+    {
+      "title": "Du'a for the deceased",
+      "source": "Traditional supplication, from the hadith collections. Plain English rendering; ask the imam for the Arabic.",
+      "text": "O God, forgive them and have mercy upon them, keep them safe and pardon them. Make honourable their welcome, and wide their entry. Wash them with water, snow and hail, and cleanse them as a white garment is cleansed of stains."
+    }
+  ]
+}

@@ -129,6 +129,16 @@
   object-fit: cover;
 }
 
+.notePending {
+  display: block;
+  flex: 0 0 96px;
+  width: 96px;
+  height: 96px;
+  border-radius: var(--radius);
+  border: 1px solid var(--line);
+  background: var(--paper);
+}
+
 .noteField {
   width: 100%;
   min-height: 96px;

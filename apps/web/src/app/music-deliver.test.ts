@@ -585,7 +585,7 @@ describe('the deliver screen', () => {
 
     expect(text).toContain('The service version');
     expect(text).toContain('Prepare the final video');
-    expect(text).toContain('Quick preview render');
+    expect(text).toContain('quick, small copy to check first');
     expect(text).toContain('5–15 minutes');
     expect(text).toContain('close this page');
     expect(hrefsOf(page)).toContain(`/m/${memorialId}/deliver?cut=family`);

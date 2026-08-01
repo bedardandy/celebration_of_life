@@ -48,8 +48,9 @@
 }
 
 @media (min-width: 52rem) {
+  /* Four cards: two by two reads more calmly than three and a stray. */
   .cards {
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(2, 1fr);
   }
 }
 

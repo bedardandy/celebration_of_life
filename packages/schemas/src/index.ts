@@ -6,3 +6,5 @@ export * from './photo-analysis';
 export * from './interview';
 export * from './jobs';
 export * from './music';
+export * from './eulogy';
+export * from './program';

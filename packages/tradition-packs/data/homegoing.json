@@ -1,0 +1,93 @@
+{
+  "slug": "homegoing",
+  "label": "Homegoing celebration",
+  "pacingPreset": "flexible",
+  "serviceTimelineNote": "A homegoing is usually held one to two weeks after the death — later than many traditions, and deliberately so. The extra days let family travel from other states, let the program be printed properly, and let the church and the repast be organised without anybody being rushed. There is often a wake or viewing the evening before, then the homegoing service itself, the interment, and the repast afterwards. It is a celebration: a life being sent home with joy as well as grief.",
+  "mediaPlacement": [
+    {
+      "context": "The printed program",
+      "guidance": "In this tradition the program is not a handout — it is a keepsake. People keep them in Bibles and photo albums for decades. Expect a full booklet: the portrait on the cover, the obituary inside, the order of service, the acknowledgement from the family, and often a poem and a page of photographs. Give it the time you would give anything else, and print more than you think you need."
+    },
+    {
+      "context": "During the service",
+      "guidance": "A photo tribute is very much at home in a homegoing service, usually shown between the remarks and the eulogy. Most churches have a screen and a projector and are entirely used to it. Ring the church and ask when they would like it to play."
+    },
+    {
+      "context": "The wake or viewing",
+      "guidance": "A looping slideshow near the entrance gives people something to gather around and talk over while they wait to greet the family."
+    },
+    {
+      "context": "The repast",
+      "guidance": "The meal afterwards is where the longer family cut belongs — the extra pictures, the reunions, the church anniversaries, the ones everybody argues about. Let it loop while people eat."
+    }
+  ],
+  "musicGuidance": [
+    "Music carries this service. The choir, the organ, a soloist, the congregation singing along — plan it with the minister of music early, because they will have thoughts and they will be good ones.",
+    "Gospel recordings are almost always still in copyright, so we cannot bake one into a video file you can share. We can build the video silent and timed to the song, and the musicians or the sound desk play it live in the room. Nothing is lost, and live is better anyway.",
+    "For a video to keep and send to relatives who could not travel, choose one of the cleared instrumental pieces so it plays anywhere without trouble."
+  ],
+  "interviewAdjustments": [
+    {
+      "promptSlug": "faith-and-belief",
+      "note": "Ask about church life fully: the church home, how long they had been a member, the choir, the usher board, the deacons, the ministry they served in, who they took to service every Sunday."
+    },
+    {
+      "promptSlug": "home-and-people",
+      "note": "Ask for the family list carefully and by name — children, grandchildren, godchildren, the ones raised as their own. The obituary in the program names everyone, and being left out of it is remembered."
+    },
+    {
+      "promptSlug": "work-and-days",
+      "note": "Ask about work, service and the organisations they belonged to. Long service to a job, a union, a lodge or a club is a point of pride and belongs in the program."
+    }
+  ],
+  "checklistExtras": [
+    "Start the program early — the obituary, the photographs and the family list take longer than anyone expects.",
+    "Confirm with the printer how many days they need, and order more copies than you think.",
+    "Agree with the church when the photo tribute plays, and test it on their system beforehand.",
+    "Decide who reads the obituary, who gives remarks, and how long each has."
+  ],
+  "deliveryNotes": [
+    "Take the video to the church on a USB stick formatted FAT32 or exFAT, and email a copy to the church office as a backup.",
+    "Ask to test it on the church's projector and sound system on a weekday. It is ten minutes that prevents the one thing nobody forgets.",
+    "If the video is silent so the song can be played live, write that in capitals on the printed card.",
+    "Print a few extra programs for the repast, and keep two aside for the family."
+  ],
+  "orderOfService": [
+    { "item": "Processional", "note": "The family enters" },
+    { "item": "Hymn of comfort" },
+    { "item": "Scripture readings", "note": "Old Testament and New Testament" },
+    { "item": "Prayer of comfort" },
+    { "item": "Selection", "note": "By the choir or a soloist" },
+    { "item": "Reading of the obituary", "note": "Often read silently while a selection is sung" },
+    { "item": "Reflections", "note": "Two minutes each, please" },
+    { "item": "Acknowledgements and resolutions" },
+    { "item": "Photo tribute" },
+    { "item": "Selection" },
+    { "item": "Eulogy" },
+    { "item": "Recessional" },
+    { "item": "Interment", "note": "The cemetery, and that all are welcome" },
+    { "item": "Repast", "note": "Where the meal is held, and that everyone is welcome" }
+  ],
+  "readings": [
+    {
+      "title": "I have fought a good fight",
+      "source": "2 Timothy 4:6–8, King James Version, 1611 — public domain",
+      "text": "For I am now ready to be offered, and the time of my departure is at hand. I have fought a good fight, I have finished my course, I have kept the faith: henceforth there is laid up for me a crown of righteousness, which the Lord, the righteous judge, shall give me at that day: and not to me only, but unto all them also that love his appearing."
+    },
+    {
+      "title": "Psalm 23 — The Lord is my shepherd",
+      "source": "Psalm 23, King James Version, 1611 — public domain",
+      "text": "The Lord is my shepherd; I shall not want. He maketh me to lie down in green pastures: he leadeth me beside the still waters. He restoreth my soul: he leadeth me in the paths of righteousness for his name's sake. Yea, though I walk through the valley of the shadow of death, I will fear no evil: for thou art with me; thy rod and thy staff they comfort me. Thou preparest a table before me in the presence of mine enemies: thou anointest my head with oil; my cup runneth over. Surely goodness and mercy shall follow me all the days of my life: and I will dwell in the house of the Lord for ever."
+    },
+    {
+      "title": "Swing Low, Sweet Chariot",
+      "source": "Traditional spiritual, first published 1872 — public domain",
+      "text": "Swing low, sweet chariot,\nComing for to carry me home;\nSwing low, sweet chariot,\nComing for to carry me home.\n\nI looked over Jordan, and what did I see,\nComing for to carry me home?\nA band of angels coming after me,\nComing for to carry me home."
+    },
+    {
+      "title": "The Family's Acknowledgement",
+      "source": "Traditional wording used in homegoing programs — adapt it in your own words",
+      "text": "The family of our beloved wishes to express our deep appreciation for every prayer, every call, every card, every meal and every kindness shown to us during this time. Your love has held us up. May God bless and keep each of you."
+    }
+  ]
+}

@@ -1,12 +1,7 @@
 'use server';
 
 import { redirect } from 'next/navigation';
-import {
-  InvalidMemorialInput,
-  createMemorial,
-  getMailTransport,
-  organizerLoginEmail,
-} from '@col/core';
+import { InvalidMemorialInput, createMemorial, deliverEmail } from '@col/core';
 import { db } from '@/server/db';
 import { stashDevLink, writeSession } from '@/server/session';
 
@@ -44,13 +39,12 @@ export async function createMemorialAction(
     throw error;
   }
 
-  const sent = await getMailTransport().send(
-    organizerLoginEmail({
-      to: created.organizer.email as string,
-      decedentName: created.memorial.decedentName,
-      url: created.login.url,
-    }),
-  );
+  const sent = await deliverEmail(db(), {
+    template: 'organizer-login',
+    to: created.organizer.email as string,
+    memorialId: created.memorial.id,
+    data: { decedentName: created.memorial.decedentName, url: created.login.url },
+  });
 
   await writeSession({
     participantId: created.organizer.id,
