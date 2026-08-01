@@ -262,7 +262,57 @@ why none of the above is baked into the copy. See `describeRenderProgress`.
 
 ---
 
-## 7. Backups
+## 7. The three optional features, and how to turn them on
+
+Everything below is off in a default deployment, and each one is genuinely absent when it is off —
+no card, no button, no route that half-works. Each has its own page; this is the short version.
+
+### Google Photos import — [docs/google-photos.md](google-photos.md)
+
+```
+GOOGLE_OAUTH_CLIENT_ID=1234-abc.apps.googleusercontent.com
+GOOGLE_OAUTH_CLIENT_SECRET=GOCSPX-…
+```
+
+An operator must: create a Google Cloud project, **enable the Photos Picker API** (not the Photos
+Library API — that one closed to third parties in March 2025), configure the OAuth consent screen
+with the single scope `photospicker.mediaitems.readonly`, add the organisers as **test users**
+(or take the app through Google's verification review, which takes weeks), create a Web
+application OAuth client with the redirect URI `${APP_BASE_URL}/api/import/google/callback`
+character for character, then set the two variables **on both the web app and the worker** and
+restart. Access tokens are never stored: they travel to the worker sealed with a key derived from
+`SESSION_SECRET`, and are blanked from the job row when the import finishes.
+
+### Face grouping — [docs/face-grouping.md](face-grouping.md)
+
+```
+FACE_ENGINE=onnx
+FACE_MODEL_DIR=/var/lib/celebration/models
+```
+
+An operator must: install the optional runtime (`pnpm add -O onnxruntime-node --filter @col/media`),
+download the two InsightFace `buffalo_s` models on a machine that has a network — `det_500m.onnx`
+(detector) and `w600k_mbf.onnx` (embedder) — put them in `FACE_MODEL_DIR`, set the two variables on
+the **worker**, and restart it. The boot log says which engine loaded, or exactly which file it
+could not find. Nothing in this product ever downloads a model, and no face data ever leaves the
+machine. `FACE_ENGINE=mock` is for tests and development only — it produces confident, meaningless
+groups.
+
+### Photo enhancement — [docs/photo-enhancement.md](photo-enhancement.md)
+
+Needs no configuration: the built-in sharp restorer is always available, opt-in per photograph,
+and never replaces the original. To swap in a heavier restorer, set on the worker:
+
+```
+RESTORER_CMD="python /opt/CodeFormer/inference_codeformer.py -w 0.7 --input_path {in} --output_path {out}"
+```
+
+Read the fidelity warning in that document before you do. A face restorer **invents** detail, and
+CodeFormer's `w≈0.7` exists precisely so the result stays the person the family remembers.
+
+---
+
+## 8. Backups
 
 Two things need backing up, and they must be consistent with each other.
 
@@ -292,7 +342,7 @@ privacy notice, and make sure the retention window is short enough that the sent
 
 ---
 
-## 8. A production checklist
+## 9. A production checklist
 
 ```
 SESSION_SECRET      set, 32+ random bytes, not the dev default
@@ -308,6 +358,11 @@ chromium            present, or REMOTION_BROWSER_EXECUTABLE set
 reverse proxy       https, buffering off, 512m body limit
 backups             blobs then database, nightly, restore tested once
 worker              running, as a separate service, restarted on failure
+
+optional, all off by default:
+GOOGLE_OAUTH_*      only with the Picker API enabled and the redirect URI matching exactly
+FACE_ENGINE         onnx, with FACE_MODEL_DIR holding both model files (worker only)
+RESTORER_CMD        only after reading the fidelity warning in docs/photo-enhancement.md
 ```
 
 Then walk it: create a memorial, send yourself the link, open it from the email, upload three

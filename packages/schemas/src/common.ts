@@ -41,8 +41,20 @@ export const TransitionSchema = z
   .strict();
 export type Transition = z.infer<typeof TransitionSchema>;
 
-/** Rendered derivative of an original upload. */
-export const AssetVariantKindSchema = z.enum(['thumb320', 'web1600', 'render2400', 'original']);
+/**
+ * Rendered derivative of an original upload.
+ *
+ * `enhanced2400` is the opt-in gently-restored copy. It sits beside
+ * `render2400` rather than replacing it, because the original and the plain
+ * derivative must survive a family changing their mind.
+ */
+export const AssetVariantKindSchema = z.enum([
+  'thumb320',
+  'web1600',
+  'render2400',
+  'enhanced2400',
+  'original',
+]);
 export type AssetVariantKind = z.infer<typeof AssetVariantKindSchema>;
 
 export const PacingPresetSchema = z.enum(['urgent24h', 'days3to7', 'memorial-cycle', 'flexible']);

@@ -8,6 +8,7 @@
  */
 import { checkFfmpeg, seedMusicLibrary } from '@col/core';
 import { closeDb, ensureDatabase, getDb } from '@col/db';
+import { probeFaceEngine } from '@col/media';
 import { getBlobStore, initBlobStore } from '@col/storage';
 import { loadWorkerConfig } from './config';
 import { createWorker } from './worker';
@@ -27,6 +28,18 @@ async function main(): Promise<void> {
     // Not fatal: photo, story and queue work all run fine without it. Renders
     // do not, so say so once, clearly, at boot rather than mid-render.
     log.error(`ffmpeg is not available — video rendering will fail.\n${ffmpeg.message}`);
+  }
+
+  // Face grouping is off in most deployments, and saying so once at boot is
+  // how an operator finds out that the models they installed are not being
+  // found — rather than by a family pressing a button that does nothing.
+  const faces = await probeFaceEngine();
+  if (faces.status.available) {
+    log.info('face grouping ready', { engine: faces.engine?.id, note: faces.status.note });
+  } else if (faces.setting !== 'off') {
+    log.warn(`face grouping is configured but unavailable — ${faces.status.reason}`);
+  } else {
+    log.info('face grouping is off', { hint: 'set FACE_ENGINE to offer it' });
   }
 
   // Where blobs live, decided once. Every `getBlobStore()` after this — in a

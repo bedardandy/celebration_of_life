@@ -375,18 +375,21 @@ async function fetchPhotos(
   timeline: ResolvedTimeline,
   scratch: string,
 ): Promise<Record<string, string>> {
-  const wanted = new Set<string>();
+  // The EDL names the variant each photograph should come from — which is how
+  // an accepted enhancement reaches the video — and the ladder below is only a
+  // fallback for a photograph whose chosen copy is not on disk.
+  const wanted = new Map<string, string>();
   for (const entry of timeline.slides) {
     const slide = edl.slides[entry.slideId];
-    if (slide?.kind === 'photo') wanted.add(slide.assetId);
+    if (slide?.kind === 'photo') wanted.set(slide.assetId, slide.variant);
   }
 
   const out: Record<string, string> = {};
-  for (const assetId of wanted) {
+  for (const [assetId, requested] of wanted) {
     const variants = listWhere(db, assetVariants, eq(assetVariants.assetId, assetId), 10);
-    const chosen = VARIANT_PREFERENCE.map((kind) =>
-      variants.find((variant) => variant.kind === kind),
-    ).find(Boolean);
+    const chosen = [requested, ...VARIANT_PREFERENCE]
+      .map((kind) => variants.find((variant) => variant.kind === kind))
+      .find(Boolean);
     if (!chosen) continue;
 
     const extension = chosen.mime.includes('png')

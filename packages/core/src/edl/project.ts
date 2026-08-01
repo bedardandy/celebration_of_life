@@ -11,18 +11,22 @@
 import { EdlSchema, type CutName, type Edl, type ResolvedTimeline, type Slide } from '@col/schemas';
 import {
   and,
+  assetVariants,
   desc,
   enqueue,
   eq,
   getById,
+  inArray,
   insertOne,
   isNull,
   listAlive,
+  listWhere,
   mediaAssets,
   memorials,
   memoryNotes,
   slideshowProjects,
   updateById,
+  type AssetVariant,
   type Db,
   type JobRow,
   type MediaAsset,
@@ -30,6 +34,7 @@ import {
   type SlideshowProject,
 } from '@col/db';
 import { getPack } from '@col/tradition-packs';
+import { servingVariant } from '../curate/enhance';
 import { currentDoc } from '../interview/store';
 import { subjectOf } from '../interview/engine';
 import type { EdlAssetInput, EdlBuildContext, EdlQuoteInput } from './generate';
@@ -142,7 +147,18 @@ function byEraThenCapture(a: MediaAsset, b: MediaAsset): number {
   return a.id < b.id ? -1 : a.id > b.id ? 1 : 0;
 }
 
-export function assetInputsFor(assets: readonly MediaAsset[]): EdlAssetInput[] {
+/**
+ * `variants` is optional and, when given, decides which derivative each
+ * photograph is shown from — that is the whole mechanism behind "use the
+ * improved version": accepting an enhancement changes what the slideshow
+ * serves, and keeping the original changes it straight back. Without the map
+ * every photograph uses the plain render variant, which is what a caller with
+ * no interest in enhancement wants.
+ */
+export function assetInputsFor(
+  assets: readonly MediaAsset[],
+  variants?: ReadonlyMap<string, readonly Pick<AssetVariant, 'kind'>[]>,
+): EdlAssetInput[] {
   return assets.map((asset) => ({
     assetId: asset.id,
     caption: asset.caption,
@@ -154,7 +170,29 @@ export function assetInputsFor(assets: readonly MediaAsset[]): EdlAssetInput[] {
     suggestedCaption: asset.analysis?.suggestedCaption ?? null,
     width: asset.width,
     height: asset.height,
+    ...(variants ? { variant: servingVariant(asset, variants.get(asset.id) ?? []) } : {}),
   }));
+}
+
+/** assetId → its variant rows, for the assets given. One query, not N. */
+export function variantsByAsset(
+  db: Db,
+  assets: readonly MediaAsset[],
+): Map<string, AssetVariant[]> {
+  const wanted = assets.map((asset) => asset.id);
+  const out = new Map<string, AssetVariant[]>();
+  if (wanted.length === 0) return out;
+  for (const variant of listWhere(
+    db,
+    assetVariants,
+    inArray(assetVariants.assetId, wanted),
+    10_000,
+  )) {
+    const bucket = out.get(variant.assetId);
+    if (bucket) bucket.push(variant);
+    else out.set(variant.assetId, [variant]);
+  }
+  return out;
 }
 
 /**
@@ -229,7 +267,7 @@ export function buildContext(
   return {
     projectId,
     subject: subjectOf(memorial),
-    assets: assetInputsFor(assets),
+    assets: assetInputsFor(assets, variantsByAsset(db, assets)),
     quotes: approvedQuotes(db, memorial),
     structure: options.structure ?? doc.structure,
     targetSec: project?.familyTargetSec ?? DEFAULT_FAMILY_TARGET_SEC,

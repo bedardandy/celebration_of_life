@@ -30,6 +30,14 @@ export * from './curate/coverage';
 export * from './curate/dedupe';
 export * from './curate/ingest';
 export * from './curate/actions';
+export * from './curate/enhance';
+
+export * from './faces';
+
+export * from './import/seal';
+export * from './import/google-photos';
+export * from './import/run';
+export * from './import/status';
 
 export * from './edl';
 

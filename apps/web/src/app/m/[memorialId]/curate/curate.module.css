@@ -227,3 +227,155 @@
   justify-content: space-between;
   align-items: center;
 }
+
+/* --- the same face across the decades ------------------------------------ */
+
+.faces {
+  margin: 0 0 36px;
+  padding: 20px 22px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--paper-raised);
+}
+
+.facesTitle {
+  margin: 0 0 8px;
+  font-size: 1.2rem;
+}
+
+.facesBody {
+  margin: 0 0 12px;
+  color: var(--ink-soft);
+  font-size: 0.98rem;
+  line-height: 1.5;
+}
+
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin: 0 0 16px;
+}
+
+/* Chips are links, so they have to clear 48px like every other target. */
+.chip {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  padding: 6px 16px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: var(--paper);
+  color: var(--ink-soft);
+  font-size: 0.95rem;
+  text-decoration: none;
+}
+
+.chipOn {
+  border-color: var(--sage);
+  background: var(--sage-soft);
+  color: var(--ink);
+}
+
+.cluster {
+  margin: 0 0 16px;
+  padding: 14px 0 0;
+  border-top: 1px solid var(--line);
+}
+
+.clusterPrompt {
+  margin: 0 0 10px;
+  font-family: var(--serif);
+  font-size: 1.05rem;
+}
+
+.clusterFaces {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  list-style: none;
+  margin: 0 0 12px;
+  padding: 0;
+}
+
+.clusterThumb {
+  width: 72px;
+  height: 72px;
+  object-fit: cover;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+}
+
+.clusterActions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  align-items: flex-end;
+}
+
+.clusterName {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+}
+
+.clusterName input[type='text'] {
+  min-height: 44px;
+  padding: 8px 12px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--paper);
+  font-size: 1rem;
+}
+
+/* --- gently improved copies ---------------------------------------------- */
+
+.improve {
+  display: grid;
+  gap: 8px;
+  padding: 8px 0;
+  border-top: 1px solid var(--line);
+}
+
+.improveTitle {
+  margin: 0;
+  font-size: 0.9rem;
+  color: var(--ink-soft);
+}
+
+.compare {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+
+.compareItem {
+  margin: 0;
+  font-size: 0.78rem;
+  color: var(--ink-faint);
+  text-align: center;
+}
+
+.compareImage {
+  display: block;
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--paper);
+}
+
+.improveNote {
+  margin: 0;
+  font-size: 0.8rem;
+  line-height: 1.45;
+  color: var(--ink-faint);
+}
+
+.improveActions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}

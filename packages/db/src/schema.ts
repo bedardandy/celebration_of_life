@@ -13,6 +13,7 @@ import type {
   BeatGrid,
   Edl,
   EulogyNotes,
+  FaceBox,
   JobType,
   LifeStoryDocument,
   PhotoAnalysis,
@@ -74,6 +75,13 @@ export const memorials = sqliteTable('memorials', {
   aiConsentPhotoAnalysis: integer('ai_consent_photo_analysis', { mode: 'boolean' })
     .notNull()
     .default(false),
+  /**
+   * When the organizer asked us to look for the same faces across the
+   * photographs. Face work never leaves this machine, so this is not consent to
+   * send anything anywhere — it is the record that a person chose it, which is
+   * what makes the feature explainable to the rest of the family later.
+   */
+  faceGroupingStartedAt: integer('face_grouping_started_at'),
   status: text('status', { enum: ['draft', 'active', 'delivered', 'archived'] })
     .notNull()
     .default('draft'),
@@ -225,6 +233,24 @@ export const mediaAssets = sqliteTable(
       .default('pending'),
     caption: text('caption'),
     sortHint: real('sort_hint'),
+    /**
+     * The opt-in restoration, which is never applied to anything: the original
+     * bytes and the plain `render2400` both stay exactly as they were, and this
+     * only records whether an `enhanced2400` variant exists and whether the
+     * family said they preferred it. 'accepted' is reversible in one tap.
+     */
+    enhanceState: text('enhance_state', {
+      enum: ['none', 'queued', 'ready', 'accepted', 'failed'],
+    })
+      .notNull()
+      .default('none'),
+    /** Which restorer made it: 'sharp', or the external command's name. */
+    enhanceEngine: text('enhance_engine'),
+    /** What actually changed, in measured numbers, for the before/after copy. */
+    enhanceNote: text('enhance_note'),
+    enhancedAt: integer('enhanced_at'),
+    /** Set when the family chose the improved copy. Null means the original. */
+    enhanceAcceptedAt: integer('enhance_accepted_at'),
     ingestState: text('ingest_state', { enum: ['uploaded', 'processing', 'ready', 'failed'] })
       .notNull()
       .default('uploaded'),
@@ -246,7 +272,9 @@ export const assetVariants = sqliteTable(
     assetId: text('asset_id')
       .notNull()
       .references(() => mediaAssets.id, { onDelete: 'cascade' }),
-    kind: text('kind', { enum: ['thumb320', 'web1600', 'render2400', 'original'] }).notNull(),
+    kind: text('kind', {
+      enum: ['thumb320', 'web1600', 'render2400', 'enhanced2400', 'original'],
+    }).notNull(),
     blobKey: text('blob_key').notNull(),
     mime: text('mime').notNull(),
     width: integer('width'),
@@ -255,6 +283,60 @@ export const assetVariants = sqliteTable(
     createdAt: createdAt(),
   },
   (t) => [uniqueIndex('asset_variants_asset_kind_idx').on(t.assetId, t.kind)],
+);
+
+/* -------------------------------------------------------------------------- */
+/* face_detections                                                             */
+/* -------------------------------------------------------------------------- */
+
+/**
+ * One row per face found in one photograph, and nothing else.
+ *
+ * Three deliberate choices live in this table:
+ *
+ *  - `memorialId` is carried even though it is reachable through the asset.
+ *    Deletion is why: a family removing a memorial must take every face vector
+ *    with it, and a purge that has to join through another table to find them
+ *    is a purge that will one day miss some.
+ *  - `clusterId` is recomputed from scratch every time grouping runs, so it is
+ *    a label rather than an identity. `personId` is the identity, because that
+ *    is the part a person typed, and it must survive new photographs arriving
+ *    and the grouping being redone.
+ *  - `dismissedAt` records "these are not the same person" so the strip does
+ *    not keep asking. It is a tombstone on a suggestion, not on a photograph.
+ */
+export const faceDetections = sqliteTable(
+  'face_detections',
+  {
+    id: id(),
+    memorialId: text('memorial_id')
+      .notNull()
+      .references(() => memorials.id, { onDelete: 'cascade' }),
+    assetId: text('asset_id')
+      .notNull()
+      .references(() => mediaAssets.id, { onDelete: 'cascade' }),
+    /** Where the face is, in 0..1 of the picture. Drives the crop in the strip. */
+    box: text('box', { mode: 'json' }).$type<FaceBox>().notNull(),
+    /** The descriptor. Never sent anywhere; deleted with the memorial. */
+    embedding: text('embedding', { mode: 'json' }).$type<number[]>().notNull(),
+    quality: real('quality').notNull().default(0),
+    /** Which engine produced it, so a model change can be re-run knowingly. */
+    engine: text('engine').notNull().default('mock'),
+    /** Recomputed label from the last grouping pass. */
+    clusterId: text('cluster_id'),
+    /** Set once somebody says "this is Ruth". */
+    personId: text('person_id').references(() => people.id, { onDelete: 'set null' }),
+    /** "Not the same person" — the suggestion is put away, the faces stay. */
+    dismissedAt: integer('dismissed_at'),
+    createdAt: createdAt(),
+    updatedAt: updatedAt(),
+  },
+  (t) => [
+    index('face_detections_memorial_idx').on(t.memorialId),
+    index('face_detections_asset_idx').on(t.assetId),
+    index('face_detections_cluster_idx').on(t.memorialId, t.clusterId),
+    index('face_detections_person_idx').on(t.memorialId, t.personId),
+  ],
 );
 
 /* -------------------------------------------------------------------------- */
@@ -603,6 +685,7 @@ export const schema = {
   magicTokens,
   mediaAssets,
   assetVariants,
+  faceDetections,
   memoryNotes,
   lifeStoryDocs,
   interviewSessions,
@@ -624,6 +707,7 @@ export const TABLE_NAMES = [
   'magic_tokens',
   'media_assets',
   'asset_variants',
+  'face_detections',
   'memory_notes',
   'life_story_docs',
   'interview_sessions',
@@ -649,6 +733,8 @@ export type MediaAsset = typeof mediaAssets.$inferSelect;
 export type NewMediaAsset = typeof mediaAssets.$inferInsert;
 export type AssetVariant = typeof assetVariants.$inferSelect;
 export type NewAssetVariant = typeof assetVariants.$inferInsert;
+export type FaceDetection = typeof faceDetections.$inferSelect;
+export type NewFaceDetection = typeof faceDetections.$inferInsert;
 export type MemoryNote = typeof memoryNotes.$inferSelect;
 export type NewMemoryNote = typeof memoryNotes.$inferInsert;
 export type LifeStoryDocRow = typeof lifeStoryDocs.$inferSelect;

@@ -13,6 +13,7 @@ import {
   EDL_VERSION,
   EdlProposalSchema,
   EdlSchema,
+  type AssetVariantKind,
   type AudioMode,
   type Easing,
   type Edl,
@@ -91,6 +92,12 @@ export type EdlAssetInput = {
   suggestedCaption?: string | null;
   width?: number | null;
   height?: number | null;
+  /**
+   * Which derivative this photograph should be shown from. Set to
+   * 'enhanced2400' only when the family looked at a before-and-after and said
+   * they preferred the improved copy; everything else stays on the plain one.
+   */
+  variant?: AssetVariantKind;
 };
 
 export type EdlQuoteInput = {
@@ -231,7 +238,7 @@ export function assembleEdl(proposal: EdlProposal, context: EdlBuildContext): As
       slides[slideId] = {
         kind: 'photo',
         assetId: asset.assetId,
-        variant: SLIDE_VARIANT,
+        variant: asset.variant ?? SLIDE_VARIANT,
         durationSec: PHOTO_DEFAULT_SEC,
         kenBurns: kenBurnsFor(photo.kenBurns),
         ...(caption ? { caption: { text: caption.slice(0, 300), position: 'lower-third' } } : {}),

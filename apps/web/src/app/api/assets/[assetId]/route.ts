@@ -15,7 +15,7 @@ import { Readable } from 'node:stream';
 import type { ReadableStream as WebReadableStream } from 'node:stream/web';
 import { authorizeOrganizer, resolveContributorToken } from '@col/core';
 import { assetVariants, eq, getById, listWhere, mediaAssets, memorials } from '@col/db';
-import { VARIANT_NAMES } from '@col/media';
+import { ENHANCED_VARIANT, VARIANT_NAMES } from '@col/media';
 import { BlobNotFoundError, getBlobStore } from '@col/storage';
 import { db } from '@/server/db';
 import { readSession } from '@/server/session';
@@ -91,11 +91,14 @@ export async function GET(
 
 export const HEAD = GET;
 
+/** Every derivative a screen may ask for, including the opt-in improved copy. */
+const SERVABLE = [...VARIANT_NAMES, ENHANCED_VARIANT] as readonly string[];
+
 /** The original is served only when a derived variant was never made (video). */
 function pickVariant(assetId: string, requested: string) {
   const rows = listWhere(db(), assetVariants, eq(assetVariants.assetId, assetId));
   if (rows.length === 0) return undefined;
-  const wanted = (VARIANT_NAMES as readonly string[]).includes(requested) ? requested : 'thumb320';
+  const wanted = SERVABLE.includes(requested) ? requested : 'thumb320';
   return (
     rows.find((row) => row.kind === wanted) ??
     // Fall back along the ladder rather than showing nothing: a grid that is

@@ -30,6 +30,13 @@ export type CoverageInput = {
   countsByEra: Map<string, number>;
   /** Used when there is no birth year: the earliest decade we do have. */
   now?: number;
+  /**
+   * Whose photographs these are, when it is not simply "the photographs".
+   * Face grouping sets this to a named person — "No photos of Ruth from their
+   * thirties yet" — so the same heuristic serves both the whole memorial and
+   * one face in it.
+   */
+  subject?: string;
 };
 
 const DECADE = 10;
@@ -85,7 +92,7 @@ export function findCoverageGaps(input: CoverageInput): CoverageGap[] {
       era,
       startYear,
       ...(ageRange ? { ageRange } : {}),
-      message: gapMessage(era, ageRange),
+      message: gapMessage(era, ageRange, input.subject),
     });
   }
   return gaps;
@@ -108,15 +115,23 @@ const AGE_DECADE_WORD: Record<number, string> = {
   90: 'nineties',
 };
 
-export function gapMessage(era: string, ageRange?: { from: number; to: number }): string {
+export function gapMessage(
+  era: string,
+  ageRange?: { from: number; to: number },
+  /** A named person, when the gap is about one face rather than the whole set. */
+  subject?: string,
+): string {
+  // "of Ruth" only when we were given a name: for the person the memorial is
+  // for, "No photos from their thirties" is how a family already talks.
+  const of = subject ? ` of ${subject}` : '';
   if (ageRange) {
     const decade = Math.floor(ageRange.from / 10) * 10;
-    const subject = decade < 10 ? 'their childhood' : `their ${AGE_DECADE_WORD[decade] ?? era}`;
+    const period = decade < 10 ? 'their childhood' : `their ${AGE_DECADE_WORD[decade] ?? era}`;
     if (decade < 10 || AGE_DECADE_WORD[decade]) {
-      return `No photos from ${subject} yet — someone may have a shoebox. Ask them?`;
+      return `No photos${of} from ${period} yet — someone may have a shoebox. Ask them?`;
     }
   }
-  return `No photos from the ${era} yet — someone may have a shoebox. Ask them?`;
+  return `No photos${of} from the ${era} yet — someone may have a shoebox. Ask them?`;
 }
 
 /** The single nudge worth showing. More than one at a time is a to-do list. */

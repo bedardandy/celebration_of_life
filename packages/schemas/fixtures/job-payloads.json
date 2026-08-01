@@ -36,5 +36,23 @@
     "subject": "Your link to Margaret's memorial page",
     "template": "organizer-magic-link",
     "data": { "memorialName": "Margaret Ellen Doyle" }
+  },
+  {
+    "type": "import-google-photos",
+    "memorialId": "0192f3a0-0000-7000-8000-000000000001",
+    "sessionId": "picker-sessions/abc123",
+    "sealedToken": "v1.V0hBVEVWRVI.bm9uY2U.Y2lwaGVydGV4dA",
+    "participantId": "0192f3a0-2222-7000-8000-000000000001"
+  },
+  {
+    "type": "detect-faces",
+    "memorialId": "0192f3a0-0000-7000-8000-000000000001",
+    "assetIds": ["0192f3a0-3333-7000-8000-00000000000a"],
+    "redo": false
+  },
+  {
+    "type": "enhance-asset",
+    "memorialId": "0192f3a0-0000-7000-8000-000000000001",
+    "assetId": "0192f3a0-3333-7000-8000-00000000000a"
   }
 ]

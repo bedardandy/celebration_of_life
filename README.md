@@ -105,14 +105,16 @@ apps/web         Next.js 15 — organizer flow, contributor pages, authed media 
 apps/worker      job queue: ingest, photo analysis, EDL generation, rendering
 packages/        schemas · db · core · ai · media · storage · video · tradition-packs
 content/         bundled music library (CC0, generated, licensed per track)
-docs/            ADRs, AI provider guide
+docs/            ADRs, AI providers, production, Google import, faces, enhancement
 ```
 
 See [docs/adr/](docs/adr/) for the reasoning behind the big choices.
 
 ## Status
 
-The MVP (story + slideshow, end to end) is complete, and so are the eulogy studio, the
-printable order-of-service program, and nine tradition packs. On the roadmap: hosted watch
-pages and live venue playback, voice interview input, Google Photos Picker import, and local
-face clustering for finding photos of the person across decades.
+The full planned build is complete: the MVP (story + slideshow, end to end), hosted watch
+pages and live venue playback, voice interview input, the eulogy studio, the printable
+order-of-service program, nine tradition packs, and three config-gated optional features —
+Google Photos Picker import, local-only face grouping (nothing leaves the machine), and
+opt-in photo enhancement that never touches the original. Each optional feature is genuinely
+absent until an operator turns it on; see [docs/production.md](docs/production.md).

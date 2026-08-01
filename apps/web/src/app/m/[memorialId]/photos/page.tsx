@@ -14,6 +14,8 @@ import {
   COLLECTION_LINK_HELP,
   REVOKE_LINK_HELP,
   ensureCollectionLink,
+  googleImportConfigured,
+  latestGoogleImport,
   listCollectionLinks,
   messageDrafts,
   type CollectionLink,
@@ -81,6 +83,11 @@ export default async function PhotosPage({
 
   const qr = familyLink?.url ? await qrSvg(familyLink.url) : undefined;
 
+  // Two separate questions: is the integration configured on this server at
+  // all, and has this family used it.
+  const googleConfigured = googleImportConfigured();
+  const googleImport = googleConfigured ? latestGoogleImport(db(), memorialId) : undefined;
+
   return (
     <StepScreen
       wide
@@ -100,6 +107,43 @@ export default async function PhotosPage({
     >
       {query['revoked'] ? (
         <p className={styles.notice}>That link has been turned off. Photos already shared stay.</p>
+      ) : null}
+
+      {query['google'] === 'cancelled' ? (
+        <p className={styles.notice}>
+          Nothing came over from Google, and nothing changed here. You can try again whenever you
+          like.
+        </p>
+      ) : null}
+      {query['google'] === 'again' ? (
+        <p className={styles.notice}>
+          That connection to Google did not finish. Starting it again usually works, and nothing was
+          lost.
+        </p>
+      ) : null}
+
+      {googleImport ? <p className={styles.notice}>{googleImport.message}</p> : null}
+
+      {/*
+        Only when the two Google variables are set. An unconfigured deployment
+        renders nothing at all here — no teaser, no "coming soon", no button
+        that leads to a page explaining what a family cannot have.
+      */}
+      {googleConfigured ? (
+        <section className={styles.panel}>
+          <h2 className={styles.panelTitle}>From Google Photos</h2>
+          <p className={styles.help}>
+            If the photos are already in Google Photos, you can pick them there and they will come
+            straight across. Google asks you to sign in and choose; we only ever see the ones you
+            pick.
+          </p>
+          <form action="/api/import/google/start" method="post" className={styles.inlineForm}>
+            <input type="hidden" name="memorialId" value={memorialId} />
+            <button type="submit" className={step.quiet}>
+              Bring photos from Google Photos
+            </button>
+          </form>
+        </section>
       ) : null}
 
       <section className={styles.panel} id="links">

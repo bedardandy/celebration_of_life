@@ -9,6 +9,9 @@ export const JOB_TYPES = [
   'render',
   'purge-blobs',
   'send-email',
+  'import-google-photos',
+  'detect-faces',
+  'enhance-asset',
 ] as const;
 
 export const JobTypeSchema = z.enum(JOB_TYPES);
@@ -80,6 +83,52 @@ export const SendEmailPayloadSchema = z
   })
   .strict();
 
+/**
+ * Bring photographs across from Google Photos.
+ *
+ * The access token is not here in the clear and is never stored in a column of
+ * its own: `sealedToken` is an AES-GCM envelope opened with a key derived from
+ * `SESSION_SECRET`, and the handler blanks it the moment the import finishes.
+ * The tradeoff — an encrypted, short-lived credential resting briefly in a job
+ * row — is written down in docs/google-photos.md.
+ */
+export const ImportGooglePhotosPayloadSchema = z
+  .object({
+    type: z.literal('import-google-photos'),
+    memorialId: IdSchema,
+    /** The Picker session the person is choosing photographs in. */
+    sessionId: z.string().min(1).max(200),
+    sealedToken: z.string().min(1).max(4_000),
+    /** The organizer the photographs are attributed to. */
+    participantId: IdSchema.optional(),
+  })
+  .strict();
+
+/**
+ * Find the same faces across a memorial's photographs. Entirely local: no
+ * payload here ever crosses a network, and the job is skipped rather than
+ * failed when no face engine is installed.
+ */
+export const DetectFacesPayloadSchema = z
+  .object({
+    type: z.literal('detect-faces'),
+    memorialId: IdSchema,
+    /** Omitted means "every photograph that is ready and not yet looked at". */
+    assetIds: z.array(IdSchema).max(2_000).optional(),
+    /** Look again at photographs that already have faces recorded. */
+    redo: z.boolean().default(false),
+  })
+  .strict();
+
+/** Make the opt-in gently-restored copy of one photograph. */
+export const EnhanceAssetPayloadSchema = z
+  .object({
+    type: z.literal('enhance-asset'),
+    memorialId: IdSchema,
+    assetId: IdSchema,
+  })
+  .strict();
+
 export const JobPayloadSchema = z.discriminatedUnion('type', [
   NoopPayloadSchema,
   IngestAssetPayloadSchema,
@@ -88,6 +137,9 @@ export const JobPayloadSchema = z.discriminatedUnion('type', [
   RenderPayloadSchema,
   PurgeBlobsPayloadSchema,
   SendEmailPayloadSchema,
+  ImportGooglePhotosPayloadSchema,
+  DetectFacesPayloadSchema,
+  EnhanceAssetPayloadSchema,
 ]);
 export type JobPayload = z.infer<typeof JobPayloadSchema>;
 
@@ -105,6 +157,9 @@ export const JobPayloadSchemas = {
   render: RenderPayloadSchema,
   'purge-blobs': PurgeBlobsPayloadSchema,
   'send-email': SendEmailPayloadSchema,
+  'import-google-photos': ImportGooglePhotosPayloadSchema,
+  'detect-faces': DetectFacesPayloadSchema,
+  'enhance-asset': EnhanceAssetPayloadSchema,
 } as const;
 
 /**
