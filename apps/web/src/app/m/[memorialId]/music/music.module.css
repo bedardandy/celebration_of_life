@@ -286,6 +286,107 @@
   background: var(--paper-raised);
 }
 
+/* --- the song audition ----------------------------------------------------- */
+
+.audition {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 20px 22px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--paper-raised);
+}
+
+.auditionLead {
+  margin: 0;
+  color: var(--ink);
+  font-size: 1.02rem;
+  line-height: 1.55;
+}
+
+.auditionSearch {
+  display: block;
+}
+
+.auditionRow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  align-items: center;
+}
+
+.auditionRow .input {
+  flex: 1 1 14rem;
+}
+
+.auditionResults {
+  display: grid;
+  gap: 12px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.auditionTrack {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px 16px;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 14px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+}
+
+.auditionArt {
+  display: block;
+  flex: 0 0 auto;
+  width: 56px;
+  height: 56px;
+  border-radius: 6px;
+  background: var(--paper);
+  object-fit: cover;
+}
+
+.auditionBody {
+  flex: 1 1 14rem;
+  min-width: 0;
+}
+
+.auditionTitle {
+  margin: 0;
+  font-size: 1.08rem;
+}
+
+.practice {
+  margin-top: 28px;
+  padding: 16px 20px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+}
+
+.practiceSummary {
+  min-height: var(--tap);
+  display: flex;
+  align-items: center;
+  color: var(--ink);
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+.practiceBody {
+  margin: 0;
+  padding-left: 20px;
+  color: var(--ink-soft);
+  font-size: 0.95rem;
+  line-height: 1.6;
+}
+
+.practiceBody li + li {
+  margin-top: 8px;
+}
+
 /* --- tap tempo ------------------------------------------------------------- */
 
 .tapRow {

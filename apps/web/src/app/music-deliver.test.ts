@@ -182,6 +182,7 @@ const CLIENT_COMPONENTS = new Set([
   'RenderWatch',
   'TrackPreview',
   'TapTempo',
+  'SongAudition',
 ]);
 
 /** Every string of text a server component put on the page, props included. */

@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import {
   computeChecklist,
+  countOpenReviewNotes,
   countSpeeches,
   currentDoc,
   currentProgram,
@@ -71,6 +72,8 @@ export default async function DashboardPage({
     // The words half of the day: what people will say, and what is handed out.
     speeches: countSpeeches(db(), memorialId),
     program: programState(memorial),
+    // What family said after watching the video from the shared link.
+    reviewNotes: countOpenReviewNotes(db(), memorialId),
   };
 
   const checklist = computeChecklist(memorial, counts);
@@ -101,6 +104,7 @@ export default async function DashboardPage({
       footer={
         <div className={styles.footerRow}>
           <span>Everything here saves as you go.</span>
+          <Link href={`/m/${memorialId}/share`}>Share the work with someone</Link>
           <RemoveMemorial memorialId={memorialId} />
         </div>
       }

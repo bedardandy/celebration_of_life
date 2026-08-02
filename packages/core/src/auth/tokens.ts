@@ -17,7 +17,13 @@ import { absoluteUrl, sessionSecret } from '../env';
 
 export const TOKEN_BYTES = 32;
 
-export type TokenKind = 'organizer-login' | 'collection-link' | 'contributor' | 'watch';
+export type TokenKind =
+  | 'organizer-login'
+  | 'collection-link'
+  | 'contributor'
+  | 'watch'
+  /** Hands somebody else the organiser's own job. See review/invites.ts. */
+  | 'co-organizer-invite';
 
 /** Fourteen days. Long enough to survive a hard week; short enough to expire. */
 export const ORGANIZER_LOGIN_TTL_MS = 14 * 24 * 60 * 60 * 1000;
@@ -57,6 +63,7 @@ export type IssuedToken = {
 
 export function tokenUrl(kind: TokenKind, token: string): string {
   if (kind === 'watch') return absoluteUrl(`/w/${token}`);
+  if (kind === 'co-organizer-invite') return absoluteUrl(`/join/${token}`);
   if (kind === 'contributor' || kind === 'collection-link') return absoluteUrl(`/c/${token}`);
   return absoluteUrl(`/auth/${token}`);
 }
@@ -85,6 +92,7 @@ export function issueToken(db: Db, input: IssueTokenInput): IssuedToken {
 function defaultScopes(kind: TokenKind): string[] {
   if (kind === 'organizer-login') return ['organizer'];
   if (kind === 'contributor' || kind === 'collection-link') return ['upload', 'memory-note'];
+  if (kind === 'co-organizer-invite') return ['co-organizer-invite'];
   return ['watch'];
 }
 
@@ -241,7 +249,9 @@ export function resolveContributorToken(
 ): TokenLookup {
   const found = inspectToken(db, token, options);
   if (!found.ok) return found;
-  if (found.row.kind === 'organizer-login') {
+  // A login link is not a contributor link, and neither is an invitation to
+  // co-organise: it opens one screen, and nothing else until it is accepted.
+  if (found.row.kind === 'organizer-login' || found.row.kind === 'co-organizer-invite') {
     return { ok: false, reason: 'wrong-kind', row: found.row };
   }
   return found;

@@ -1,0 +1,78 @@
+.empty {
+  margin: 0;
+  padding: 28px 24px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--paper-raised);
+  color: var(--ink-soft);
+  line-height: 1.6;
+}
+
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.note {
+  padding: 18px 20px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--paper-raised);
+}
+
+.noteSettled {
+  opacity: 0.72;
+}
+
+.who {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  align-items: baseline;
+  margin: 0 0 8px;
+}
+
+.age {
+  color: var(--ink-faint);
+  font-size: 0.92rem;
+}
+
+.body {
+  margin: 0 0 10px;
+  line-height: 1.6;
+  white-space: pre-wrap;
+}
+
+.where {
+  margin: 0 0 8px;
+  color: var(--ink-soft);
+  font-size: 0.98rem;
+}
+
+.buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  align-items: center;
+}
+
+.settled {
+  margin-top: 40px;
+  padding-top: 24px;
+  border-top: 1px solid var(--line);
+}
+
+.settledTitle {
+  margin: 0 0 6px;
+  font-size: 1.15rem;
+}
+
+.settledHelp {
+  margin: 0 0 16px;
+  color: var(--ink-soft);
+  font-size: 0.98rem;
+}

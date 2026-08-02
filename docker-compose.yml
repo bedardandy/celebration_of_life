@@ -1,0 +1,95 @@
+# The VPS path: one app container, one Caddy in front of it for HTTPS.
+#
+#   cp .env.example .env      # then fill in the four things docs/deploy.md lists
+#   docker compose up -d --build
+#
+# Caddy gets and renews the certificate on its own, so there is nothing to
+# install and nothing to renew by hand. Point the domain's A record at this
+# machine first, or the certificate cannot be issued.
+
+name: celebration-of-life
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: celebration-of-life:local
+    restart: unless-stopped
+
+    # Every setting comes from .env — see .env.example. The three that are not
+    # optional: SESSION_SECRET, LINK_SECRET, APP_BASE_URL.
+    env_file: .env
+
+    # These four win over anything in .env, on purpose. `.env.example` carries a
+    # developer's paths (./data/app.db), and a copy of it that quietly moved the
+    # database out of the volume and into the container would be erased by the
+    # next rebuild — with the family's photographs.
+    environment:
+      NODE_ENV: production
+      PORT: '3000'
+      DATABASE_URL: file:/data/app.db
+      STORAGE_DIR: /data/blobs
+
+    # The database, the photographs and the finished videos. This one volume is
+    # the entire backup story (docs/production.md §8).
+    volumes:
+      - col-data:/data
+
+    # Not published to the internet: Caddy is the only way in.
+    expose:
+      - '3000'
+
+    # Chromium leaves processes behind when a render is cancelled; an init
+    # reaps them. The image already uses tini, so this is belt and braces.
+    init: true
+
+    # Sizing, from the measurements in docs/adr/0002-render-and-music.md:
+    #   * 2 GB of RAM is the floor for a 1080p render, 4 GB is comfortable.
+    #   * faster cores beat more cores — 2 fast ones finish a 1080p render in
+    #     twenty minutes where 16 slow ones take an hour.
+    #   * one worker per machine. A busy week wants a second machine, not a
+    #     second worker on this one.
+    # Uncomment to hold the app to a share of a box it is sharing:
+    # deploy:
+    #   resources:
+    #     limits:
+    #       cpus: '3.0'
+    #       memory: 4g
+
+    healthcheck:
+      test:
+        [
+          'CMD',
+          'node',
+          '-e',
+          "fetch('http://127.0.0.1:3000/api/health').then(r=>process.exit(r.ok?0:1),()=>process.exit(1))",
+        ]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 90s
+
+  caddy:
+    image: caddy:2
+    restart: unless-stopped
+    depends_on:
+      - app
+    ports:
+      - '80:80'
+      - '443:443'
+      - '443:443/udp' # HTTP/3
+    environment:
+      # Set COL_DOMAIN in .env, e.g. COL_DOMAIN=remembering-jean.example.com
+      COL_DOMAIN: ${COL_DOMAIN:?set COL_DOMAIN in .env — Caddy needs to know which name to get a certificate for}
+    volumes:
+      - ./deploy/Caddyfile:/etc/caddy/Caddyfile:ro
+      # The certificates. Losing this means asking Let's Encrypt for new ones,
+      # which is rate-limited — keep the volume.
+      - caddy-data:/data
+      - caddy-config:/config
+
+volumes:
+  col-data:
+  caddy-data:
+  caddy-config:

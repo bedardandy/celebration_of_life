@@ -12,6 +12,7 @@ export * from './mail/resend';
 export * from './mail/deliver';
 
 export * from './watch/links';
+export * from './review';
 
 export * from './interview';
 
@@ -40,6 +41,8 @@ export * from './import/run';
 export * from './import/status';
 
 export * from './edl';
+
+export * from './music-audition';
 
 export * from './music/library';
 export * from './music/seed';

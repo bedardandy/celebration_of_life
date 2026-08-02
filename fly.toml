@@ -1,0 +1,67 @@
+# Fly.io: one machine, one volume, always on.
+#
+#   fly launch --no-deploy --copy-config     # claims the app name
+#   fly volumes create col_data --size 20    # in the same region as the app
+#   fly secrets set SESSION_SECRET=... LINK_SECRET=... APP_BASE_URL=https://<app>.fly.dev
+#   fly deploy
+#
+# Rename `app` and change `primary_region` before the first deploy; everything
+# else can stay. See docs/deploy.md.
+
+app = "celebration-of-life"
+primary_region = "lhr"
+
+# The worker is a second process inside the same container, and it is the thing
+# that renders. Stopping the machine to save money stops renders halfway, so the
+# machine stays up: kill_signal reaches the supervisor, which asks the worker to
+# finish the job it holds before it exits.
+kill_signal = "SIGTERM"
+kill_timeout = "120s"
+
+[build]
+  dockerfile = "Dockerfile"
+
+[env]
+  PORT = "3000"
+  DATABASE_URL = "file:/data/app.db"
+  STORAGE_DIR = "/data/blobs"
+  # Set this to the real hostname — it is what magic links are built from.
+  # `fly secrets set APP_BASE_URL=...` also works and takes precedence.
+  APP_BASE_URL = "https://celebration-of-life.fly.dev"
+
+[http_service]
+  internal_port = 3000
+  force_https = true
+  # Off, both of them. A stopped machine cannot render, and a family waiting on
+  # a video would simply never get one.
+  auto_stop_machines = "off"
+  auto_start_machines = false
+  min_machines_running = 1
+
+  [http_service.concurrency]
+    type = "requests"
+    # Every photograph and every video is streamed through the app and checked
+    # there, so viewers cost real bandwidth. These are gentle on purpose.
+    soft_limit = 40
+    hard_limit = 60
+
+# The database, the blobs and the renders. One machine holds this volume, which
+# is also why there is only ever one machine: two would be two SQLite writers.
+[[mounts]]
+  source = "col_data"
+  destination = "/data"
+
+# Rendering is CPU-bound software rasterisation, and faster cores beat more of
+# them (docs/adr/0002-render-and-music.md): on four 2.1 GHz cores a five-minute
+# 1080p cut takes about 75 minutes. 2 GB of RAM is the floor for a 1080p render;
+# 4 GB is what makes it comfortable. shared-cpu-1x will not do this work.
+[[vm]]
+  cpu_kind = "performance"
+  cpus = 2
+  memory = "4gb"
+
+[deploy]
+  # Take the machine down, then bring it up on the new image. A volume attaches
+  # to one machine at a time, so there is no rolling option to have — and two
+  # containers on one SQLite file is not a thing to attempt.
+  strategy = "immediate"

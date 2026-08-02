@@ -1,0 +1,20 @@
+# The whole reverse proxy. Caddy gets the HTTPS certificate itself, on first
+# start, and renews it — nothing here to schedule and nothing to remember.
+#
+# COL_DOMAIN comes from .env via docker-compose.yml.
+
+{$COL_DOMAIN} {
+	# `app` is the service name in docker-compose.yml; 3000 is the port the
+	# container listens on. Caddy streams both ways by default, which is what
+	# lets someone drag the scrubber on a video and lets a phone finish a slow
+	# upload.
+	reverse_proxy app:3000
+
+	# A burst of photographs from a modern phone is bigger than you expect.
+	request_body {
+		max_size 512MB
+	}
+
+	# One line per request, to the container log: `docker compose logs caddy`.
+	log
+}

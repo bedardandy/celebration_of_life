@@ -167,6 +167,31 @@ describe('computeChecklist', () => {
     expect(flags['delivered']).toBe(true);
   });
 
+  it('folds in what family said after watching, once there is a video', () => {
+    const { cards } = computeChecklist(memorial, {
+      photos: 40,
+      memories: 4,
+      slideshow: { hasEdl: true, musicChosen: true, delivered: true },
+      reviewNotes: 3,
+    });
+    const slideshow = card(cards, 'slideshow');
+    expect(slideshow.statusLine).toContain('Notes from family (3)');
+    // And the card takes them straight to those notes.
+    expect(slideshow.href).toBe('/m/m-1/review');
+  });
+
+  it('says nothing about notes when nobody has left any', () => {
+    const { cards } = computeChecklist(memorial, {
+      photos: 40,
+      memories: 4,
+      slideshow: { hasEdl: true, musicChosen: true, delivered: true },
+      reviewNotes: 0,
+    });
+    const slideshow = card(cards, 'slideshow');
+    expect(slideshow.statusLine).not.toMatch(/note/i);
+    expect(slideshow.href).toBe('/m/m-1/deliver');
+  });
+
   it('reports flags that can be persisted on the memorial row', () => {
     const done = computeChecklist(
       { id: 'm-1', intakeCompletedAt: 123 },

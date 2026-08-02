@@ -9,24 +9,41 @@
  * Nothing plays until they press play. That rule is absolute here — a tribute
  * video that starts on its own is the single worst thing this page could do.
  */
-import { PRODUCT_NAME, describeLength, formatServiceDate, resolveWatchToken } from '@col/core';
+import {
+  PRODUCT_NAME,
+  describeLength,
+  formatServiceDate,
+  noteInvitation,
+  notePrivacyLine,
+  organizerDisplayName,
+  resolveWatchToken,
+} from '@col/core';
 import { StepScreen } from '@/components/StepScreen';
 import { LinkClosed } from '@/app/c/[token]/LinkClosed';
 import { db } from '@/server/db';
+import { NoteForm, WATCH_VIDEO_ID } from './NoteForm';
 import styles from './watch.module.css';
 
 export const dynamic = 'force-dynamic';
 
 export const metadata = { title: 'In loving memory' };
 
-export default async function WatchPage({ params }: { params: Promise<{ token: string }> }) {
+export default async function WatchPage({
+  params,
+  searchParams,
+}: {
+  params: Promise<{ token: string }>;
+  searchParams?: Promise<Record<string, string | string[] | undefined>>;
+}) {
   const { token } = await params;
+  const query = (await searchParams) ?? {};
   const resolved = resolveWatchToken(db(), token);
   if (!resolved.ok) return <LinkClosed reason={resolved.reason} />;
 
   const { memorial, render, allowDownload } = resolved.context;
   const name = memorial.decedentName;
   const src = render ? `/api/renders/${render.id}?watch=${encodeURIComponent(token)}` : undefined;
+  const organizer = organizerDisplayName(db(), memorial.id);
 
   return (
     <StepScreen
@@ -50,6 +67,7 @@ export default async function WatchPage({ params }: { params: Promise<{ token: s
           <div className={styles.frame}>
             {/* No autoplay, no loop, no muted-autoplay trick. */}
             <video
+              id={WATCH_VIDEO_ID}
               className={styles.video}
               src={src}
               poster={`/api/renders/${render.id}/poster?watch=${encodeURIComponent(token)}`}
@@ -79,6 +97,15 @@ export default async function WatchPage({ params }: { params: Promise<{ token: s
               </a>
             </p>
           ) : null}
+
+          {/* Only the family sees these, and the form says so before anybody
+              types. Nothing a viewer writes is ever shown to another viewer. */}
+          <NoteForm
+            token={token}
+            invitation={noteInvitation(organizer)}
+            privacyLine={notePrivacyLine(organizer)}
+            sent={query['sent'] === '1'}
+          />
         </>
       ) : (
         <p className={styles.waiting}>

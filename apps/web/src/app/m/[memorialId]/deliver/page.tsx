@@ -22,6 +22,7 @@ import {
   USB_STEPS,
   WATCH_DOWNLOAD_HELP,
   WATCH_LINK_HELP,
+  countOpenReviewNotes,
   deliverableFilename,
   describeLength,
   describeRenderProgress,
@@ -102,6 +103,7 @@ export default async function DeliverPage({
   const working = rows.some((row) => row.progress.working);
   const ready = rows.filter((row) => row.progress.done && row.job.outputBlobKey);
   const watchLinks = listWatchLinks(db(), memorialId).filter((link) => link.active);
+  const openNotes = countOpenReviewNotes(db(), memorialId);
 
   return (
     <StepScreen
@@ -300,6 +302,7 @@ export default async function DeliverPage({
             links={watchLinks}
             justShared={query['shared'] === '1'}
             justTurnedOff={query['watchoff'] === '1'}
+            noteCount={openNotes}
           />
         </section>
       ) : null}
@@ -320,15 +323,26 @@ function Sharing({
   links,
   justShared,
   justTurnedOff,
+  noteCount,
 }: {
   memorialId: string;
   links: WatchLink[];
   justShared: boolean;
   justTurnedOff: boolean;
+  /** Notes family have left after watching. Shown only when there are any. */
+  noteCount: number;
 }) {
   return (
     <section className={styles.share} id="watch">
       <h2 className={styles.guidesTitle}>For people who cannot be there</h2>
+
+      {noteCount > 0 ? (
+        <p className={styles.guideBody}>
+          <Link href={`/m/${memorialId}/review`}>
+            {noteCount} {noteCount === 1 ? 'note' : 'notes'} from family
+          </Link>
+        </p>
+      ) : null}
 
       {justTurnedOff ? (
         <p className={styles.started}>

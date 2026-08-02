@@ -30,11 +30,18 @@ autosaves. Everything can be undone. Nothing auto-plays, upsells, or rushes.
   (the video can be shared anywhere), or time the video to the family's own song, delivered
   silent, with a printable venue timing card — the song plays out loud at the service under the
   venue's own license. Eight original instrumental tracks ship with the product (CC0, generated,
-  exact beat grids). Families can also upload a recording they own.
+  exact beat grids). Families can also upload a recording they own, or find their song by ear —
+  a search box backed by Apple's free preview API plays a half-minute clip to confirm it's the
+  right version before the details are filled in.
 - **Deliver** — 1080p H.264/AAC faststart MP4 (plus 720p backup and a quick draft preset),
   loudness-normalized to −16 LUFS, ffprobe-verified before it is ever called done. Dignified
   filenames, USB/FAT32 instructions, and a printable funeral-director card ("please test it on
   the venue's own equipment before the service").
+- **Share and hear back** — a private, revocable viewing link streams the draft to family
+  anywhere; viewers can leave a note pinned to a moment in the video ("at 1:23 — that photo is
+  upside down"), which lands on the organizer's gentle checklist with done/undo. A co-organizer
+  invite link shares the whole workload with a sibling — no passwords anywhere, the link is the
+  credential, and every link can be turned off.
 - **Speeches & program** — a eulogy studio for each person speaking: a guided setup (who,
   how long, how it should sound, which memories), one AI call for a first draft built only
   from the memories that speaker ticked, versioned editing with "a little shorter / warmer /
@@ -85,11 +92,16 @@ Remotion downloads its own headless shell, or set `REMOTION_BROWSER_EXECUTABLE`.
 Other useful commands:
 
 ```bash
-pnpm test         # 777 tests, no network, no real AI
+pnpm test         # 1106 tests, no network, no real AI
+pnpm e2e          # the whole journey with real browser clicks, from blank page to shared video
 pnpm e2e:deliver  # the whole product once, for real: create → ingest → EDL → music → render → authed download
 pnpm ai:doctor    # check your configured AI provider(s)
 pnpm music:build  # regenerate the bundled music library from seeds
+pnpm start:prod   # production boot: migrations + seed, then web + worker under one supervisor
 ```
+
+To put it on a real URL for the family, see [docs/deploy.md](docs/deploy.md) — a Dockerfile,
+docker-compose + Caddy for a small VPS, and Railway/Fly configs, with a 15-minute walkthrough.
 
 ## Architecture
 
@@ -117,4 +129,7 @@ pages and live venue playback, voice interview input, the eulogy studio, the pri
 order-of-service program, nine tradition packs, and three config-gated optional features —
 Google Photos Picker import, local-only face grouping (nothing leaves the machine), and
 opt-in photo enhancement that never touches the original. Each optional feature is genuinely
-absent until an operator turns it on; see [docs/production.md](docs/production.md).
+absent until an operator turns it on; see [docs/production.md](docs/production.md). On top of
+that: the family review loop (notes on the draft from viewing links, a co-organizer invite),
+song search with half-minute previews, and a deploy kit for Railway, Fly.io, or any small VPS
+([docs/deploy.md](docs/deploy.md)).

@@ -9,6 +9,13 @@
  *
  * Nothing about the recording itself is uploaded, stored or analysed. That is
  * exactly why this mode exists.
+ *
+ * Above the fields there is a search box that plays half a minute of each
+ * candidate, because "Danny Boy" is nine different recordings and the family
+ * means one of them. It is a helper and never a gate: it can be ignored
+ * entirely, it fills in the same two fields anybody could type, and when the
+ * catalogue cannot be reached it shrinks to one sentence and gets out of the
+ * way. Nothing it plays is kept, mixed in, or timed to.
  */
 import Link from 'next/link';
 import { latestProject, musicChoice } from '@col/core';
@@ -16,6 +23,7 @@ import { StepScreen, step } from '@/components/StepScreen';
 import { db } from '@/server/db';
 import { requireOrganizer } from '@/server/auth';
 import { TapTempo } from '../TapTempo';
+import { SongAudition } from '../SongAudition';
 import { chooseSideloadedAction } from '../actions';
 import styles from '../music.module.css';
 
@@ -59,6 +67,14 @@ export default async function TheirSongPage({
 
       <form action={chooseSideloadedAction} className={styles.form}>
         <input type="hidden" name="memorialId" value={memorialId} />
+
+        <div>
+          <p className={styles.auditionLead}>
+            What was their song? Search, and listen to half a minute to be sure it is the right
+            version. Or skip this and type the name yourself — both end up in the same place.
+          </p>
+          <SongAudition titleFieldId="title" artistFieldId="artist" />
+        </div>
 
         <div>
           <label className={styles.label} htmlFor="title">
@@ -128,6 +144,36 @@ export default async function TheirSongPage({
           </button>
         </div>
       </form>
+
+      {/*
+        Closed by default and deliberately quiet: this is reassurance for the
+        person who is worrying about the day, not a task on this screen. There
+        is no new machinery behind it — a practice run is a person, a phone and
+        the video, which is exactly what will happen in the room.
+      */}
+      <details className={styles.practice}>
+        <summary className={styles.practiceSummary}>How to have a practice run</summary>
+        <ol className={styles.practiceBody}>
+          <li>
+            Open the video on a laptop and have the song ready on a phone, paused at the very start.
+          </li>
+          <li>
+            Start the video. Press play on the song when the screen fades up from black — that is
+            the cue, and it is something you can see from the back of a room.
+          </li>
+          <li>
+            If the song ends first, it simply ends; if the video ends first, the last picture holds.
+            Being a few seconds out is normal and nobody will notice.
+          </li>
+        </ol>
+        <p className={styles.hint}>
+          Once the video is made, the{' '}
+          <Link className={step.quiet} href={`/m/${memorialId}/deliver/timing-card`}>
+            timing card for the venue
+          </Link>{' '}
+          prints these same words for whoever is playing the song on the day.
+        </p>
+      </details>
     </StepScreen>
   );
 }

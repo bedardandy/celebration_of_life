@@ -43,6 +43,64 @@
   color: var(--ink);
 }
 
+/* --- a note back to the family -------------------------------------------- */
+
+.notes {
+  margin-top: 32px;
+  padding-top: 24px;
+  border-top: 1px solid var(--line);
+}
+
+.notesTitle {
+  margin: 0 0 16px;
+  font-size: 1.2rem;
+  font-weight: 600;
+}
+
+.noteForm {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  align-items: flex-start;
+}
+
+/* Each field owns the full column; the buttons underneath do not. */
+.noteForm > div {
+  width: 100%;
+}
+
+.noteForm textarea {
+  width: 100%;
+  min-height: 120px;
+  padding: 14px 16px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--paper-raised);
+  line-height: 1.6;
+  resize: vertical;
+}
+
+.noteMoment {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  align-items: center;
+}
+
+.notesSent {
+  margin: 0 0 20px;
+  padding: 14px 18px;
+  border-left: 3px solid var(--accent);
+  background: var(--paper-raised);
+  color: var(--ink);
+}
+
+.notesPrivacy {
+  margin: 0;
+  color: var(--ink-soft);
+  font-size: 0.95rem;
+}
+
 .waiting {
   margin: 0;
   padding: 28px 24px;

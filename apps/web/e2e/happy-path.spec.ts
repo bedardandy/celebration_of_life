@@ -276,9 +276,39 @@ test('a family gets from nothing to a video somebody else can watch', async ({ p
 
   // And it is a viewing link, not a download link, until the family says so.
   await expect(stranger.getByRole('link', { name: 'Save a copy' })).toHaveCount(0);
+  mark('watched from a fresh browser');
+
+  /* --- and says something back, from the same page ------------------------ */
+
+  // The note is left the way somebody actually leaves one: two fields, and a
+  // button for "here, this bit" rather than a scrub bar to drag.
+  await stranger.getByLabel('Your first name').fill('Michael');
+  await stranger
+    .getByLabel('What would you like to say?')
+    .fill('That is Margaret at the front, not Ruth.');
+  await stranger.getByRole('button', { name: 'At this moment in the video' }).click();
+  const moment = stranger.getByRole('button', { name: /remove$/ });
+  await expect(moment).toBeVisible();
+  await stranger.getByRole('button', { name: 'Send this' }).click();
+  await expect(stranger.getByText('That has gone to the family')).toBeVisible();
 
   await strangerContext.close();
-  mark('watched from a fresh browser');
+  mark('note left from the viewing link');
+
+  /* --- the organiser reads it, and marks it done -------------------------- */
+
+  await page.goto(`/m/${memorialId}/review`);
+  await expect(h1(page)).toContainText('Notes from family');
+  await expect(page.getByText('That is Margaret at the front, not Ruth.')).toBeVisible();
+  // Written by somebody with no account, and placed in the video.
+  await expect(page.getByText('Michael')).toBeVisible();
+  await expect(page.getByText(/^at \d+:\d\d/)).toBeVisible();
+
+  await page.getByRole('button', { name: 'Done' }).click();
+  // Undoable for a few seconds, like everything else that moves in this product.
+  await expect(page.getByText('Marked as done.')).toBeVisible();
+  await expect(page.getByRole('button', { name: 'Put this back' })).toBeVisible();
+  mark('note marked done');
 });
 
 /** Three answers, of the kind somebody actually types at eleven at night. */

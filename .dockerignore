@@ -1,0 +1,48 @@
+# What never belongs in a build context.
+#
+# content/ and fixtures/ are deliberately absent from this list: the music
+# library is seeded into the database at boot, and fixtures/ai is what the mock
+# AI provider answers with, so both are needed inside the image.
+
+node_modules
+**/node_modules
+.pnpm-store
+
+.git
+.github
+.gitignore
+
+# Rebuilt inside the image.
+.next
+**/.next
+.turbo
+**/.turbo
+dist
+**/dist
+build
+**/build
+out
+**/out
+*.tsbuildinfo
+**/*.tsbuildinfo
+
+# A developer's own database, blobs and renders. The container has /data.
+/data
+
+# Test output.
+coverage
+**/coverage
+test-results
+**/test-results
+playwright-report
+**/playwright-report
+
+# Secrets stay in the environment, never in a layer. .env.example is text and
+# is kept, because it is the reference for what to set.
+.env
+.env.*
+!.env.example
+
+.DS_Store
+Thumbs.db
+*.log

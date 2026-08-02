@@ -27,6 +27,7 @@
     "dev:worker": "pnpm --filter @col/worker run dev",
     "build:web": "pnpm --filter @col/web run build",
     "worker": "pnpm --filter @col/worker run start",
+    "start:prod": "node scripts/start-prod.mjs",
     "enqueue-test": "pnpm --filter @col/worker run enqueue-test",
     "ai:doctor": "tsx scripts/ai-doctor.ts",
     "fixtures": "tsx scripts/make-fixtures.ts",

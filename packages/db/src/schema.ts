@@ -159,9 +159,10 @@ export const magicTokens = sqliteTable(
      * 'collection-link' is the one link a family shares with everyone;
      * 'contributor' is a personal ask made of one person. Both land on the same
      * contributor pages — the difference is what the landing page says.
+     * 'co-organizer-invite' hands somebody the organiser's own job.
      */
     kind: text('kind', {
-      enum: ['organizer-login', 'collection-link', 'contributor', 'watch'],
+      enum: ['organizer-login', 'collection-link', 'contributor', 'watch', 'co-organizer-invite'],
     }).notNull(),
     scopes: text('scopes', { mode: 'json' }).$type<string[]>().notNull().default([]),
     /** Who this link was made for, in the organiser's words: "Aunt Mary". */
@@ -563,6 +564,54 @@ export const renderJobs = sqliteTable(
 );
 
 /* -------------------------------------------------------------------------- */
+/* review_notes                                                                */
+/* -------------------------------------------------------------------------- */
+
+/**
+ * What the family said about the draft.
+ *
+ * A brother in another country watches the video from the link he was sent,
+ * notices that a photograph is Margaret and not Ruth, and needs somewhere to
+ * say so. That is this table: one row per thing somebody spotted, addressed to
+ * the organiser and nobody else.
+ *
+ * Two columns describe the same moment on purpose. `timecodeMs` is what the
+ * person's finger actually pointed at and is never recomputed; `slideId` is our
+ * reading of it at the time they wrote, which lets the organiser be shown "the
+ * photo of the lake" instead of a number. The slideshow is edited afterwards,
+ * so the reading can go stale — the raw timecode is what stays true.
+ */
+export const reviewNotes = sqliteTable(
+  'review_notes',
+  {
+    id: id(),
+    memorialId: text('memorial_id')
+      .notNull()
+      .references(() => memorials.id, { onDelete: 'cascade' }),
+    /** Which draft they were watching. Kept as history, so a re-render does
+     *  not take the note with it. */
+    renderJobId: text('render_job_id').references(() => renderJobs.id, { onDelete: 'set null' }),
+    /** Their first name, as they typed it. Blank is allowed and normal. */
+    authorName: text('author_name'),
+    body: text('body').notNull(),
+    /** Where in the video they were, in milliseconds. Optional. */
+    timecodeMs: integer('timecode_ms'),
+    /** The slide that was on screen then, resolved when the note was written. */
+    slideId: text('slide_id'),
+    status: text('status', { enum: ['open', 'done', 'dismissed'] })
+      .notNull()
+      .default('open'),
+    /** 'watch' is somebody with the viewing link; 'organizer' is a note to self. */
+    createdVia: text('created_via', { enum: ['watch', 'organizer'] })
+      .notNull()
+      .default('watch'),
+    createdAt: createdAt(),
+    updatedAt: updatedAt(),
+  },
+  (t) => [index('review_notes_memorial_status_idx').on(t.memorialId, t.status)],
+);
+
+/* -------------------------------------------------------------------------- */
 /* eulogy_drafts (append-only, versioned)                                      */
 /* -------------------------------------------------------------------------- */
 
@@ -694,6 +743,7 @@ export const schema = {
   musicTracks,
   musicSelections,
   renderJobs,
+  reviewNotes,
   eulogyDrafts,
   programDocs,
   jobs,
@@ -716,6 +766,7 @@ export const TABLE_NAMES = [
   'music_tracks',
   'music_selections',
   'render_jobs',
+  'review_notes',
   'eulogy_drafts',
   'program_docs',
   'jobs',
@@ -751,6 +802,8 @@ export type MusicSelection = typeof musicSelections.$inferSelect;
 export type NewMusicSelection = typeof musicSelections.$inferInsert;
 export type RenderJob = typeof renderJobs.$inferSelect;
 export type NewRenderJob = typeof renderJobs.$inferInsert;
+export type ReviewNote = typeof reviewNotes.$inferSelect;
+export type NewReviewNote = typeof reviewNotes.$inferInsert;
 export type EulogyDraftRow = typeof eulogyDrafts.$inferSelect;
 export type NewEulogyDraftRow = typeof eulogyDrafts.$inferInsert;
 export type ProgramDocRow = typeof programDocs.$inferSelect;

@@ -69,6 +69,12 @@ export type ChecklistCounts = {
     /** Enough of it exists to hand to a printer. */
     ready: boolean;
   };
+  /**
+   * Notes family have left after watching the shared video, still waiting on
+   * the organiser. Optional for the same reason the others are: a memorial that
+   * has never been shared has nothing to count.
+   */
+  reviewNotes?: number;
 };
 
 export type CardId = 'photos' | 'story' | 'slideshow' | 'speeches';
@@ -182,13 +188,20 @@ function slideshowCard(memorialId: string, counts: ChecklistCounts): ChecklistCa
   // The end of the road first: a family with a finished video should be looking
   // at how to get it into the room, not at the slideshow editor.
   if (slideshow?.delivered) {
+    // Once family have watched it and written back, what they said is the more
+    // useful thing to say on this card than the USB stick.
+    const notes = counts.reviewNotes ?? 0;
     return {
       ...base,
       title: 'The video is ready',
       help: 'Download it, and take the card for the funeral director.',
-      href: `/m/${memorialId}/deliver`,
+      // Once family have written back, that is the more useful place to land.
+      href: notes > 0 ? `/m/${memorialId}/review` : `/m/${memorialId}/deliver`,
       state: 'ready',
-      statusLine: 'Made and checked — it will play. There is guidance for the USB stick too.',
+      statusLine:
+        notes > 0
+          ? `Made and checked. Notes from family (${notes}) are waiting for you.`
+          : 'Made and checked — it will play. There is guidance for the USB stick too.',
     };
   }
 
